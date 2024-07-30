@@ -1,4 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="eligibilityCriteria">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="eligibilityCriterion">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="EligibilityCriterionType">
+                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="EligibilityCriterionType">
+        <xs:sequence>
+            <xs:element name="eligibilityCriteriaType">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the type of eligibility criteria (e.g. "program_enrollment ", "pilot_participation") <p/>
+                            
+                            Comment:<br/> 
+                            enum with possible values: "program_enrollment ", "pilot_participation"</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                        <xs:enumeration value="ServiceProvision"/>
+                        <xs:enumeration value="RateProvision"/>
+                        <xs:enumeration value="EndUse"/>
+                        <xs:enumeration value="CustomerClass"/>
+                        <xs:enumeration value="Equipment"/>
+                        <xs:enumeration value="ProgramEnrollment"/>
+                        <xs:enumeration value="Applicability"/>
+                        <xs:enumeration value="VoluntaryEnrollment"/>
+                        <xs:enumeration value="ServiceClass"/>
+                        <xs:enumeration value="MandatoryEnrollment"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="name">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            name of the eligibility criteria for being eligible to be on this rate plan (e.g."Energy Affordability Program")  <p/>
+                            
+                            Comment:<br/> 
+                            value with name of the criteria for being eligible to be on this rate plan, ex: "Energy Affordability Program" </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="description">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            a text description of the rules for fulfilling this eligibility criteria<p/>
+                            
+                            Comment:<br/> 
+                            a text description of the rules for fulfilling this criteria</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
