@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    <xs:attribute name="ratePlanCodeUnique" type="xs:ID">
+    <xs:attribute name="ratePlanCodeUnique">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/>
 a unique identifier for the rate plan to consistently identify the rate plan and its parameters<p/>
 Comment:<br/>
 unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and find its parameters</xs:documentation>
         </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:ID">
+                <xs:maxLength value="21"/>
+            </xs:restriction>
+        </xs:simpleType>
     </xs:attribute>
 </xs:schema>
