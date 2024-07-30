@@ -1,4 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="seasons">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="season">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="SeasonType">
+                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="SeasonType">
+        <xs:sequence>
+            <xs:element name="name">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                                    the name of the season <p/>
+                                    
+                                    Comment:<br/> 
+                                    the name of the season</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                        <xs:enumeration value="Winter"/>
+                        <xs:enumeration value="Spring"/>
+                        <xs:enumeration value="Shoulder"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="month">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                                    the number representing the month as an integer (i.e. 1-12) <p/>
+                                    
+                                    Comment:<br/> 
+                                    the number for the month, as a zero padded two digit number, e.g. 01-12</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxInclusive value="12"/>
+                        <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
