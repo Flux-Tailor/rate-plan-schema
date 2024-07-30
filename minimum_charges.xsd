@@ -1,4 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="eligibilityLimits">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="eligibilityLimit">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="EligibilityLimitType">
+                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="EligibilityLimitType">
+        <xs:sequence>
+            <xs:element name="eligibilityLimitType">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the type of eligibility limit (e.g. "Tension", "ReactivePower", "Consumption", "ElectricDemand") <p/>
+                            
+                            Comment:<br/> 
+                            ex.: Tension, ReactivePower, Consumption, ElectricDemand (this should either become a restricted enum or we will map a known list of options for a given data provider to a common model to allow for use of the limits in automated filtering) </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                        <xs:enumeration value="ActiveEnergyConsumption"/>
+                        <xs:enumeration value="EquipmentSize"/>
+                        <xs:enumeration value="ResidentialProportion"/>
+                        <xs:enumeration value="Seasonality"/>
+                        <xs:enumeration value="Tension"/>
+                        <xs:enumeration value="ElectricDemand"/>
+                        <xs:enumeration value="ContractDemand"/>
+                        <xs:enumeration value="Capacity"/>
+                        <xs:enumeration value="Transportation"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
