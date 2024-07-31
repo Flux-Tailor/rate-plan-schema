@@ -1,4 +1,116 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="serviceTierThresholds">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceTierThreshold">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ServiceTierThresholdType">
+                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ServiceTierThresholdType">
+        <xs:sequence>
+            <xs:element name="measurementKind">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            TODO: Is this correct? <p/>
+                            the type of measurement on which the tier is based (e.g. "consumption",  "demand","generation")<p/>
+                            
+                            Comment:<br/> 
+                            the type of measurement (e.g. "consumption",  "demand","generation")</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                        <xs:whiteSpace value="collapse"/>
+                        <xs:enumeration value="consumption"/>
+                        <xs:enumeration value="demand"/>
+                        <xs:enumeration value="generation"/>
+                        <xs:enumeration value="TODO: ???"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="unitOfMeasure" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            TODO: Is this correct? <p/>
+                            the unit of measure of the service threshold tier<p/>
+                            
+                            Comment:<br/> 
+                            the unit of measure of the service threshold tier</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="6"/>
+                        <xs:enumeration value="kWh"/>
+                        <xs:enumeration value="kW"/>
+                        <xs:enumeration value="thm"/>
+                        <xs:enumeration value="BTU"/>
+                        <xs:enumeration value="Dth"/>
+                        <xs:enumeration value="MW"/>
+                        <xs:enumeration value="Rkvah"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="season">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            TODO: Should this be the SeasonNameType? <p/>
+                            the name of the season<p/>
+                            
+                            Comment:<br/> 
+                            The name of the season during which this tier is applicable</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="20"/>
+                        <xs:enumeration value="Winter"/>
+                        <xs:enumeration value="Spring"/>
+                        <xs:enumeration value="Shoulder"/>
+                        <xs:whiteSpace value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="min_qty">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            TODO: Is this nillable?  "minimum is zero, infinity denoted with either "NULL" or a multiple of 9: "999999"<p/>
+                            The minimum threshold usage quantity from which rate is applicable<p/>
+                            
+                            Comment:<br/> 
+                            The minimum threshold usage quantity from which rate is applicable</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="40"/>
+                        <xs:minExclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="max_qty">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            TODO: Is this nillable?  "minimum is zero, infinity denoted with either "NULL" or a multiple of 9: "999999"<p/>
+                            the maximum threshold usage quantity up to which rate is applicable<p/>
+                            
+                            Comment:<br/> 
+                            The maximum threshold usage quantity up to which rate is applicable</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="40"/>
+                        <xs:minExclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
