@@ -1,4 +1,425 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="ratePlans">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="ratePlan">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="RatePlanType">
+                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="RatePlanType">
+        <xs:sequence>
+            <xs:element name="ratePlanName">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the name of the rate plan<p/>
+                            
+                            Comment:<br/> 
+                            The name of the specific rate in the tariff book. There are multiple rate names per each tariff. </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255"/>
+                        <xs:whiteSpace value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dateDraftUpdate" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated<p/>
+                            
+                            Comment:<br/> 
+                            - Date that the rate plan was drafted
+                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:date"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dateEffective" nillable="false">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the date that the rate plan went or will go into effect<p/>
+                            
+                            Comment:<br/> 
+                            - Date that the rate plan went into effect
+                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:date"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dateCancellation" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the date that the rate plan was cancelled, or is expected to be cancelled, if any such date exists<p/>
+                            
+                            Comment:<br/> 
+                            - Date that the rate plan was cancelled, or is expected to be cancelled, if any such date exists 
+                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:date"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanIedrOrgAbbreviation" nillable="false">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            a three letter abbreviation for the utility assigned for the IEDR platform (.e.g New York State Electric &amp; Gas Corporation is NYE; Consolidated Edison Company of New York, Inc is CED)<p/>
+                            
+                            Comment:<br/> 
+                            abbreviation for utility organization assigned for IEDR (see "iedr_utilities"). Populated at either parent data provider organization or sub-utility level.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="3"/>
+                        <xs:enumeration value="AGR"/>
+                        <xs:enumeration value="AGR"/>
+                        <xs:enumeration value="CEI"/>
+                        <xs:enumeration value="LBR"/>
+                        <xs:enumeration value="NGG"/>
+                        <xs:enumeration value="NFG"/>
+                        <xs:enumeration value="PLI"/>
+                        <xs:enumeration value="DPS"/>
+                        <xs:enumeration value="NRD"/>
+                        <xs:enumeration value="NYE"/>
+                        <xs:enumeration value="RGE"/>
+                        <xs:enumeration value="CED"/>
+                        <xs:enumeration value="ORU"/>
+                        <xs:enumeration value="KNY"/>
+                        <xs:enumeration value="KLI"/>
+                        <xs:enumeration value="NIM"/>
+                        <xs:enumeration value="LPA"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="serviceType" nillable="false">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the type of service that the rate plan covers, possible values are "Electric", "Gas", "Steam"<p/>
+                            
+                            Comment:<br/> 
+                            The type of service that the rate plan covers such as electric service or gas service</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="8"/>
+                        <xs:enumeration value="Electric"/>
+                        <xs:enumeration value="Gas"/>
+                        <xs:enumeration value="Steam"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="customerClass" nillable="false">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the type of customer that the rate plan applies to such as residential, commercial, industrial, lighting<p/>
+                            
+                            Comment:<br/> 
+                            The type of customer that the tariff applies to such as residential, commercial, industrial, lighting</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255"/>
+                        <xs:enumeration value="Commercial"/>
+                        <xs:enumeration value=" Commercial Large"/>
+                        <xs:enumeration value="Distributed Generation"/>
+                        <xs:enumeration value="Industrial"/>
+                        <xs:enumeration value="Interruptible"/>
+                        <xs:enumeration value="Lighting"/>
+                        <xs:enumeration value="Natural Gas Vehicle"/>
+                        <xs:enumeration value="Non-residential"/>
+                        <xs:enumeration value="Religious"/>
+                        <xs:enumeration value="Residential"/>
+                        <xs:enumeration value="Street Lighting"/>
+                        <xs:enumeration value="Time of Use"/>
+                        <xs:enumeration value="Transmission"/>
+                        <xs:enumeration value="Transmission Or Substation"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="serviceClassNumber">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the number of the service class with which this rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            Number used to group rates by service class</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="3"/>
+                        <xs:minInclusive value="1"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="serviceClassName">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the name of the service class with which this rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            Name of service class</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                        <xs:whiteSpace value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="rateCode" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            an identifier used by utilities to refer to this rate plan or a group of rate plans to which this rate plan belongs<p/>
+                            
+                            Comment:<br/> 
+                            identifier used publicly to refer to the parent rate plan of which this rate is a rate plan permutation</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="10"/>
+                        <xs:whiteSpace value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanDescription">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            a brief description of the rate plan such as what type of customer it applies to and major eligibility criteria<p/>
+                            
+                            Comment:<br/> 
+                            Brief description of the tariff such as what type of customer it applies to and major eligibility criteria.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255"/>
+                        <xs:whiteSpace value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariffDpsCaseNumber">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the New York State Department of Public Service (DSP) docket number (also known as "case number") with which the rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            NYS DPS docket number</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="40"/>
+                        <xs:pattern value="\d+-[a-zA-Z]-\d+"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanHasRetailSupply">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply (i.e. "TRUE"if  there is retail supply)<p/>
+                            
+                            Comment:<br/> 
+                            boolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply. If "TRUE" they have an ESCO for supply; if "FALSE" then they don't have an ESCO for supply.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanHasTieredBlocks">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicating whether the rate plan includes a baseline allowance (TRUE or FALSE)<p/>
+                            
+                            Comment:<br/> 
+                            Boolean indicating whether the rate includes a baseline allowance</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanHasDemandCharges">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicating whether the rate plan includes Demand Charges ( TRUE or FALSE)<p/>
+                            
+                            Comment:<br/> 
+                            Boolean indicating whether the rate includes Demand Charges</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanHasIcapTag">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicated whether the rate plan calculation is subject to the ICAP tag of a given customer (TRUE or FALSE)<p/>
+                            
+                            Comment:<br/> 
+                            Rate calculation is subject to the ICAP tag of a given customer</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanHasReactivePower">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicating whether the rate plan includes Reactive Power Charges (TRUE or FALSE)<p/>
+                            
+                            Comment:<br/> 
+                            Boolean indicating whether the rate includes Reactive Power Charges</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanHasTimeOfUsePricing">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicating whether the rate plan includes Time of Use (TOU) Pricing (TRUE or FALSE)<p/>
+                            
+                            Comment:<br/> 
+                            Boolean indicating whether the rate includes Time of Use Pricing</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanIsRateRider">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book (TRUE or FALSE)<p/>
+                            
+                            Comment:<br/> 
+                            Whether the rate is defined in the tariff book or a rider to the tariff book. </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanNumberRatePeriods" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the number of rate periods associated with the rate, counting 1 for each period occurrence for each season and weekday type<p/>
+                            
+                            Comment:<br/> 
+                            The number of periods associated with the rate, counting 1 for each period occurrence in each season (e.g. 3 off peak/base/peak periods means 6 periods for winter and summer combined). This is used to inform programming of devices that operate (turn on/off, charge, import/export) based on time of use schedules.</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="2"/>
+                        <xs:minExclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanTariffId" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            an identifier used by the utility to refer to the tariff with which this rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            identifier used by the utility to refer to the tariff or rate plan</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="50"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="ratePlanTerritory" >
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the NYISO load zone(s) that the rate applies to<p/>
+                            
+                            Comment:<br/> 
+                            The NYISO load zones that the rate applies to, use "all" if all, separate with semicolons for subsets, i.e "J;H"</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="255"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariffUtilityName" >
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the name of the utility provider in the tariff book with which this rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            Name of utility provider</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariffUtilityPscNumber" >
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            an ID assigned by the New York State Department of Public Service, non-unique across service types and utilities<p/>
+                            
+                            Comment:<br/> 
+                            Unique ID from DPS, one utility may have multiple and these are non-unique. There is 1 id per utility service type and some utilities manage multiple utilities</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariffUtilityName" >
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the name of the utility provider in the tariff book with which this rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            Name of utility provider</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariffUtilityPscNumber" >
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            an ID assigned by the New York State Department of Public Service, non-unique across service types and utilities<p/>
+                            
+                            Comment:<br/> 
+                            Unique ID from DPS, one utility may have multiple and these are non-unique. There is 1 id per utility service type and some utilities manage multiple utilities</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariff_book_leaf_ranges" >
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            <p/>
+                            
+                            Comment:<br/> 
+                            i</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value=""/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>
