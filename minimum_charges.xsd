@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:element name="eligibilityLimits">
+    <xs:element name="minimumCharges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="eligibilityLimit">
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="minimumCharge">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="EligibilityLimitType">
+                            <xs:extension base="MinimiumChargeType">
                                 <xs:attribute ref="ratePlanCodeUnique" use="required"/>
                             </xs:extension>
                         </xs:complexContent>
@@ -16,28 +16,62 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="EligibilityLimitType">
+    <xs:complexType name="MinimiumChargeType">
         <xs:sequence>
-            <xs:element name="eligibilityLimitType">
+            <xs:element name="name">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            the type of eligibility limit (e.g. "Tension", "ReactivePower", "Consumption", "ElectricDemand") <p/>
+                            the name of the minimum charge (e.g. "Basic Service Charge", "Bill Issuance Charge")<p/>
                             
                             Comment:<br/> 
-                            ex.: Tension, ReactivePower, Consumption, ElectricDemand (this should either become a restricted enum or we will map a known list of options for a given data provider to a common model to allow for use of the limits in automated filtering) </xs:documentation>
+                            The name of the minimum charge, ex.: "Basic Service Charge" </xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="40"/>
-                        <xs:enumeration value="ActiveEnergyConsumption"/>
-                        <xs:enumeration value="EquipmentSize"/>
-                        <xs:enumeration value="ResidentialProportion"/>
-                        <xs:enumeration value="Seasonality"/>
-                        <xs:enumeration value="Tension"/>
-                        <xs:enumeration value="ElectricDemand"/>
-                        <xs:enumeration value="ContractDemand"/>
-                        <xs:enumeration value="Capacity"/>
-                        <xs:enumeration value="Transportation"/>
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="chargeAmount">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the minimum amount charged to a customer per billing cycle<p/>
+                            
+                            Comment:<br/> 
+                            The minimum amount charged </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:decimal">
+                        <xs:totalDigits value="40"/>
+                        <xs:minExclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="chargeTier" nillable="true">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the number of the threshold tier for which the minimum charge is applicable (if any tiered thresholds exist for the rate)<p/>
+                            
+                            Comment:<br/> 
+                            The number of the tier for which the base charge is applicable (if any tier thresholds exist for the rate).</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="unitOfMeasure">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the unit of measure and time determination per which the minimum charge is applied (e.g. "/30 days", "per billing cycle")<p/>
+                            
+                            Comment:<br/> 
+                            The unit of measure and time determination per which the minimum charge is applied </xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="30"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
