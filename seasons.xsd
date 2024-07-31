@@ -32,6 +32,7 @@
                         <xs:enumeration value="Winter"/>
                         <xs:enumeration value="Spring"/>
                         <xs:enumeration value="Shoulder"/>
+                        <xs:whiteSpace value="collapse"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
