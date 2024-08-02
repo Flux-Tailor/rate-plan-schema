@@ -114,11 +114,10 @@
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            TODO: xs:time requiest HH:MM:SS.  Should this be a string? <p/>
-                            the time of day  on and after which a given rate period is applicable,as hours and minutes in 24 hour format, formatted as [hh]:[mm] (i.e."16:00" for a 4-7pm rate period)<p/>
+                            the time of day on and after which a given rate period is applicable,as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] (i.e."16:00" for a 4-7pm rate period)<p/>
                             
                             Comment:<br/> 
-                            The time of day  on and after which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh][mm] or T[hh]:[mm]. ex. "T1600" for a 4-7 rate period. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
+                            The time of day on and after which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh]:[mm]:[ss]. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:time">
                     </xs:restriction>
@@ -128,11 +127,10 @@
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            TODO: xs:time requiest HH:MM:SS.  Should this be a string? <p/>
-                            the time of day in hours and minutes in 24 hour format up to (but not including) which a given rate period is applicable, as hours and minutes in 24 hour format, formatted as [hh]:[mm] (i.e. "19:00" for a 4-7pm rate period)<p/>
+                            the time of day in hours and minutes in 24 hour format up to (but not including) which a given rate period is applicable, as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] (i.e. "19:00" for a 4-7pm rate period)<p/>
                             
                             Comment:<br/> 
-                            The time of day in hours and minutes in 24 hour format up to (but not including) which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh][mm] or T[hh]:[mm]. ex. "T1900" for a 4-7 rate period. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
+                            The time of day in hours and minutes in 24 hour format up to (but not including) which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:time">
                     </xs:restriction>
