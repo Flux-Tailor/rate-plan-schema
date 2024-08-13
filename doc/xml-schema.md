@@ -1,5 +1,5 @@
-# Oxygen Example Docs
+# Rate Plan Schema Docs
 
-The Oxygen Example Docs are located here:
+The OxygenXML-generated Rate Plan Schema Docs are located here:
 
-* [ExampleOxygenXMLDocs](https://flux-tailor.github.io/docs-demo/_static/ExampleOxygenXMLDocs/ExampleOxygenXMLDocs.html)
+* [Rate Plan Schema Docs](https://flux-tailor.github.io/rate_plan_schema/_static/rate_plan_schema_docs/rate_plan_main.html)
