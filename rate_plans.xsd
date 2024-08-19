@@ -25,7 +25,7 @@
                             the name of the rate plan<p/>
                             
                             Comment:<br/> 
-                            The name of the specific rate in the tariff book. There are multiple rate names per each tariff. </xs:documentation>
+                            The name of the specific rate plan in the tariff book. There are multiple rate names per each tariff. </xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="255"/>
