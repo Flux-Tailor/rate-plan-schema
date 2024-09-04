@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="tariffBook">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tariffDocumentationType">
+                    <xs:sequence>
+                        <xs:element ref="tariffBookLeafRanges"/>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tariffBookLeafRanges">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tariffBookLeafRange"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tariffBookLeafRange" type="tariffDocumentationType">
+        <xs:annotation>
+            <xs:documentation>TODO: Resolve error:
+
+[Xerces] Element 'tariffBookLeafRange' has both a 'type' attribute and a 'anonymous type' child. Only one of these is allowed for an element.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="startLeafNbr" type="xs:string"/>
+                <xs:element name="endLeafNbr" type="xs:string"/>
+                <xs:element name="DPS_case_number">
+                    <xs:simpleType>
+                        <xs:list itemType="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

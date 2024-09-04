@@ -14,6 +14,13 @@
         </options>
     </meta>
     <projectTree name="RatePlanSchema.xpr">
+        <folder masterFiles="true" name="Main Files">
+            <file name="charges.xsd"/>
+        </folder>
         <folder path="."/>
+        <file name="charges.xsd"/>
+        <file name="common_definitions.xsd"/>
+        <file name="service_tier_thresholds.xsd"/>
+        <file name="tariff_statements.xsd"/>
     </projectTree>
 </project>

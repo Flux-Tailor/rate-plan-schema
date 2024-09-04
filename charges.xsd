@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="charges" type="chargeType"/>
+    <xs:complexType name="chargeType">
+        <xs:sequence>
+            <xs:element name="value" type="xs:decimal"/>
+            <xs:element name="uom" type="unitOfMeasure"/>
+            <xs:element form="qualified" name="calculationMethod">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="by_metered_quantity"/>
+                        <xs:pattern value=""/>
+                        <xs:enumeration value="fixed"/>
+                        <xs:enumeration value="by_variable_utility_settings"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="inputMeasurement" form="qualified" type="measurementKind"/>
+            <xs:element name="validPeriod" type="timePeriodType"/>
+            <xs:element name="serviceTierThresholdNr" type="xs:int"/>
+            <xs:element name="ratePeriodNr" type="xs:int"/>
+            <xs:element name="peakType" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
