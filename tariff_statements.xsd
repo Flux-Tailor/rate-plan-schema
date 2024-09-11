@@ -3,10 +3,28 @@
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="statement_charges.xsd"/>
     <xs:element name="tariffStatements">
         <xs:complexType>
             <xs:sequence>
-                <xs:element form="qualified" name="tariffStatement" type="tariffDocumentationType"/>
+                <xs:element form="qualified" name="tariffStatement">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="tariffDocumentationType">
+                                <xs:sequence>
+                                    <xs:element name="typeCode"/>
+                                    <xs:element name="DPSCaseNumber"/>
+                                    <xs:element name="generalRuleRefs">
+                                        <xs:simpleType>
+                                            <xs:list itemType="itemType"/>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element ref="statementCharges"/>
+                                </xs:sequence>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="eligibility_criteria.xsd"/>
+    <xs:include schemaLocation="eligibility_limits.xsd"/>
+    <xs:include schemaLocation="holidays.xsd"/>
+    <xs:include schemaLocation="minimum_charges.xsd"/>
+    <xs:include schemaLocation="other_fixed_charges.xsd"/>
+    <xs:include schemaLocation="rate_plans.xsd"/>
+    <xs:include schemaLocation="seasons.xsd"/>
+    <xs:include schemaLocation="service_tier_thresholds.xsd"/>
+    <xs:include schemaLocation="time_of_use_periods.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
+    <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
+    <xs:element name="ratePlanSelection">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="RatePlanType">
+                    <xs:sequence>
+                        <xs:element minOccurs="0" ref="seasons"/>
+                        <xs:element ref="timeOfUsePeriods"/>
+                        <xs:element minOccurs="0" ref="serviceTierThresholds"/>
+                        <xs:element name="chargeSummary">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="deliveryCharges">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element ref="minimumCharges"/>
+                                                <xs:element ref="otherFixedCharges"/>
+                                                <xs:element ref="nonmeteredServiceCharges"/>
+                                                <xs:element ref="summaryCharges"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="supplyCharges">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element ref="summaryCharges"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="otherCharges"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="customerScenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ratePlanSelection"/>
+                <xs:element name="modifierSelection"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="summaryCharges" type="chargeType"/>
+</xs:schema>
