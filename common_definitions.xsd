@@ -8,7 +8,7 @@ Comment:<br/>
 unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and find its parameters</xs:documentation>
         </xs:annotation>
         <xs:simpleType>
-            <xs:restriction base="xs:ID">
+            <xs:restriction base="xs:string">
                 <xs:maxLength value="21"/>
             </xs:restriction>
         </xs:simpleType>
