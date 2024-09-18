@@ -88,8 +88,18 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                     <xs:documentation>The date on which tariff documentation was published</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="dateEffectiveStart" type="xs:date"/>
-            <xs:element name="dateEffectiveEnd" type="xs:date"/>
+            <xs:element name="effectivePeriod" type="timePeriodType"/>
+            <xs:element name="iedrOrgAbbreviation" type="xs:string"/>
+            <xs:element minOccurs="1" name="dpsUtilityPscNumber">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="3"/>
+                        <xs:maxExclusive value="1000"/>
+                        <xs:whiteSpace fixed="true" value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="serviceType"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="timePeriodType">
@@ -98,9 +108,12 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             <xs:element name="endTime" form="qualified" type="xs:dateTime"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:simpleType name="unitOfMeasure">
-        <xs:restriction base="xs:string"/>
-    </xs:simpleType>
+    <xs:complexType name="valueThresholdType">
+        <xs:sequence>
+            <xs:element name="inclusive" type="xs:boolean"/>
+            <xs:element name="exclusive" type="xs:decimal"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:simpleType name="measurementKind">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/> 
@@ -129,10 +142,14 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:enumeration value=""/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:complexType name="thresholdType">
-        <xs:sequence>
-            <xs:element name="valueIncluded" type="xs:boolean"/>
-            <xs:element name="value" type="xs:decimal"/>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:simpleType name="unitSymbolKind">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+    <xs:simpleType name="serviceKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Electric"/>
+            <xs:enumeration value="Gas"/>
+            <xs:enumeration value="Steam"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

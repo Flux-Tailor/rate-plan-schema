@@ -103,23 +103,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="serviceType" nillable="false">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the type of service that the rate plan covers, possible values are "Electric", "Gas", "Steam"<p/>
-                            
-                            Comment:<br/> 
-                            The type of service that the rate plan covers such as electric service or gas service</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="8"/>
-                        <xs:enumeration value="Electric"/>
-                        <xs:enumeration value="Gas"/>
-                        <xs:enumeration value="Steam"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="service" nillable="false" type="serviceKind"> </xs:element>
             <xs:element name="customerClass" nillable="false">
                 <xs:simpleType>
                     <xs:annotation>

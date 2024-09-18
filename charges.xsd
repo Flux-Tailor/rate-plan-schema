@@ -22,7 +22,6 @@
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="by_metered_quantity"/>
-                        <xs:pattern value=""/>
                         <xs:enumeration value="fixed"/>
                         <xs:enumeration value="by_variable_utility_settings"/>
                     </xs:restriction>
@@ -30,7 +29,8 @@
             </xs:element>
             <xs:element name="peakType" type="xs:string"/>
             <xs:element name="value" type="xs:decimal"/>
-            <xs:element name="uom" type="unitOfMeasure"/>
+            <xs:element name="uom" type="unitSymbolKind"/>
+            <xs:element name="unitMultiplier"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
