@@ -18,7 +18,8 @@
                 <xs:extension base="RatePlanType">
                     <xs:sequence>
                         <xs:element minOccurs="0" ref="seasons"/>
-                        <xs:element ref="timeOfUsePeriods"/>
+                        <xs:element minOccurs="0" ref="holidays"/>
+                        <xs:element ref="timeOfUsePeriods" minOccurs="0"/>
                         <xs:element minOccurs="0" ref="serviceTierThresholds"/>
                         <xs:element name="chargeSummary">
                             <xs:complexType>

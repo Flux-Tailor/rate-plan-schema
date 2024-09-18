@@ -18,28 +18,29 @@
     </xs:element>
     <xs:complexType name="TimeOfUsePeriodType">
         <xs:sequence>
-            <xs:element name="nonholidayRatePeriodNumber">
+            <xs:element name="effectivePeriod" type="timePeriodType"/>
+            <xs:element name="RatePeriodIdNonHolidays">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            the rate period number for the peak type applicable during non holidays.<p/>
+                            the rate period id for the peak type applicable during non holidays.<p/>
                             
                             Comment:<br/> 
-                            Tthe rate period number for the peak type applicable during non holidays</xs:documentation>
+                            Tthe rate period id for the peak type applicable during non holidays</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:int">
                         <xs:totalDigits value="2"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="holidayRatePeriodNumber">
+            <xs:element name="RatePeriodIdHolidays">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            the rate period number for the peak type applicable during holidays<p/>
+                            the rate period id for the peak type applicable during holidays<p/>
                             
                             Comment:<br/> 
-                            the rate period number for the peak type applicable during holidays</xs:documentation>
+                            the rate period id for the peak type applicable during holidays</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:int">
                         <xs:totalDigits value="2"/>
@@ -106,8 +107,7 @@
                             Comment:<br/> 
                             whether or not this rate period applies on holidays or whether it has an alternate applicable peak type if it's a holiday</xs:documentation>
                     </xs:annotation>
-                    <xs:restriction base="xs:boolean">
-                    </xs:restriction>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="timeStart">
@@ -119,8 +119,7 @@
                             Comment:<br/> 
                             The time of day on and after which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh]:[mm]:[ss]. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
                     </xs:annotation>
-                    <xs:restriction base="xs:time">
-                    </xs:restriction>
+                    <xs:restriction base="xs:time"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="timeEnd">
@@ -132,8 +131,7 @@
                             Comment:<br/> 
                             The time of day in hours and minutes in 24 hour format up to (but not including) which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
                     </xs:annotation>
-                    <xs:restriction base="xs:time">
-                    </xs:restriction>
+                    <xs:restriction base="xs:time"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
         </xs:sequence>

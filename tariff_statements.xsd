@@ -12,13 +12,9 @@
                         <xs:complexContent>
                             <xs:extension base="tariffDocumentationType">
                                 <xs:sequence>
-                                    <xs:element name="typeCode"/>
-                                    <xs:element name="DPSCaseNumber"/>
-                                    <xs:element name="generalRuleRefs">
-                                        <xs:simpleType>
-                                            <xs:list itemType="itemType"/>
-                                        </xs:simpleType>
-                                    </xs:element>
+                                    <xs:element name="typeCode" type="xs:string"/>
+                                    <xs:element name="DPSCaseNumber" type="xs:string"/>
+                                    <xs:element name="generalRuleRefs" type="xs:string"> </xs:element>
                                     <xs:element ref="statementCharges"/>
                                 </xs:sequence>
                             </xs:extension>

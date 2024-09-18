@@ -14,29 +14,6 @@ unique identifier for the rate plan permutation assigned by utility (may need to
         </xs:simpleType>
     </xs:attribute>
     <xs:element name="scopeOfApplicability" type="scopeOfApplicabilityType"> </xs:element>
-    <xs:complexType name="timePeriodType">
-        <xs:sequence>
-            <xs:element form="qualified" name="startTime" type="xs:dateTime"/>
-            <xs:element name="endTime" form="qualified" type="xs:dateTime"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="scopeOfApplicabilityType">
-        <xs:annotation>
-            <xs:documentation>The scope of rate plan parameters to which a data point or set of data points is applicable. This will be used to filter charges data for the set applicable to a customer scenario to be calculated.</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element form="qualified" name="include" type="constraintVariableType">
-                <xs:annotation>
-                    <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit inclusion. All other values for this same field are explicitly excluded.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="exclude" type="constraintVariableType">
-                <xs:annotation>
-                    <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit exclusion. This allows for the exclusion of a subset of excluded values for one variables from a larger set of included values for another variable, e.g. "All service class 1 rate plans except time of use rate plans"</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
     <xs:complexType name="constraintVariableType">
         <xs:sequence>
             <xs:element name="serviceClasses">
@@ -70,9 +47,23 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             <xs:element minOccurs="0" name="seasons"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:simpleType name="unitOfMeasure">
-        <xs:restriction base="xs:string"/>
-    </xs:simpleType>
+    <xs:complexType name="scopeOfApplicabilityType">
+        <xs:annotation>
+            <xs:documentation>The scope of rate plan parameters to which a data point or set of data points is applicable. This will be used to filter charges data for the set applicable to a customer scenario to be calculated.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element form="qualified" name="include" type="constraintVariableType">
+                <xs:annotation>
+                    <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit inclusion. All other values for this same field are explicitly excluded.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="exclude" type="constraintVariableType">
+                <xs:annotation>
+                    <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit exclusion. This allows for the exclusion of a subset of excluded values for one variables from a larger set of included values for another variable, e.g. "All service class 1 rate plans except time of use rate plans"</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="tariffDocumentationType">
         <xs:sequence>
             <xs:element name="sourceDocKind">
@@ -101,33 +92,40 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             <xs:element name="dateEffectiveEnd" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:element name="measurementKind">
-        <xs:simpleType>
-            <xs:annotation>
-                <xs:documentation>Tooltip:<br/> 
-                            TODO: Is this correct? <p/>
-                            the type of measurement on which the tier is based (e.g. "consumption",  "demand","generation")<p/>
-                            
-                            Comment:<br/> 
-                            the type of measurement (e.g. "consumption",  "demand","generation")</xs:documentation>
-            </xs:annotation>
-            <xs:restriction base="xs:string">
-                <xs:maxLength value="100"/>
-                <xs:whiteSpace value="collapse"/>
-                <xs:enumeration value="consumption"/>
-                <xs:enumeration value="demand"/>
-                <xs:enumeration value="generation"/>
-                <xs:enumeration value="TODO: ???"/>
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:element>
+    <xs:complexType name="timePeriodType">
+        <xs:sequence>
+            <xs:element form="qualified" name="startTime" type="xs:dateTime"/>
+            <xs:element name="endTime" form="qualified" type="xs:dateTime"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="unitOfMeasure">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
     <xs:simpleType name="measurementKind">
         <xs:annotation>
-            <xs:documentation>Using naming from CIM and enumeration options also used in GBC
+            <xs:documentation>Tooltip:<br/> 
+                          
+The type of measurement, Naming and enumeration options are in alignment with those from Green Button Connect
+Element naming is aligned with the CIM semantic model: https://ontology.tno.nl/cerise/cim-profile/cim_ReadingType.measurementKind.html
 
 Identifies "what" is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
+            <xs:enumeration value="apparentPowerFactor"/>
+            <xs:enumeration value="batteryCarryover"/>
+            <xs:enumeration value="batteryVoltage"/>
+            <xs:enumeration value="demand"/>
+            <xs:enumeration value="demandLimit"/>
+            <xs:enumeration value="distance"/>
+            <xs:enumeration value="energy"/>
+            <xs:enumeration value="frequency"/>
+            <xs:enumeration value="phasorPowerFactor"/>
+            <xs:enumeration value="phasorReactivePower"/>
+            <xs:enumeration value="power"/>
+            <xs:enumeration value="powerFactor"/>
+            <xs:enumeration value="powerQuality"/>
+            <xs:enumeration value="voltage"/>
+            <xs:enumeration value="volumetricFlow"/>
             <xs:enumeration value=""/>
         </xs:restriction>
     </xs:simpleType>

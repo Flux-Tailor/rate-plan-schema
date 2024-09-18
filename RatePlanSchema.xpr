@@ -16,7 +16,7 @@
     <projectTree name="RatePlanSchema.xpr">
         <folder masterFiles="true" name="Main Files">
             <file name="rate_plan_data_input.xsd"/>
-            <file name="rate_plan_user_output.xsd"/>
+            <file name="rate_plan_data_output.xsd"/>
         </folder>
         <folder path="."/>
     </projectTree>

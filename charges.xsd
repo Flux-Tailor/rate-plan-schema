@@ -3,10 +3,18 @@
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:element name="charges" type="chargeType"/>
+    <xs:element name="charges">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="charge" type="chargeType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:complexType name="chargeType">
         <xs:sequence>
-            <xs:element name="validPeriod" type="timePeriodType"/>
+            <xs:element name="effectivePeriod" type="timePeriodType"/>
+            <xs:element name="serviceTierId" type="xs:int"/>
+            <xs:element name="ratePeriodId" type="xs:int"/>
             <xs:element name="name" type="xs:string"/>
             <xs:element name="description" type="xs:string"/>
             <xs:element name="inputMeasurement" form="qualified" type="measurementKind"/>
@@ -20,9 +28,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="ratePeriodNr" type="xs:int"/>
             <xs:element name="peakType" type="xs:string"/>
-            <xs:element name="serviceTierThresholdNr" type="xs:int"/>
             <xs:element name="value" type="xs:decimal"/>
             <xs:element name="uom" type="unitOfMeasure"/>
         </xs:sequence>

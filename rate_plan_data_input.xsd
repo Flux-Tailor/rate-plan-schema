@@ -16,5 +16,5 @@
     <xs:include schemaLocation="statement_charges.xsd"/>
     <xs:include schemaLocation="tariff_book_leaf_ranges.xsd"/>
     <xs:include schemaLocation="tariff_statements.xsd"/>
-    <xs:include schemaLocation="rate_plan_user_output.xsd"/>
+    <xs:include schemaLocation="rate_plan_data_output.xsd"/>
 </xs:schema>
