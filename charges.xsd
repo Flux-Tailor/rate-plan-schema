@@ -6,18 +6,62 @@
     <xs:element name="charges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="charge" type="chargeType"/>
+                <xs:element maxOccurs="unbounded" name="charge">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="chargeType">
+                                <xs:attribute ref="ratePlanCodeUnique"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="chargeType">
         <xs:sequence>
-            <xs:element name="effectivePeriod" type="timePeriodType"/>
-            <xs:element name="serviceTierId" type="xs:int"/>
-            <xs:element name="ratePeriodId" type="xs:int"/>
-            <xs:element name="name" type="xs:string"/>
+            <xs:element name="servicePeriod" type="timePeriodType"/>
+            <xs:element name="serviceTierNr" type="xs:int" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Tooltip:<br/> 
+                            the number for the threshold tier for which the minimum charge is applicable (if any tiered thresholds exist for the rate)<p/>
+                            
+                            Comment:<br/> 
+                            The number of the tier for which the base charge is applicable (if any tier thresholds exist for the rate).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ratePeriodNr" type="xs:int" minOccurs="0"/>
+            <xs:element name="month">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the number representing the month as an integer (i.e. 1-12) <p/>
+                            
+                            Comment:<br/> 
+                            the number for the month, as a zero padded two digit number, e.g. 01-12</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="1"/>
+                        <xs:maxInclusive value="12"/>
+                        <xs:totalDigits value="2"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="peakType" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Name of the Peak Type</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="chargeName" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Tooltip:<br/> 
+                            the name of the minimum charge (e.g. "Basic Service Charge", "Bill Issuance Charge")<p/>
+                            
+                            Comment:<br/> 
+                            The name of the minimum charge, ex.: "Basic Service Charge" </xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="description" type="xs:string"/>
-            <xs:element name="inputMeasurement" form="qualified" type="measurementKind"/>
             <xs:element form="qualified" name="calculationMethod">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -27,10 +71,11 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="peakType" type="xs:string"/>
+            <xs:element name="inputMeasurement" form="qualified" type="measurementKind"
+                minOccurs="0"/>
             <xs:element name="value" type="xs:decimal"/>
             <xs:element name="uom" type="unitSymbolKind"/>
-            <xs:element name="unitMultiplier"/>
+            <xs:element ref="unitMultiplier"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

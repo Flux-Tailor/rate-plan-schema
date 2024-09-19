@@ -1,80 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
     <xs:element name="minimumCharges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="minimumCharge">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base="MinimiumChargeType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element maxOccurs="unbounded" name="minimumCharge" type="chargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="MinimiumChargeType">
-        <xs:sequence>
-            <xs:element name="name">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the name of the minimum charge (e.g. "Basic Service Charge", "Bill Issuance Charge")<p/>
-                            
-                            Comment:<br/> 
-                            The name of the minimum charge, ex.: "Basic Service Charge" </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="chargeAmount">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the minimum amount charged to a customer per billing cycle<p/>
-                            
-                            Comment:<br/> 
-                            The minimum amount charged </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:decimal">
-                        <xs:totalDigits value="40"/>
-                        <xs:minExclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="chargeTier" nillable="true">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the number of the threshold tier for which the minimum charge is applicable (if any tiered thresholds exist for the rate)<p/>
-                            
-                            Comment:<br/> 
-                            The number of the tier for which the base charge is applicable (if any tier thresholds exist for the rate).</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="2"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="unitOfMeasure">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the unit of measure and time determination per which the minimum charge is applied (e.g. "/30 days", "per billing cycle")<p/>
-                            
-                            Comment:<br/> 
-                            The unit of measure and time determination per which the minimum charge is applied </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="30"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>

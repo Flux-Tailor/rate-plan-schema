@@ -50,11 +50,16 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element name="customerScenario">
+    <xs:element name="ratePlanScenario">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="ratePlanSelection"/>
                 <xs:element name="modifierSelection"/>
+                <xs:element name="ScenarioSettings">
+                    <xs:annotation>
+                        <xs:documentation>Each ratePlanScenario may have one or multiple "branches" of charge options which depend on attributes specific to each scenario instance. Examples are: parameters determined by the utility (e.g. contracted electric demand) or by the scenanrio location falling within a rate plan territory.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

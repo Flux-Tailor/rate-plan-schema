@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
     <xs:element name="nonmeteredServiceCharges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="nonmeteredServiceCharge">
+                <xs:element maxOccurs="unbounded" name="nonmeteredServiceCharge">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="NonmeteredServiceChargeType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            <xs:extension base="chargeType">
+                                <xs:attribute ref="ratePlanCodeUnique"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
@@ -16,59 +17,4 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="NonmeteredServiceChargeType">
-        <xs:sequence>
-            <xs:element name="name">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the name of the non-time varying charge (e.g. "Billed Demand Charge")<p/>
-                            
-                            Comment:<br/> 
-                            The name of the non-time varying charge, ex.: "Billed Demand Charge" </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="chargeAmount">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            a numeric value representing the rate charged in dollars and cents<p/>
-                            
-                            Comment:<br/> 
-                            A numeric value representing the rate charged in dollars and cents</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:decimal">
-                        <xs:totalDigits value="40"/>
-                        <xs:minExclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="unitOfMeasure" nillable="true">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the unit of measure for non-time varying charge (e.g. "kW", "Rkvah")<p/>
-                            
-                            Comment:<br/> 
-                            unit of measure for non-time varying charge ex.: kW, Rkvah</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="6"/>
-                        <xs:enumeration value="kWh"/>
-                        <xs:enumeration value="kW"/>
-                        <xs:enumeration value="thm"/>
-                        <xs:enumeration value="BTU"/>
-                        <xs:enumeration value="Dth"/>
-                        <xs:enumeration value="MW"/>
-                        <xs:enumeration value="Rkvah"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>

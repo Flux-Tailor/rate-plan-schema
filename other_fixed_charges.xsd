@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
     <xs:element name="otherFixedCharges">
         <xs:complexType>
             <xs:sequence>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="otherFixedCharge">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="OtherFixedChargeType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                            <xs:extension base="chargeType">
+                                <xs:attribute ref="ratePlanCodeUnique"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
@@ -16,69 +17,4 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="OtherFixedChargeType">
-        <xs:sequence>
-            <xs:element name="name">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the name of the fixed charge<p/>
-                            
-                            Comment:<br/> 
-                            The name of the fixed charge</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="month" nillable="true">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the number representing the month during which the fixed charge applies, as a zero padded two digit number (i.e. 01-12)<p/>
-                            
-                            Comment:<br/> 
-                            month number, include only if charge is applicable for a given month</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="2"/>
-                        <xs:maxInclusive value="12"/>
-                        <xs:minInclusive value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="chargeAmount">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            a numeric value representing the rate charged in dollars and cents<p/>
-                            
-                            Comment:<br/> 
-                            A numeric value representing the rate charged in dollars and cents</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:decimal">
-                        <xs:totalDigits value="40"/>
-                        <xs:minExclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="note" nillable="true">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            a description of how the charge is applied for each billing cycle<p/>
-                            
-                            Comment:<br/> 
-                            A description of how the charge is applied for each billing cycle</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
-                        <xs:whiteSpace value="preserve"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>

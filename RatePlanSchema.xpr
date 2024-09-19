@@ -19,5 +19,6 @@
             <file name="rate_plan_data_output.xsd"/>
         </folder>
         <folder path="."/>
+        <file name="charges_delivery.xsd"/>
     </projectTree>
 </project>

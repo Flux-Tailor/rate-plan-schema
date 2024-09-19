@@ -134,6 +134,13 @@
                     <xs:restriction base="xs:time"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="chargesComponent">
+                <xs:annotation>
+                    <xs:documentation>whether the time of use period schedule is for the Delivery, Supply, or Export component of the charges on a bill.
+TODO: make this a common definition to re-use in charges.xsd and other purposes</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="measuredQuantity" type="measurementKind"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

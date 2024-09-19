@@ -152,4 +152,5 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:enumeration value="Steam"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:element name="unitMultiplier" type="xs:int"/>
 </xs:schema>

@@ -294,11 +294,14 @@
             <xs:element name="ratePlanNumberRatePeriods" nillable="true">
                 <xs:simpleType>
                     <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the number of rate periods associated with the rate, counting 1 for each period occurrence for each season and weekday type<p/>
-                            
-                            Comment:<br/> 
-                            The number of periods associated with the rate, counting 1 for each period occurrence in each season (e.g. 3 off peak/base/peak periods means 6 periods for winter and summer combined). This is used to inform programming of devices that operate (turn on/off, charge, import/export) based on time of use schedules.</xs:documentation>
+                        <xs:documentation>Tooltip:<br/> the number of rate periods associated with
+                            the rate plan, counting 1 for each period occurrence for each season and
+                            weekday type<p/> Comment:<br/> The number of periods associated with the
+                            rate, counting 1 for each period occurrence in each season (e.g. 3 off
+                            peak/base/peak periods means 6 periods for winter and summer combined).
+                            This is used to inform programming of devices that operate (turn on/off,
+                            charge, import/export) based on time of use
+                            schedules.</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:int">
                         <xs:totalDigits value="2"/>

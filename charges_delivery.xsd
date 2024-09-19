@@ -3,16 +3,11 @@
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:include schemaLocation="charges_delivery.xsd"/>
-    <xs:include schemaLocation="charges_supply.xsd"/>
-    <xs:include schemaLocation="charges_export.xsd"/>
-    <xs:element name="tariffBookCharges">
+    <xs:include schemaLocation="charges.xsd"/>
+    <xs:element name="deliveryCharges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="scopeOfApplicability"/>
-                <xs:element ref="deliveryCharges"/>
-                <xs:element ref="supplyCharges"/>
-                <xs:element ref="exportCharges"/>
+                <xs:element name="deliveryCharge" maxOccurs="unbounded" type="chargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

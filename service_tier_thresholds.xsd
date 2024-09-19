@@ -19,7 +19,8 @@
     <xs:complexType name="ServiceTierThresholdType">
         <xs:sequence>
             <xs:element name="serviceTierId"/>
-            <xs:element name="unitOfMeasure" nillable="true" type="unitOfMeasure"> </xs:element>
+            <xs:element name="unitOfMeasure" nillable="true" type="unitSymbolKind"> </xs:element>
+            <xs:element ref="unitMultiplier"/>
             <xs:element name="season">
                 <xs:simpleType>
                     <xs:annotation>
