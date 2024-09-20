@@ -13,6 +13,7 @@
     <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
     <xs:include schemaLocation="other_fixed_charges.xsd"/>
     <xs:include schemaLocation="rate_plans.xsd"/>
+    <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
     <xs:include schemaLocation="seasons.xsd"/>
     <xs:include schemaLocation="service_tier_thresholds.xsd"/>
     <xs:include schemaLocation="time_of_use_periods.xsd"/>

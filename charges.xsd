@@ -76,6 +76,11 @@
             <xs:element name="value" type="xs:decimal"/>
             <xs:element name="uom" type="unitSymbolKind"/>
             <xs:element ref="unitMultiplier"/>
+            <xs:element name="chargesComponent">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
