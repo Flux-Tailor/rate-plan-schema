@@ -3,6 +3,13 @@
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:element name="ratePlanModifiers"/>
+    <xs:element name="ratePlanModifiers">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" name="ratePlanModifier"
+                    type="ratePlanModifierType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:complexType name="ratePlanModifierType"/>
 </xs:schema>
