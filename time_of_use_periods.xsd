@@ -26,7 +26,7 @@
                             the rate period id for the peak type applicable during non holidays.<p/>
                             
                             Comment:<br/> 
-                            Tthe rate period id for the peak type applicable during non holidays</xs:documentation>
+                            The rate period id for the peak type applicable during non holidays</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:int">
                         <xs:totalDigits value="2"/>
@@ -95,6 +95,12 @@
                     </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="30"/>
+                        <xs:enumeration value="Base"/>
+                        <xs:enumeration value="Mid"/>
+                        <xs:enumeration value="Peak"/>
+                        <xs:enumeration value="OffPeak"/>
+                        <xs:enumeration value="ShoulderPeak"/>
+                        <xs:enumeration value="SuperPeak"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

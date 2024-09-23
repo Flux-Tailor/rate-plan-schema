@@ -78,7 +78,12 @@
             <xs:element ref="unitMultiplier"/>
             <xs:element name="chargesComponent">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string"/>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="delivery"/>
+                        <xs:enumeration value="supply"/>
+                        <xs:enumeration value="bundled"/>
+                        <xs:enumeration value="export"/>
+                    </xs:restriction>
                 </xs:simpleType>
             </xs:element>
         </xs:sequence>
