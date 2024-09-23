@@ -10,9 +10,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="scopeOfApplicability"/>
-                <xs:element ref="deliveryCharges" minOccurs="0"/>
-                <xs:element ref="supplyCharges" minOccurs="0"/>
-                <xs:element ref="exportCharges" minOccurs="0"/>
+                <xs:element maxOccurs="unbounded" name="tariffBookCharge" type="chargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
