@@ -15,7 +15,7 @@
                                     <xs:element name="typeCode" type="xs:string"/>
                                     <xs:element name="DPSCaseNumber" type="xs:string"/>
                                     <xs:element name="generalRuleRefs" type="xs:string"> </xs:element>
-                                    <xs:element ref="statementCharges"/>
+                                    <xs:element ref="statementCharges" maxOccurs="unbounded"/>
                                 </xs:sequence>
                             </xs:extension>
                         </xs:complexContent>

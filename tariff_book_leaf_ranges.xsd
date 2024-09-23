@@ -18,12 +18,12 @@
     <xs:element name="tariffBookLeafRanges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="tariffBookLeafRange">
+                <xs:element name="tariffBookLeafRange" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="tariffDocumentationType">
                                 <xs:sequence>
-                                    <xs:element ref="tariffBookCharges"/>
+                                    <xs:element ref="tariffBookCharges" maxOccurs="unbounded"/>
                                     <xs:element name="startLeafNbr" type="xs:string"/>
                                     <xs:element name="endLeafNbr" type="xs:string"/>
                                     <xs:element name="DPSCaseNumber">
