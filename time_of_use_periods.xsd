@@ -61,6 +61,8 @@
                         <xs:maxLength value="20"/>
                         <xs:enumeration value="Winter"/>
                         <xs:enumeration value="Spring"/>
+                        <xs:enumeration value="Summer"/>
+                        <xs:enumeration value="Fall"/>
                         <xs:enumeration value="Shoulder"/>
                         <xs:whiteSpace value="collapse"/>
                     </xs:restriction>
@@ -95,12 +97,12 @@
                     </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="30"/>
-                        <xs:enumeration value="Base"/>
-                        <xs:enumeration value="Mid"/>
-                        <xs:enumeration value="Peak"/>
-                        <xs:enumeration value="OffPeak"/>
-                        <xs:enumeration value="ShoulderPeak"/>
-                        <xs:enumeration value="SuperPeak"/>
+                        <xs:enumeration value="base"/>
+                        <xs:enumeration value="mid"/>
+                        <xs:enumeration value="peak"/>
+                        <xs:enumeration value="offpeak"/>
+                        <xs:enumeration value="shoulderpeak"/>
+                        <xs:enumeration value="superpeak"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

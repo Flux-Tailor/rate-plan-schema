@@ -57,7 +57,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                     <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit inclusion. All other values for this same field are explicitly excluded.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="exclude" type="constraintVariableType">
+            <xs:element name="exclude" type="constraintVariableType" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit exclusion. This allows for the exclusion of a subset of excluded values for one variables from a larger set of included values for another variable, e.g. "All service class 1 rate plans except time of use rate plans"</xs:documentation>
                 </xs:annotation>

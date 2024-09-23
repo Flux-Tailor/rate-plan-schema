@@ -7,7 +7,7 @@
     <xs:element name="tariffStatements">
         <xs:complexType>
             <xs:sequence>
-                <xs:element form="qualified" name="tariffStatement">
+                <xs:element form="qualified" name="tariffStatement" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="tariffDocumentationType">
