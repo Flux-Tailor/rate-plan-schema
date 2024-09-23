@@ -23,6 +23,7 @@
                         <xs:complexContent>
                             <xs:extension base="tariffDocumentationType">
                                 <xs:sequence>
+                                    <xs:element ref="tariffBookCharges"/>
                                     <xs:element name="startLeafNbr" type="xs:string"/>
                                     <xs:element name="endLeafNbr" type="xs:string"/>
                                     <xs:element name="DPSCaseNumber">
@@ -35,7 +36,6 @@
                         </xs:complexContent>
                     </xs:complexType>
                 </xs:element>
-                <xs:element ref="tariffBookCharges"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

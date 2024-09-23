@@ -120,6 +120,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                           
 The type of measurement, Naming and enumeration options are in alignment with those from Green Button Connect
 Element naming is aligned with the CIM semantic model: https://ontology.tno.nl/cerise/cim-profile/cim_ReadingType.measurementKind.html
+OWL ontology at: https://ontology.tno.nl/IEC_CIM.ttl
 
 Identifies "what" is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'.</xs:documentation>
         </xs:annotation>
@@ -152,5 +153,24 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:enumeration value="Steam"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:element name="unitMultiplier" type="xs:int"/>
+    <xs:element name="unitMultiplier">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:minInclusive value="0"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:complexType name="measureType">
+        <xs:sequence>
+            <xs:element name="phases" type="phaseCodeKind"/>
+            <xs:element name="unitOfMeasure" type="unitSymbolKind"/>
+            <xs:element ref="unitMultiplier"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:simpleType name="phaseCodeKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AAA"/>
+            <xs:enumeration value="ABC"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
