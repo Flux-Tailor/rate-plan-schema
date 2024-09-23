@@ -89,8 +89,8 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                 </xs:annotation>
             </xs:element>
             <xs:element name="effectivePeriod" type="timePeriodType"/>
-            <xs:element name="iedrOrgAbbreviation" type="xs:string"/>
-            <xs:element minOccurs="1" name="dpsUtilityPscNumber">
+            <xs:element name="iedrOrgAbbreviation" type="xs:string" minOccurs="0"/>
+            <xs:element minOccurs="0" name="dpsUtilityPscNumber">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:totalDigits value="3"/>
@@ -99,7 +99,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="serviceType"/>
+            <xs:element name="serviceType" type="serviceKind"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="timePeriodType">

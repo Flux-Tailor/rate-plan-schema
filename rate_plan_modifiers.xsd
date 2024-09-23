@@ -11,5 +11,12 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="ratePlanModifierType"/>
+    <xs:complexType name="ratePlanModifierType">
+        <xs:sequence>
+            <xs:element name="ratePlanModifierCodeUnique"/>
+            <xs:element ref="scopeOfApplicability"/>
+            <xs:element name="validPeriod" type="timePeriodType"/>
+            <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
 </xs:schema>

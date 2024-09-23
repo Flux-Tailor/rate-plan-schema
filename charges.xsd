@@ -31,7 +31,7 @@
                 </xs:annotation>
             </xs:element>
             <xs:element name="ratePeriodNr" type="xs:int" minOccurs="0"/>
-            <xs:element name="peakType">
+            <xs:element name="peakType" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Name of the Peak Type</xs:documentation>
@@ -46,7 +46,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="month">
+            <xs:element name="month" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
