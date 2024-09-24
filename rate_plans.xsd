@@ -196,7 +196,7 @@
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            the New York State Department of Public Service (DSP) docket number (also known as "case number") with which the rate plan is associated<p/>
+                            the New York State Department of Public Service (DPS) docket number (also known as "case number") with which the rate plan is associated<p/>
                             
                             Comment:<br/> 
                             NYS DPS docket number</xs:documentation>
@@ -235,7 +235,7 @@
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            boolean indicating whether the rate plan includes Demand Charges ( TRUE or FALSE)<p/>
+                            boolean indicating whether the rate plan includes Demand Charges (TRUE or FALSE)<p/>
                             
                             Comment:<br/> 
                             Boolean indicating whether the rate includes Demand Charges</xs:documentation>
@@ -247,7 +247,7 @@
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            boolean indicated whether the rate plan calculation is subject to the ICAP tag of a given customer (TRUE or FALSE)<p/>
+                            boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer (TRUE or FALSE)<p/>
                             
                             Comment:<br/> 
                             Rate calculation is subject to the ICAP tag of a given customer</xs:documentation>
