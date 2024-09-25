@@ -18,7 +18,7 @@
     </xs:element>
     <xs:complexType name="TimeOfUsePeriodType">
         <xs:sequence>
-            <xs:element name="effectivePeriod" type="timePeriodType"/>
+            <xs:element name="effectivePeriod" type="dateIntervalType"/>
             <xs:element name="RatePeriodNrNonHolidays">
                 <xs:simpleType>
                     <xs:annotation>
