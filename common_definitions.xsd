@@ -112,7 +112,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
     <xs:complexType name="dateIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startDate" type="xs:date"/>
-            <xs:element name="endDate" form="qualified" type="xs:date"/>
+            <xs:element name="endDate" form="qualified" type="xs:date" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="timeIntervalType">
