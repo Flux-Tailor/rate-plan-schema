@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
+    <xs:include schemaLocation="seasons.xsd"/>
     <xs:attribute name="ratePlanCodeUnique">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/>
@@ -16,7 +19,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
     <xs:element name="scopeOfApplicability" type="scopeOfApplicabilityType"> </xs:element>
     <xs:complexType name="constraintVariableType">
         <xs:sequence>
-            <xs:element name="serviceClasses">
+            <xs:element name="serviceClasses" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>List of strings for applicable service classes, eg. service Class 1</xs:documentation>
                 </xs:annotation>
@@ -26,7 +29,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             </xs:element>
             <xs:element form="qualified" name="serviceSubClasses" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>List of strings for applicable service subclasses, eg. "Service Class 1 rate II"</xs:documentation>
+                    <xs:documentation>List of applicable service subclasses, eg. "Service Class 1 rate II"</xs:documentation>
                 </xs:annotation>
                 <xs:simpleType>
                     <xs:list itemType="xs:string"/>
@@ -43,8 +46,13 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="territories" minOccurs="0"/>
-            <xs:element minOccurs="0" name="seasons"/>
+            <xs:element name="territoryId" minOccurs="0" maxOccurs="1">
+                <xs:simpleType>
+                    <xs:list itemType="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="season"/>
+            <xs:element minOccurs="0" ref="phases"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="scopeOfApplicabilityType">
@@ -88,7 +96,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
                     <xs:documentation>The date on which tariff documentation was published</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="effectivePeriod" type="timePeriodType"/>
+            <xs:element name="effectivePeriod" type="dateIntervalType"/>
             <xs:element name="iedrOrgAbbreviation" type="xs:string" minOccurs="0"/>
             <xs:element minOccurs="0" name="dpsUtilityPscNumber">
                 <xs:simpleType>
@@ -102,12 +110,25 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             <xs:element name="serviceType" type="serviceKind"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="timePeriodType">
+    <xs:complexType name="dateIntervalType">
         <xs:sequence>
-            <xs:element form="qualified" name="startTime" type="xs:date"/>
-            <xs:element name="endTime" form="qualified" type="xs:date" minOccurs="0"/>
+            <xs:element form="qualified" name="startTime" type="xs:time"/>
+            <xs:element name="endTime" form="qualified" type="xs:time"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:complexType name="timeIntervalType">
+        <xs:sequence>
+            <xs:element form="qualified" name="startTime" type="xs:time"/>
+            <xs:element name="endTime" form="qualified" type="xs:time"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="dateTimeIntervalType">
+        <xs:sequence>
+            <xs:element form="qualified" name="startDateTime" type="xs:dateTime"/>
+            <xs:element name="endDateTime" form="qualified" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="valueThresholdType">
         <xs:sequence>
             <xs:element name="inclusive" type="xs:boolean"/>
@@ -167,10 +188,31 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:element ref="unitMultiplier"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:element name="phases">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="phase"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="phase" nillable="true" type="phaseCodeKind"/>
     <xs:simpleType name="phaseCodeKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="AAA"/>
             <xs:enumeration value="ABC"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:element name="seasonName" type="seasonNameKind"/>
+    <xs:simpleType name="seasonNameKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Winter"/>
+            <xs:enumeration value="Spring"/>
+            <xs:enumeration value="Summer"/>
+            <xs:enumeration value="Fall"/>
+            <xs:enumeration value="Shoulder"/>
+            <xs:enumeration value="OffSeason"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="cycleIntervalType"/>
+    <xs:element name="cycleReferencePer"/>
 </xs:schema>

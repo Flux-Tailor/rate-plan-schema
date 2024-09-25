@@ -20,7 +20,7 @@
     </xs:element>
     <xs:complexType name="chargeType">
         <xs:sequence>
-            <xs:element name="servicePeriod" type="timePeriodType"/>
+            <xs:element name="servicePeriod" type="dateIntervalType"/>
             <xs:element name="serviceTierNr" type="xs:int" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Tooltip:<br/> 

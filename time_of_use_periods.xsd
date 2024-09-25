@@ -19,7 +19,7 @@
     <xs:complexType name="TimeOfUsePeriodType">
         <xs:sequence>
             <xs:element name="effectivePeriod" type="timePeriodType"/>
-            <xs:element name="RatePeriodIdNonHolidays">
+            <xs:element name="RatePeriodNrNonHolidays">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
@@ -33,7 +33,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="RatePeriodIdHolidays">
+            <xs:element name="RatePeriodNrHolidays" nillable="false">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
@@ -47,27 +47,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="season">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            TODO: Should this be the SeasonNameType? <p/>
-                            the name of the season<p/>
-                            
-                            Comment:<br/> 
-                            The name of the season during which this tier is applicable</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="20"/>
-                        <xs:enumeration value="Winter"/>
-                        <xs:enumeration value="Spring"/>
-                        <xs:enumeration value="Summer"/>
-                        <xs:enumeration value="Fall"/>
-                        <xs:enumeration value="Shoulder"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element ref="seasonName"> </xs:element>
             <xs:element name="dayType">
                 <xs:simpleType>
                     <xs:annotation>

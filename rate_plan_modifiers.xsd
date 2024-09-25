@@ -7,16 +7,43 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element maxOccurs="unbounded" name="ratePlanModifier"
-                    type="ratePlanModifierType"/>
+                    type="tariffDocumentationType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="ratePlanModifierType">
         <xs:sequence>
             <xs:element name="ratePlanModifierCodeUnique"/>
+            <xs:element name="ratePlanModifierKind">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="VDER_credits"/>
+                        <xs:enumeration value="HEAP_discounts"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
             <xs:element ref="scopeOfApplicability"/>
             <xs:element name="validPeriod" type="timePeriodType"/>
-            <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
+            <xs:element name="iedrOrg">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="3"/>
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element default="" name="modifierName" type="xs:string"/>
+            <xs:element name="UtilityPscNbr">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="0"/>
+                        <xs:maxInclusive value="1000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="service" type="serviceKind"/>
+            <xs:element name="modifierDescription" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
