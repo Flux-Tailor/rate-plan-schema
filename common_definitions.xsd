@@ -20,19 +20,23 @@ unique identifier for the rate plan permutation assigned by utility (may need to
         <xs:sequence>
             <xs:element name="serviceClasses" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>List of strings for applicable service classes, eg. service Class 1</xs:documentation>
+                    <xs:documentation>List of serviceClasses for applicable service classes, eg. service Class 1. Use "All" if applicable to all service classes.</xs:documentation>
                 </xs:annotation>
-                <xs:simpleType>
-                    <xs:list itemType="xs:string"/>
-                </xs:simpleType>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="serviceClass" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
             <xs:element form="qualified" name="serviceSubClasses" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>List of applicable service subclasses, eg. "Service Class 1 rate II"</xs:documentation>
                 </xs:annotation>
-                <xs:simpleType>
-                    <xs:list itemType="xs:string"/>
-                </xs:simpleType>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="serviceSubClass" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
             <xs:element name="customRatePlanAttribute" minOccurs="0">
                 <xs:annotation>
@@ -182,9 +186,10 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
     </xs:element>
     <xs:complexType name="measureType">
         <xs:sequence>
-            <xs:element name="phases" type="phaseCodeKind"/>
+            <xs:element name="phases" type="phaseCodeKind" minOccurs="0"/>
             <xs:element name="unitOfMeasure" type="unitSymbolKind"/>
             <xs:element ref="unitMultiplier"/>
+            <xs:element name="measurementType"/>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="phases">
@@ -212,6 +217,26 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:enumeration value="OffSeason"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:element name="cycleIntervalType"/>
-    <xs:element name="cycleReferencePer"/>
+    <xs:element name="calcIntervalType">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="PER-CYCLE"/>
+                <xs:enumeration value="CYCLE"/>
+                <xs:enumeration value="DAY"/>
+                <xs:enumeration value="WEEK"/>
+                <xs:enumeration value="MONTH"/>
+                <xs:enumeration value="YEAR"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="calcIntervalPer" type="xs:int"/>
+    <xs:element name="calculationMode">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="TOTAL"/>
+                <xs:enumeration value="PERIOD"/>
+                <xs:enumeration value="SLIDING"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
 </xs:schema>
