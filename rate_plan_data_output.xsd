@@ -1,17 +1,110 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
     <xs:include schemaLocation="eligibility_criteria.xsd"/>
     <xs:include schemaLocation="eligibility_limits.xsd"/>
     <xs:include schemaLocation="holidays.xsd"/>
     <xs:include schemaLocation="minimum_charges.xsd"/>
+    <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
     <xs:include schemaLocation="other_fixed_charges.xsd"/>
     <xs:include schemaLocation="rate_plans.xsd"/>
+    <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
     <xs:include schemaLocation="seasons.xsd"/>
     <xs:include schemaLocation="service_tier_thresholds.xsd"/>
     <xs:include schemaLocation="time_of_use_periods.xsd"/>
-    <xs:include schemaLocation="charges.xsd"/>
-    <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
+    <xs:element name="ratePlanScenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="ratePlanSelection"/>
+                <xs:element name="modifierSelection" maxOccurs="unbounded" minOccurs="0">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ratePlanModifierType">
+                                <xs:sequence>
+                                    <xs:element ref="seasons"/>
+                                    <xs:element minOccurs="0" ref="holidays"/>
+                                    <xs:element ref="timeOfUsePeriods" minOccurs="0"/>
+                                    <xs:element minOccurs="0" ref="serviceTierThresholds"/>
+                                    <xs:element name="deliveryCharges">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element ref="minimumCharges"/>
+                                                <xs:element ref="otherFixedCharges" minOccurs="0"/>
+                                                <xs:element minOccurs="0"
+                                                  name="meteredDeliveryCharges">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" minOccurs="1"
+                                                  name="meteredDeliveryCharge" type="chargeType"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                                <xs:element ref="nonmeteredServiceCharges"
+                                                  minOccurs="0"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="supplyCharges" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element maxOccurs="1"
+                                                  name="meteredSupplyCharges" minOccurs="0">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="meteredSupplyCharge" type="chargeType"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                </xs:element>
+                                                <xs:element ref="nonmeteredServiceCharges"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element minOccurs="0" name="exportCredits">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element maxOccurs="unbounded"
+                                                  name="exportCredit" type="chargeType"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="otherCharges" minOccurs="0">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element maxOccurs="unbounded"
+                                                  ref="otherFixedCharges"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="ScenarioSettings">
+                    <xs:annotation>
+                        <xs:documentation>Each ratePlanScenario may have one or multiple "branches" of charge options which depend on attributes specific to each scenario instance. Examples are: parameters determined by the utility (e.g. contracted electric demand) or by the scenanrio location falling within a rate plan territory.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="customerClass">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string"/>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element maxOccurs="1" minOccurs="0" name="icapTag"/>
+                            <xs:element minOccurs="0" name="county" type="xs:string"/>
+                            <xs:element minOccurs="0" name="zipcode" type="xs:string"/>
+                            <xs:element minOccurs="0" name="territory" type="xs:string"/>
+                            <xs:element minOccurs="0" name="equipment" type="xs:string"/>
+                            <xs:element minOccurs="0" ref="phase"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="ratePlanSelection">
         <xs:complexType>
             <xs:complexContent>
@@ -21,27 +114,51 @@
                         <xs:element minOccurs="0" ref="holidays"/>
                         <xs:element ref="timeOfUsePeriods" minOccurs="0"/>
                         <xs:element minOccurs="0" ref="serviceTierThresholds"/>
-                        <xs:element name="chargeSummary">
+                        <xs:element name="deliveryCharges">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element name="deliveryCharges">
+                                    <xs:element ref="minimumCharges"/>
+                                    <xs:element ref="otherFixedCharges" minOccurs="0"/>
+                                    <xs:element minOccurs="0" name="meteredDeliveryCharges">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element ref="minimumCharges"/>
-                                                <xs:element ref="otherFixedCharges"/>
-                                                <xs:element ref="nonmeteredServiceCharges"/>
-                                                <xs:element ref="summaryCharges"/>
+                                                <xs:element maxOccurs="unbounded" minOccurs="1"
+                                                  name="meteredDeliveryCharge" type="chargeType"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
-                                    <xs:element name="supplyCharges">
+                                    <xs:element ref="nonmeteredServiceCharges" minOccurs="0"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="supplyCharges" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="1" name="meteredSupplyCharges"
+                                        minOccurs="0">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element ref="summaryCharges"/>
+                                                <xs:element maxOccurs="unbounded"
+                                                  name="meteredSupplyCharge" type="chargeType"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
-                                    <xs:element name="otherCharges"/>
+                                    <xs:element ref="nonmeteredServiceCharges"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element minOccurs="0" name="exportCredits">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" name="exportCredit"
+                                        type="chargeType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="otherCharges" minOccurs="0">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" ref="otherFixedCharges"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -50,18 +167,5 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ratePlanScenario">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="ratePlanSelection"/>
-                <xs:element name="modifierSelection"/>
-                <xs:element name="ScenarioSettings">
-                    <xs:annotation>
-                        <xs:documentation>Each ratePlanScenario may have one or multiple "branches" of charge options which depend on attributes specific to each scenario instance. Examples are: parameters determined by the utility (e.g. contracted electric demand) or by the scenanrio location falling within a rate plan territory.</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="summaryCharges" type="chargeType"/>
+    <xs:element name="meteredCharge" type="chargeType"> </xs:element>
 </xs:schema>

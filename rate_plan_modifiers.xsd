@@ -7,7 +7,7 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element maxOccurs="unbounded" name="ratePlanModifier"
-                    type="tariffDocumentationType"/>
+                    type="ratePlanModifierType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -24,7 +24,7 @@
             </xs:element>
             <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
             <xs:element ref="scopeOfApplicability"/>
-            <xs:element name="validPeriod" type="timePeriodType"/>
+            <xs:element name="validPeriod" type="dateIntervalType"/>
             <xs:element name="iedrOrg">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
