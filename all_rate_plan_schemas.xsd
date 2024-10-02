@@ -9,8 +9,7 @@
     <xs:include schemaLocation="tariff_statements.xsd"/>
     <xs:include schemaLocation="tariff_book_charges.xsd"/>
     <xs:include schemaLocation="statement_charges.xsd"/>
-    <xs:include schemaLocation="eligibility_criteria.xsd"/>
-    <xs:include schemaLocation="eligibility_limits.xsd"/>
+    <xs:include schemaLocation="eligibility"/>
     <xs:include schemaLocation="holidays.xsd"/>
     <xs:include schemaLocation="minimum_charges.xsd"/>
     <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
