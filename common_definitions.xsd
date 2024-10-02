@@ -263,7 +263,7 @@ Enumerations
             <xs:enumeration value="W">
                 <xs:annotation>
                     <xs:appinfo>Watt</xs:appinfo>
-                    <xs:documentation>Real power, multiplier=3 for kWh, multiplier=6 for MW.</xs:documentation>
+                    <xs:documentation>Real power, multiplier=3 for kW, multiplier=6 for MW.</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="thm">
@@ -283,30 +283,30 @@ Enumerations
             <xs:enumeration value="VA">
                 <xs:annotation>
                     <xs:appinfo>Volt Ampere</xs:appinfo>
-                    <xs:documentation>Apparent power, multiplier=3 for Kilo volt ampere (kVA)</xs:documentation>
+                    <xs:documentation>Apparent power, multiplier=3 for Kilo Volt-ampere (kVA)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VArh">
                 <xs:annotation>
                     <xs:appinfo>Volt Ampere reactive hours</xs:appinfo>
-                    <xs:documentation>Reactive energy, multiplier=3 for Kilo Volt Ampere reactive hours (KVArh)</xs:documentation>
+                    <xs:documentation>Reactive energy, multiplier=3 for Kilo Volt-Ampere reactive hours (kVArh)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VAr">
                 <xs:annotation>
                     <xs:appinfo>Volt Ampere reactive</xs:appinfo>
-                    <xs:documentation>Reactive power, multiplier=3 for Kilo Volt Ampere Reactive (KVAr)</xs:documentation>
+                    <xs:documentation>Reactive power, multiplier=3 for Kilo Volt-Ampere Reactive (kVAr)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VAh">
                 <xs:annotation>
-                    <xs:appinfo>Volt Ampere hours, multiplier=3 for Kilo Volt Ampere (kVAh)</xs:appinfo>
+                    <xs:appinfo>Volt Ampere hours, multiplier=3 for Kilo Volt-Ampere hours (kVAh)</xs:appinfo>
                     <xs:documentation>Apparent energy</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VA">
                 <xs:annotation>
-                    <xs:appinfo>Volt Ampere</xs:appinfo>
+                    <xs:appinfo>Volt-Ampere</xs:appinfo>
                     <xs:documentation>Apparent power</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
