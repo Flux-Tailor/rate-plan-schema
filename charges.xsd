@@ -72,20 +72,9 @@
                 </xs:annotation>
             </xs:element>
             <xs:element name="description" type="xs:string" minOccurs="0"/>
-            <xs:element form="qualified" name="calculationMethod">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="by_metered_quantity"/>
-                        <xs:enumeration value="fixed"/>
-                        <xs:enumeration value="by_variable_utility_settings"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="inputMeasurement" form="qualified" type="measurementKind"
-                minOccurs="0"/>
-            <xs:element name="value" type="xs:decimal"/>
+            <xs:element name="measurementDefinition" type="measureType"/>
+            <xs:element name="value" type="xs:int"/>
             <xs:element name="uom" type="unitSymbolKind"/>
-            <xs:element ref="unitMultiplier"/>
             <xs:element name="chargesComponent">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">

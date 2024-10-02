@@ -4,7 +4,7 @@
     <xs:element name="timeOfUsePeriods">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="timeOfUsePeriod">
+                <xs:element maxOccurs="unbounded" minOccurs="1" name="timeOfUsePeriod">
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="TimeOfUsePeriodType">

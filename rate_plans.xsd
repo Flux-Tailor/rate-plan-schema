@@ -33,7 +33,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="dateDraftUpdate" nillable="true">
+            <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
@@ -59,7 +59,7 @@
                     <xs:restriction base="xs:date"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="dateCancellation" nillable="true">
+            <xs:element name="dateCancellation" nillable="true" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
