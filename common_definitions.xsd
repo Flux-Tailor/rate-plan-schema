@@ -2,6 +2,18 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
+    <!--
+=======================================
+Schema: common_definitions.xsd  
+Version: V0.91
+=======================================
+-->
+
+    <!--
+=======================================
+Simple Types     
+=======================================
+-->
     <xs:attribute name="ratePlanCodeUnique">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/>
@@ -15,7 +27,11 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             </xs:restriction>
         </xs:simpleType>
     </xs:attribute>
-    <xs:element name="scopeOfApplicability" type="scopeOfApplicabilityType"> </xs:element>
+    <!--
+=======================================
+Complex Types
+=======================================
+-->
     <xs:complexType name="constraintVariableType">
         <xs:sequence>
             <xs:element name="serviceClasses" minOccurs="0">
@@ -56,6 +72,61 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             </xs:element>
             <xs:element minOccurs="0" name="season"/>
             <xs:element minOccurs="0" ref="phases"/>
+        </xs:sequence>
+    </xs:complexType>
+    <!--
+   ================
+ Measurement Definition
+   ================
+   -->
+
+    <!--
+   ================
+   Time Definition
+   ================
+   -->
+
+    <xs:complexType name="dateIntervalType">
+        <xs:sequence>
+            <xs:element form="qualified" name="startDate" type="xs:date"/>
+            <xs:element name="endDate" form="qualified" type="xs:date" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="dateTimeIntervalType">
+        <xs:sequence>
+            <xs:element form="qualified" name="startDateTime" type="xs:dateTime"/>
+            <xs:element name="endDateTime" form="qualified" type="xs:dateTime" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="measureType">
+        <xs:sequence>
+            <xs:element form="qualified" name="calculationMethod">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="by_metered_quantity"/>
+                        <xs:enumeration value="fixed"/>
+                        <xs:enumeration value="by_variable_utility_settings"/>
+                        <xs:enumeration value="by_billing_cycle"/>
+                        <xs:enumeration value="percentage"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="calculationBaseValue" type="xs:string"/>
+            <xs:element name="measurementSource" type="measurementKind"/>
+            <xs:element name="phases" type="phaseCodeKind" minOccurs="0"/>
+            <xs:element name="unitOfMeasure" type="unitSymbolKind"/>
+            <xs:element minOccurs="0" ref="statisticKind"/>
+            <xs:element name="inclusionStatus" type="valueInclusionKind"/>
+            <xs:element ref="unitMultiplierPowerOfTen"/>
+            <xs:element name="measurementInterval">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="calculationMode"/>
+                        <xs:element ref="calcIntervalKind"/>
+                        <xs:element ref="calcIntervalPer"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="scopeOfApplicabilityType">
@@ -113,40 +184,31 @@ unique identifier for the rate plan permutation assigned by utility (may need to
             <xs:element name="serviceType" type="serviceKind"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="dateIntervalType">
-        <xs:sequence>
-            <xs:element form="qualified" name="startDate" type="xs:date"/>
-            <xs:element name="endDate" form="qualified" type="xs:date" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
     <xs:complexType name="timeIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startTime" type="xs:time"/>
             <xs:element name="endTime" form="qualified" type="xs:time"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="dateTimeIntervalType">
-        <xs:sequence>
-            <xs:element form="qualified" name="startDateTime" type="xs:dateTime"/>
-            <xs:element name="endDateTime" form="qualified" type="xs:dateTime" minOccurs="0"/>
-        </xs:sequence>
-    </xs:complexType>
 
-    <xs:complexType name="valueThresholdType">
-        <xs:sequence>
-            <xs:element name="inclusive" type="xs:boolean"/>
-            <xs:element name="exclusive" type="xs:decimal"/>
-        </xs:sequence>
-    </xs:complexType>
+
+
+    <!--
+=======================================
+Enumerations
+=======================================
+-->
+
+
     <xs:simpleType name="measurementKind">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/> 
-                          
-The type of measurement, Naming and enumeration options are in alignment with those from Green Button Connect
-Element naming is aligned with the CIM semantic model: https://ontology.tno.nl/cerise/cim-profile/cim_ReadingType.measurementKind.html
-OWL ontology at: https://ontology.tno.nl/IEC_CIM.ttl
-
-Identifies "what" is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'.</xs:documentation>
+                
+                The type of measurement, Naming and enumeration options are in alignment with those from Green Button Connect
+                Element naming is aligned with the CIM semantic model: https://ontology.tno.nl/cerise/cim-profile/cim_ReadingType.measurementKind.html
+                OWL ontology at: https://ontology.tno.nl/IEC_CIM.ttl
+                
+                Identifies "what" is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="apparentPowerFactor"/>
@@ -167,46 +229,12 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:enumeration value=""/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="unitSymbolKind">
-        <xs:restriction base="xs:string"/>
-    </xs:simpleType>
-    <xs:simpleType name="serviceKind">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="Electric"/>
-            <xs:enumeration value="Gas"/>
-            <xs:enumeration value="Steam"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:element name="unitMultiplier">
-        <xs:simpleType>
-            <xs:restriction base="xs:int">
-                <xs:minInclusive value="0"/>
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:element>
-    <xs:complexType name="measureType">
-        <xs:sequence>
-            <xs:element name="phases" type="phaseCodeKind" minOccurs="0"/>
-            <xs:element name="unitOfMeasure" type="unitSymbolKind"/>
-            <xs:element ref="unitMultiplier"/>
-            <xs:element name="measurementType"/>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:element name="phases">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="phase"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="phase" nillable="true" type="phaseCodeKind"/>
     <xs:simpleType name="phaseCodeKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="AAA"/>
             <xs:enumeration value="ABC"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:element name="seasonName" type="seasonNameKind"/>
     <xs:simpleType name="seasonNameKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Winter"/>
@@ -217,7 +245,92 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             <xs:enumeration value="OffSeason"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:element name="calcIntervalType">
+    <xs:simpleType name="serviceKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Electric"/>
+            <xs:enumeration value="Gas"/>
+            <xs:enumeration value="Steam"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="unitSymbolKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Wh">
+                <xs:annotation>
+                    <xs:appinfo>Watt hour</xs:appinfo>
+                    <xs:documentation>Real energy, multiplier=3 for kWh, multiplier=6 for MWh.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="W">
+                <xs:annotation>
+                    <xs:appinfo>Watt</xs:appinfo>
+                    <xs:documentation>Real power, multiplier=3 for kW, multiplier=6 for MW.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="thm">
+                <xs:annotation>
+                    <xs:appinfo>Therm</xs:appinfo>
+                    <xs:documentation>Energy, unit of heat energy that equal to 100,000 British thermal units (BTU). Multiplier = 1 for Deca therm (Dth).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BTU">
+                <xs:annotation>
+                    <xs:appinfo>British Thermal Units</xs:appinfo>
+                    <xs:documentation>Energy, multiplier = 5 for Metric Million British Thermal Unit (MMBtu).
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VA">
+                <xs:annotation>
+                    <xs:appinfo>Volt Ampere</xs:appinfo>
+                    <xs:documentation>Apparent power, multiplier=3 for Kilo Volt-ampere (kVA)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VArh">
+                <xs:annotation>
+                    <xs:appinfo>Volt Ampere reactive hours</xs:appinfo>
+                    <xs:documentation>Reactive energy, multiplier=3 for Kilo Volt-Ampere reactive hours (kVArh)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VAr">
+                <xs:annotation>
+                    <xs:appinfo>Volt Ampere reactive</xs:appinfo>
+                    <xs:documentation>Reactive power, multiplier=3 for Kilo Volt-Ampere Reactive (kVAr)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VAh">
+                <xs:annotation>
+                    <xs:appinfo>Volt Ampere hours, multiplier=3 for Kilo Volt-Ampere hours (kVAh)</xs:appinfo>
+                    <xs:documentation>Apparent energy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="VA">
+                <xs:annotation>
+                    <xs:appinfo>Volt-Ampere</xs:appinfo>
+                    <xs:documentation>Apparent power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="V">
+                <xs:annotation>
+                    <xs:appinfo>Volt</xs:appinfo>
+                    <xs:documentation>Electric potential</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="lb">
+                <xs:annotation>
+                    <xs:appinfo>Pounds</xs:appinfo>
+                    <xs:documentation>Pounds, multiplier=6 for Mlb of Steam</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="valueInclusionKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="inclusive"/>
+            <xs:enumeration value="exclusive"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="calcIntervalKind">
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:enumeration value="PER-CYCLE"/>
@@ -239,4 +352,40 @@ Identifies "what" is being measured, as refinement of 'commodity'. When combined
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
+
+    <xs:element name="phases">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="phase"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="phase" nillable="true" type="phaseCodeKind"/>
+    <xs:element name="scopeOfApplicability" type="scopeOfApplicabilityType"> </xs:element>
+    <xs:element name="statisticKind">
+        <xs:simpleType>
+            <xs:annotation>
+                <xs:documentation>Tooltip:<br/> 
+                    the statistic type of the eligibility limit to de minimum or maximum limit (e.g. "min", "max", "avg") limits are inclusive. i.e. a minimum of 40kW means sa customer with 40 kW can be on the rate plan<p/>
+                    
+                    Comment:<br/> 
+                    the statistic type of the eligibility limit to de minimum or maximum limit (e.g. "min", "max", "avg")
+                    limits are inclusive. i.e. a minimum of 40kW means a customer with 40 kW can be on the rate plan</xs:documentation>
+            </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="3"/>
+                <xs:enumeration value="min"/>
+                <xs:enumeration value="max"/>
+                <xs:enumeration value="avg"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="unitMultiplierPowerOfTen">
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:minInclusive value="0"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="seasonName" type="seasonNameKind"/>
 </xs:schema>

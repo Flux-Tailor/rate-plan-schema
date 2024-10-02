@@ -2,8 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:include schemaLocation="charges.xsd"/>
-    <xs:include schemaLocation="eligibility_criteria.xsd"/>
-    <xs:include schemaLocation="eligibility_limits.xsd"/>
+    <xs:include schemaLocation="eligibility.xsd"/>
     <xs:include schemaLocation="holidays.xsd"/>
     <xs:include schemaLocation="minimum_charges.xsd"/>
     <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
@@ -110,9 +109,10 @@
             <xs:complexContent>
                 <xs:extension base="RatePlanType">
                     <xs:sequence>
+                        <xs:element minOccurs="0" ref="eligibility"/>
                         <xs:element minOccurs="0" ref="seasons"/>
                         <xs:element minOccurs="0" ref="holidays"/>
-                        <xs:element ref="timeOfUsePeriods" minOccurs="0"/>
+                        <xs:element ref="timeOfUsePeriods" minOccurs="1" maxOccurs="1"/>
                         <xs:element minOccurs="0" ref="serviceTierThresholds"/>
                         <xs:element name="deliveryCharges">
                             <xs:complexType>

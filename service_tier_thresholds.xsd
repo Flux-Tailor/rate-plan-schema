@@ -18,42 +18,11 @@
     </xs:element>
     <xs:complexType name="ServiceTierThresholdType">
         <xs:sequence>
-            <xs:element name="serviceTierNr"/>
-            <xs:element name="unitOfMeasure" nillable="true" type="unitSymbolKind"> </xs:element>
-            <xs:element ref="unitMultiplier"/>
+            <xs:element name="serviceTierNr" type="xs:int"/>
             <xs:element ref="seasonName"> </xs:element>
-            <xs:element name="min_qty">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            TODO: Is this nillable?  "minimum is zero, infinity denoted with either "NULL" or a multiple of 9: "999999"<p/>
-                            The minimum threshold usage quantity from which rate is applicable<p/>
-                            
-                            Comment:<br/> 
-                            The minimum threshold usage quantity from which rate is applicable</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:decimal">
-                        <xs:totalDigits value="40"/>
-                        <xs:minExclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="max_qty">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            TODO: Is this nillable?  "minimum is zero, infinity denoted with either "NULL" or a multiple of 9: "999999"<p/>
-                            the maximum threshold usage quantity up to which rate is applicable<p/>
-                            
-                            Comment:<br/> 
-                            The maximum threshold usage quantity up to which rate is applicable</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:decimal">
-                        <xs:totalDigits value="40"/>
-                        <xs:minExclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="measurementSpecification" type="measureType"/>
+            <xs:element name="min_qty" type="xs:int"> </xs:element>
+            <xs:element name="max_qty" type="xs:int"> </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
