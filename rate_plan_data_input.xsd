@@ -13,4 +13,12 @@
     <xs:include schemaLocation="seasons.xsd"/>
     <xs:include schemaLocation="service_tier_thresholds.xsd"/>
     <xs:include schemaLocation="time_of_use_periods.xsd"/>
+    <xs:element name="dataTransfer">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" ref="tariffBook"/>
+                <xs:element ref="tariffStatements"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>
