@@ -72,9 +72,9 @@
                 </xs:annotation>
             </xs:element>
             <xs:element name="description" type="xs:string" minOccurs="0"/>
-            <xs:element name="measurementDefinition" type="measureType"/>
-            <xs:element name="value" type="xs:int"/>
-            <xs:element name="uom" type="unitSymbolKind"/>
+            <xs:element name="chargeValue" type="xs:decimal"/>
+            <xs:element name="uom" type="unitSymbolKind" minOccurs="0"/>
+            <xs:element name="measurementDefinition" type="measureType" minOccurs="0"/>
             <xs:element name="chargesComponent">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
