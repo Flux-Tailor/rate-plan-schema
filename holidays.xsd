@@ -27,8 +27,9 @@ holiday name, see this element's restrictions for values</xs:documentation>
         <xs:restriction base="xs:string">
             <xs:maxLength value="25"/>
             <xs:enumeration value="Christmas Day"/>
-            <xs:enumeration value="Indiginous Peoples' Day"/>
+            <xs:enumeration value="Indigenous Peoples' Day"/>
             <xs:enumeration value="Independence Day"/>
+            <xs:enumeration value="Juneteenth"/>
             <xs:enumeration value="Labor Day"/>
             <xs:enumeration value="Memorial Day"/>
             <xs:enumeration value="New Year’s Day"/>
