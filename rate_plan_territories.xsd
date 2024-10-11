@@ -2,6 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
+    <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:element name="ratePlanTerritories">
         <xs:complexType>
             <xs:sequence>
@@ -23,8 +24,9 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="geographicUnit"/>
+            <xs:element name="geographicUnit" type="xs:string"/>
             <xs:element name="rawValue" type="xs:string"/>
+            <xs:element name="effectivePeriod" type="dateIntervalType"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
