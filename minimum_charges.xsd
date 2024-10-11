@@ -5,7 +5,15 @@
     <xs:element name="minimumCharges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="minimumCharge" type="chargeType"/>
+                <xs:element maxOccurs="unbounded" name="minimumCharge">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="chargeType">
+                                <xs:attribute ref="ratePlanCodeUnique"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

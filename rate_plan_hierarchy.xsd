@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="utilities">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="parentUtility">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="parentIedrOrgAbbreviation">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:maxLength value="3"/>
+                                        <xs:minLength value="3"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element maxOccurs="unbounded" name="iedrOrg">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element form="qualified" name="iedrOrgAbbreviation">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:maxLength value="3"/>
+                                                  <xs:minLength value="3"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="userFacingUtilityName" type="xs:string"/>
+                                        <xs:element name="utilityOperatingCompany">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="iedrOrgAbbreviation"
+                                                  type="xs:string"/>
+                                                  <xs:element name="dpsCompanyId" type="xs:string">
+                                                  <xs:annotation>
+                                                  <xs:documentation>populated by IEDR platform</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  <xs:element name="serviceType" type="serviceKind"/>
+                                                  <xs:element name="tariff">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="dpsPscNumber" type="xs:string"> </xs:element>
+                                                  <xs:element name="serviceClasses">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="serviceClass">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="serviceClassNumber"
+                                                  type="xs:int"/>
+                                                  <xs:element name="serviceClassName"
+                                                  type="xs:string"/>
+                                                  <xs:element name="rateOptions">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="rateOption">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="rateCode" type="xs:string"/>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="iedrRatePlan">
+                                                  <xs:complexType>
+                                                  <xs:attribute name="ratePlanCodeUnique"/>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

@@ -45,14 +45,22 @@ Complex Types
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element form="qualified" name="serviceSubClasses" minOccurs="0">
+            <xs:element form="qualified" name="rateCodes" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>List of applicable service subclasses, eg. "Service Class 1 rate II"</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="serviceSubClass"
+                        <xs:element maxOccurs="unbounded" name="rateCode"
                             type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element form="qualified" minOccurs="0" name="ratePlans">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded"
+                            name="ratePlanCodeUnique" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -93,6 +101,7 @@ Complex Types
             <xs:element form="qualified" name="startDate" type="xs:date"/>
             <xs:element name="endDate" form="qualified" type="xs:date"
                 minOccurs="0"/>
+            <xs:element minOccurs="0" name="expectedEndDate" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="dateTimeIntervalType">
