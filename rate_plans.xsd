@@ -77,20 +77,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tariffBookLeafRanges">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the ranges of tariff book "leaves" associated with the rate plan<p/>
-                            
-                            Comment:<br/> 
-                            ranges of "leaves" associated with the rate separated by semicolons, escape if shared as CSV, i.e " 44-55;67-89"</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
             <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>

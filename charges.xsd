@@ -6,12 +6,38 @@
     <xs:element name="charges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="charge">
+                <xs:element maxOccurs="unbounded" name="charge" minOccurs="0">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="ChargeType">
-                                <xs:attribute ref="ratePlanCodeUnique"/>
-                            </xs:extension>
+                            <xs:extension base="ChargeType"> </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="minimumCharge" minOccurs="0">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ChargeType"> </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="otherFixedCharge">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ChargeType"> </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="nonmeteredServiceCharge" minOccurs="0">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ChargeType"> </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="unbounded" name="meteredServiceCharge" minOccurs="0">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ChargeType"> </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
                 </xs:element>

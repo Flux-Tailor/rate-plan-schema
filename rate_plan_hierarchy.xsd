@@ -78,7 +78,7 @@
                                                   <xs:element name="rates">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element name="rate">
+                                                  <xs:element maxOccurs="unbounded" name="rate">
                                                   <xs:complexType>
                                                   <xs:sequence>
                                                   <xs:element name="rateCode" type="xs:string"/>
