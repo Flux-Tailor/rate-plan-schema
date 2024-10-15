@@ -204,7 +204,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="service" nillable="false" type="serviceKind"> </xs:element>
+            <xs:element name="service" nillable="false" type="ServiceKind"> </xs:element>
             <xs:element name="customerClass" nillable="false" maxOccurs="unbounded">
                 <xs:simpleType>
                     <xs:annotation>

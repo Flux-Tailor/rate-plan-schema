@@ -7,7 +7,7 @@
     <xs:element name="tariffBook">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="tariffDocumentationType">
+                <xs:extension base="TariffDocumentationType">
                     <xs:sequence>
                         <xs:element ref="tariffBookLeafRanges"/>
                     </xs:sequence>
@@ -21,7 +21,7 @@
                 <xs:element name="tariffBookLeafRange" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="tariffDocumentationType">
+                            <xs:extension base="TariffDocumentationType">
                                 <xs:sequence>
                                     <xs:element ref="tariffBookCharges" maxOccurs="unbounded"/>
                                     <xs:element name="startLeafNbr" type="xs:string"/>

@@ -9,7 +9,7 @@
                 <xs:element maxOccurs="unbounded" name="charge">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="chargeType">
+                            <xs:extension base="ChargeType">
                                 <xs:attribute ref="ratePlanCodeUnique"/>
                             </xs:extension>
                         </xs:complexContent>
@@ -18,9 +18,9 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="chargeType">
+    <xs:complexType name="ChargeType">
         <xs:sequence>
-            <xs:element name="servicePeriod" type="dateIntervalType"/>
+            <xs:element name="servicePeriod" type="DateIntervalType"/>
             <xs:element name="serviceTierNr" type="xs:int" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Tooltip:<br/> 
@@ -73,8 +73,8 @@
             </xs:element>
             <xs:element name="description" type="xs:string" minOccurs="0"/>
             <xs:element name="chargeValue" type="xs:decimal"/>
-            <xs:element name="uom" type="unitSymbolKind" minOccurs="0"/>
-            <xs:element name="measurementDefinition" type="measureType" minOccurs="0"/>
+            <xs:element name="uom" type="UnitSymbolKind" minOccurs="0"/>
+            <xs:element name="measurementDefinition" type="MeasureType" minOccurs="0"/>
             <xs:element name="chargesComponent">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
