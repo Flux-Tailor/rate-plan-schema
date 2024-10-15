@@ -32,11 +32,13 @@ unique identifier for the rate plan permutation assigned by utility (may need to
 Complex Types
 =======================================
 -->
-    <xs:complexType name="constraintVariableType">
+    <xs:complexType name="ConstraintVariableType">
         <xs:sequence>
             <xs:element name="serviceClasses" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>List of serviceClasses for applicable service classes, eg. service Class 1. Use "All" if applicable to all service classes.</xs:documentation>
+                    <xs:documentation>Applicable service classes, eg. "1" for service Class 1. Use "All" if applicable to all service classes.
+
+If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just the number for the parent service class. The suffix shall made available separately in "rateCodes"</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
@@ -47,7 +49,7 @@ Complex Types
             </xs:element>
             <xs:element form="qualified" name="rateCodes" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>List of applicable service subclasses, eg. "Service Class 1 rate II"</xs:documentation>
+                    <xs:documentation>Applicable service rate codes, eg. "2" for Service Class 1 rate 2".</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
@@ -57,6 +59,9 @@ Complex Types
                 </xs:complexType>
             </xs:element>
             <xs:element form="qualified" minOccurs="0" name="ratePlans">
+                <xs:annotation>
+                    <xs:documentation>Applicable ratePlanCodeUnique values</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element maxOccurs="unbounded"
@@ -64,6 +69,22 @@ Complex Types
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element minOccurs="0" name="territories">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="territory">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="territoryId" maxOccurs="1"
+                                        type="xs:string"> </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="season"/>
+            <xs:element minOccurs="0" ref="phases"/>
             <xs:element name="customRatePlanAttribute" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
@@ -75,13 +96,6 @@ Complex Types
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="territoryId" minOccurs="0" maxOccurs="1">
-                <xs:simpleType>
-                    <xs:list itemType="xs:string"/>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element minOccurs="0" name="season"/>
-            <xs:element minOccurs="0" ref="phases"/>
         </xs:sequence>
     </xs:complexType>
     <!--
@@ -96,7 +110,7 @@ Complex Types
    ================
    -->
 
-    <xs:complexType name="dateIntervalType">
+    <xs:complexType name="DateIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startDate" type="xs:date"/>
             <xs:element name="endDate" form="qualified" type="xs:date"
@@ -104,14 +118,14 @@ Complex Types
             <xs:element minOccurs="0" name="expectedEndDate" type="xs:date"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="dateTimeIntervalType">
+    <xs:complexType name="DateTimeIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startDateTime" type="xs:dateTime"/>
             <xs:element name="endDateTime" form="qualified" type="xs:dateTime"
                 minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="measureType">
+    <xs:complexType name="MeasureType">
         <xs:sequence>
             <xs:element form="qualified" name="calculationMethod">
                 <xs:simpleType>
@@ -126,9 +140,9 @@ Complex Types
             </xs:element>
             <xs:element minOccurs="0" name="calculationBaseValue"
                 type="xs:string"/>
-            <xs:element name="measurementSource" type="measurementKind"/>
-            <xs:element name="phases" type="phaseCodeKind" minOccurs="0"/>
-            <xs:element name="unitOfMeasure" type="unitSymbolKind"/>
+            <xs:element name="measurementSource" type="MeasurementKind"/>
+            <xs:element name="phases" type="PhaseCodeKind" minOccurs="0"/>
+            <xs:element name="unitOfMeasure" type="UnitSymbolKind"/>
             <xs:element ref="unitMultiplierPowerOfTen"/>
             <xs:element name="measurementInterval">
                 <xs:complexType>
@@ -140,22 +154,22 @@ Complex Types
                 </xs:complexType>
             </xs:element>
             <xs:element minOccurs="0" ref="statisticKind"/>
-            <xs:element name="inclusionStatus" type="valueInclusionKind"
+            <xs:element name="inclusionStatus" type="ValueInclusionKind"
                 minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="scopeOfApplicabilityType">
+    <xs:complexType name="ScopeOfApplicabilityType">
         <xs:annotation>
             <xs:documentation>The scope of rate plan parameters to which a data point or set of data points is applicable. This will be used to filter charges data for the set applicable to a customer scenario to be calculated.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element form="qualified" name="include"
-                type="constraintVariableType">
+                type="ConstraintVariableType">
                 <xs:annotation>
                     <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit inclusion. All other values for this same field are explicitly excluded.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="exclude" type="constraintVariableType"
+            <xs:element name="exclude" type="ConstraintVariableType"
                 minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit exclusion. This allows for the exclusion of a subset of excluded values for one variables from a larger set of included values for another variable, e.g. "All service class 1 rate plans except time of use rate plans"</xs:documentation>
@@ -163,7 +177,7 @@ Complex Types
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="tariffDocumentationType">
+    <xs:complexType name="TariffDocumentationType">
         <xs:sequence>
             <xs:element name="sourceDocKind">
                 <xs:annotation>
@@ -187,7 +201,7 @@ Complex Types
                     <xs:documentation>The date on which tariff documentation was published</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="effectivePeriod" type="dateIntervalType"/>
+            <xs:element name="effectivePeriod" type="DateIntervalType"/>
             <xs:element name="iedrOrgAbbreviation" type="xs:string"
                 minOccurs="0"/>
             <xs:element minOccurs="0" name="dpsUtilityPscNumber">
@@ -199,10 +213,10 @@ Complex Types
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="serviceType" type="serviceKind"/>
+            <xs:element name="serviceType" type="ServiceKind"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="timeIntervalType">
+    <xs:complexType name="TimeIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startTime" type="xs:time"/>
             <xs:element name="endTime" form="qualified" type="xs:time"/>
@@ -218,7 +232,7 @@ Enumerations
 -->
 
 
-    <xs:simpleType name="measurementKind">
+    <xs:simpleType name="MeasurementKind">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/> 
                 
@@ -247,13 +261,13 @@ Enumerations
             <xs:enumeration value=""/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="phaseCodeKind">
+    <xs:simpleType name="PhaseCodeKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="AAA"/>
             <xs:enumeration value="ABC"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="seasonNameKind">
+    <xs:simpleType name="SeasonNameKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Winter"/>
             <xs:enumeration value="Spring"/>
@@ -263,14 +277,14 @@ Enumerations
             <xs:enumeration value="OffSeason"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="serviceKind">
+    <xs:simpleType name="ServiceKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Electric"/>
             <xs:enumeration value="Gas"/>
             <xs:enumeration value="Steam"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="unitSymbolKind">
+    <xs:simpleType name="UnitSymbolKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Wh">
                 <xs:annotation>
@@ -342,7 +356,7 @@ Enumerations
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="valueInclusionKind">
+    <xs:simpleType name="ValueInclusionKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="inclusive"/>
             <xs:enumeration value="exclusive"/>
@@ -374,12 +388,12 @@ Enumerations
     <xs:element name="phases">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="phase"/>
+                <xs:element ref="phase" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="phase" nillable="true" type="phaseCodeKind"/>
-    <xs:element name="scopeOfApplicability" type="scopeOfApplicabilityType"> </xs:element>
+    <xs:element name="phase" nillable="true" type="PhaseCodeKind"/>
+    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"> </xs:element>
     <xs:element name="statisticKind">
         <xs:simpleType>
             <xs:annotation>
@@ -403,5 +417,5 @@ Enumerations
             <xs:restriction base="xs:int"> </xs:restriction>
         </xs:simpleType>
     </xs:element>
-    <xs:element name="seasonName" type="seasonNameKind"/>
+    <xs:element name="seasonName" type="SeasonNameKind"/>
 </xs:schema>
