@@ -3,7 +3,7 @@
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:include schemaLocation="tariff_book_charges.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
     <xs:element name="tariffBook">
         <xs:complexType>
             <xs:complexContent>
@@ -23,10 +23,17 @@
                         <xs:complexContent>
                             <xs:extension base="TariffDocumentationType">
                                 <xs:sequence>
-                                    <xs:element ref="tariffBookCharges" maxOccurs="unbounded"/>
+                                    <xs:element name="tariffBookCharges">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element ref="scopeOfApplicability"/>
+                                                <xs:element maxOccurs="unbounded" name="tariffBookCharge" type="ChargeType"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
                                     <xs:element name="startLeafNbr" type="xs:string"/>
                                     <xs:element name="endLeafNbr" type="xs:string"/>
-                                    <xs:element name="DPSCaseNumber">
+                                    <xs:element name="dpsCaseNumber">
                                         <xs:simpleType>
                                             <xs:list itemType="xs:string"/>
                                         </xs:simpleType>

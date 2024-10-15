@@ -56,7 +56,7 @@
                                                   <xs:sequence>
                                                   <xs:element name="orgAbbreviation"
                                                   type="xs:string"/>
-                                                  <xs:element name="serviceType" type="serviceKind"/>
+                                                  <xs:element name="serviceType" type="ServiceKind"/>
                                                   <xs:element name="tariffs">
                                                   <xs:complexType>
                                                   <xs:sequence>
