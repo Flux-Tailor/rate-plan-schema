@@ -13,7 +13,7 @@ permissions:
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
-    uses: Flux-Tailor/oxygen-script-documentation-action@main
+    uses: Flux-Tailor/oxygen-script-documentation-action@v1.0.0
     env:
       SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
     with:
