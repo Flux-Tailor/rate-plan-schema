@@ -142,7 +142,7 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 type="xs:string"/>
             <xs:element name="measurementSource" type="MeasurementKind"/>
             <xs:element name="phases" type="PhaseCodeKind" minOccurs="0"/>
-            <xs:element name="unitOfMeasure" type="UnitSymbolKind"/>
+            <xs:element name="unitOfMeasure" type="UnitSymbolKind" minOccurs="0"/>
             <xs:element ref="unitMultiplierPowerOfTen"/>
             <xs:element name="measurementInterval">
                 <xs:complexType>
