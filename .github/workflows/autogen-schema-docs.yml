@@ -13,12 +13,12 @@ permissions:
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
+    with:
+      docsVersion: ${{ inputs.docsVersion }}
+    secrets: 
+      GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
     steps:
       - name: Flux Tailor Oxygen Documentation Script
         uses: Flux-Tailor/oxygen-script-documentation-action@v1.0.0
         env:
           SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
-        with:
-          docsVersion: ${{ inputs.docsVersion }}
-        secrets: 
-          GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
