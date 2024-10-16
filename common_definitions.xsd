@@ -140,11 +140,16 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
             </xs:element>
             <xs:element minOccurs="0" name="calculationBaseValue"
                 type="xs:string"/>
-            <xs:element name="measurementSource" type="MeasurementKind"/>
+            <xs:element name="measurementSource" type="MeasurementKind"
+                minOccurs="0"/>
             <xs:element name="phases" type="PhaseCodeKind" minOccurs="0"/>
             <xs:element name="unitOfMeasure" type="UnitSymbolKind" minOccurs="0"/>
-            <xs:element ref="unitMultiplierPowerOfTen"/>
-            <xs:element name="measurementInterval">
+            <xs:element ref="unitMultiplierPowerOfTen" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>use "0" if there is no multiplier, "1" for X10,"2" for "100", "-1" for "0.1", etc.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="measurementInterval" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element ref="calculationMode"/>
