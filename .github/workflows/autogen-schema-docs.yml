@@ -5,6 +5,10 @@ on:
       docsVersion:
         description: 'Version of documentation to create/overwrite'
         required: true
+permissions:
+  contents: write
+  pull-requests: write
+  
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
