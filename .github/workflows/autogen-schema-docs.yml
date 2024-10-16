@@ -4,9 +4,6 @@ on:
     inputs:
       docsVersion:
         description: 'Version of documentation to create/overwrite'
-        required: true
-    secrets:
-      GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN:
         required: true 
 
 permissions:
