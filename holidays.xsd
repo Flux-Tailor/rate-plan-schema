@@ -8,7 +8,7 @@
                     <xs:complexType>
                         <xs:simpleContent>
                             <xs:extension base="HolidayNameType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                                <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
                             </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>

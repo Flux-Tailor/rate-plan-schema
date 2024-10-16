@@ -112,16 +112,7 @@
                                         <xs:simpleType>
                                             <xs:list itemType="xs:string"/>
                                         </xs:simpleType>
-                                    </xs:element>
-                                    <xs:element ref="ratePlans"/>
-                                    <xs:element maxOccurs="unbounded" name="ratePlanOption">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element ref="scopeOfApplicability"/>
-                                                <xs:element ref="charges"/>
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
+                                    </xs:element>                      
                                 </xs:sequence>
                             </xs:extension>
                         </xs:complexContent>
