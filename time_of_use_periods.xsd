@@ -8,7 +8,7 @@
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="TimeOfUsePeriodType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="required"/>
+                                <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>

@@ -99,7 +99,6 @@
             </xs:element>
             <xs:element name="description" type="xs:string" minOccurs="0"/>
             <xs:element name="chargeValue" type="xs:decimal"/>
-            <xs:element name="uom" type="UnitSymbolKind" minOccurs="0"/>
             <xs:element name="measurementDefinition" type="MeasureType" minOccurs="0"/>
             <xs:element name="chargesComponent">
                 <xs:simpleType>

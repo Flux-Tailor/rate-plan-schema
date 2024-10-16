@@ -219,19 +219,19 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="ratePlanTerritory" maxOccurs="unbounded" minOccurs="0">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the NYISO load zone(s) that the rate applies to<p/>
-                            
-                            Comment:<br/> 
-                            The NYISO load zones that the rate applies to, use "all" if all, separate with semicolons for subsets, i.e "J;H"</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
-                    </xs:restriction>
-                </xs:simpleType>
+            <xs:element minOccurs="0" name="territories">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="territory">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="1" name="territoryId" type="xs:string">
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
             <xs:element name="ratePlanDescription">
                 <xs:simpleType>
@@ -248,7 +248,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tariffDpsCaseNumber">
+            <xs:element name="tariffDpsCaseNumber" maxOccurs="unbounded">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
