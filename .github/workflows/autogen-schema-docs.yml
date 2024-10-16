@@ -13,6 +13,9 @@ permissions:
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
+    env:
+      SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
+
     steps:
     - name: Checkout main repo.
       uses: actions/checkout@v3.3.0
@@ -45,8 +48,6 @@ jobs:
         mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
         cp -r ${{ github.workspace }}/scripting/doc/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
       shell: bash
-      env:
-          SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
