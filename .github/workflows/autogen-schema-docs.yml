@@ -4,7 +4,7 @@ on:
     inputs:
       docsVersion:
         description: 'Version of documentation to create/overwrite'
-        required: true 
+        required: truee 
 
 permissions:
   contents: write
@@ -18,7 +18,7 @@ jobs:
         uses: Flux-Tailor/oxygen-script-documentation-action@v1.0.0
         env:
           SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
-        secrets: 
-          GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         with:
           docsVersion: ${{ inputs.docsVersion }}
+        secrets: 
+          GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
