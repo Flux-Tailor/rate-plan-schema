@@ -99,7 +99,7 @@
                                 <xs:sequence>
                                     <xs:element name="startLeafNbr" type="xs:string"/>
                                     <xs:element name="endLeafNbr" type="xs:string"/>
-                                    <xs:element name="dpsCaseNumber">
+                                    <xs:element name="dpsCaseNumber" maxOccurs="unbounded">
                                         <xs:simpleType>
                                             <xs:list itemType="xs:string"/>
                                         </xs:simpleType>
