@@ -1,10 +1,10 @@
 name: Autogen Schema Documentation Script
 on:
   workflow_dispatch:
-  inputs:
-    docsVersion:
-      description: 'Version of documentation to create/overwrite'
-      required: true
+    inputs:
+      docsVersion:
+        description: 'Version of documentation to create/overwrite'
+        required: true
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
