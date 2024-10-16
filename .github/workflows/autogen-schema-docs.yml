@@ -45,6 +45,8 @@ jobs:
         mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
         cp -r ${{ github.workspace }}/scripting/doc/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
       shell: bash
+      env:
+          SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
