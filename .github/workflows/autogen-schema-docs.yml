@@ -14,10 +14,41 @@ jobs:
   generate-doc:
     runs-on: ubuntu-latest
     steps:
-      - name: Flux Tailor Oxygen Documentation Script
-        uses: Flux-Tailor/oxygen-script-documentation-action@main
-        env:
-          SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
-        with:
-          docsVersion: ${{ inputs.docsVersion }}
-  secrets: inherit
+    - name: Checkout main repo.
+      uses: actions/checkout@v3.3.0
+
+    - name: Checkout Documentation Template repo.
+      uses: actions/checkout@v3.3.0
+      with:
+        repository: Flux-Tailor/oxygen-script-documentation
+        ref: main
+        path: scripting
+
+    - name: Checkout rate-plan-documentation repo.
+      uses: actions/checkout@v3.3.0
+      with:
+        token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
+        repository: Flux-Tailor/rate-plan-documentation
+        ref: main
+        path: rate-plan-documentation
+
+    - name: Setup Gradle
+      uses: gradle/gradle-build-action@v2
+
+    - name: Make gradlew executable
+      run: chmod +x ./scripting/build/gradlew
+      shell: bash
+
+    - name: Build with Gradle
+      run: |
+        cd scripting/build; ./gradlew generateDoc -PschemaFile=all_rate_plan_schemas.xsd -PinnerBuild=false --info --stacktrace --build-cache
+        mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+        cp -r ${{ github.workspace }}/scripting/doc/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+      shell: bash
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
+        path: rate-plan-documentation
+        commit-message: "[Flux Bot] New version of schema documentation"
