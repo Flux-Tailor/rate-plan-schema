@@ -4,7 +4,7 @@ on:
     inputs:
       docsVersion:
         description: 'Version of documentation to create/overwrite'
-        required: truee 
+        required: true
 
 permissions:
   contents: write
