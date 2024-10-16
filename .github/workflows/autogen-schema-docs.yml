@@ -13,11 +13,11 @@ permissions:
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
+    secrets: inherit
     steps:
       - name: Flux Tailor Oxygen Documentation Script
         uses: Flux-Tailor/oxygen-script-documentation-action@v1.0.0
         env:
           SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
-        secrets: inherit
         with:
           docsVersion: ${{ inputs.docsVersion }}
