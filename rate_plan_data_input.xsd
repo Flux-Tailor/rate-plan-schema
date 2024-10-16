@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:include schemaLocation="tariff_book_leaf_ranges.xsd"/>
+    <xs:include schemaLocation="tariff_books.xsd"/>
     <xs:include schemaLocation="tariff_statements.xsd"/>
     <xs:include schemaLocation="rate_plans.xsd"/>
     <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
     <xs:include schemaLocation="eligibility.xsd"/>
     <xs:include schemaLocation="holidays.xsd"/>
-    <xs:include schemaLocation="minimum_charges.xsd"/>
-    <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
-    <xs:include schemaLocation="other_fixed_charges.xsd"/>
     <xs:include schemaLocation="seasons.xsd"/>
     <xs:include schemaLocation="service_tier_thresholds.xsd"/>
     <xs:include schemaLocation="time_of_use_periods.xsd"/>

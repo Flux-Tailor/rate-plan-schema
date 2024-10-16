@@ -26,7 +26,7 @@
             </xs:element>
             <xs:element name="geographicUnit" type="xs:string"/>
             <xs:element name="rawValue" type="xs:string"/>
-            <xs:element name="effectivePeriod" type="dateIntervalType"/>
+            <xs:element name="effectivePeriod" type="DateIntervalType"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

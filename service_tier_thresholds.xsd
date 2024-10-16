@@ -18,10 +18,10 @@
     </xs:element>
     <xs:complexType name="ServiceTierThresholdType">
         <xs:sequence>
-            <xs:element name="effectiveInterval" type="dateIntervalType"/>
+            <xs:element name="effectiveInterval" type="DateIntervalType"/>
             <xs:element name="serviceTierNr" type="xs:int"/>
             <xs:element ref="seasonName"> </xs:element>
-            <xs:element name="measurementSpecification" type="measureType"/>
+            <xs:element name="measurementSpecification" type="MeasureType"/>
             <xs:element name="min_qty" type="xs:int"> </xs:element>
             <xs:element name="max_qty" type="xs:int"> </xs:element>
         </xs:sequence>

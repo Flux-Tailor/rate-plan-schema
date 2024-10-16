@@ -24,7 +24,7 @@
             </xs:element>
             <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
             <xs:element ref="scopeOfApplicability"/>
-            <xs:element name="validPeriod" type="dateIntervalType"/>
+            <xs:element name="validPeriod" type="DateIntervalType"/>
             <xs:element name="iedrOrg">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -42,7 +42,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="service" type="serviceKind"/>
+            <xs:element name="service" type="ServiceKind"/>
             <xs:element name="modifierDescription" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>

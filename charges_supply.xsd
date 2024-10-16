@@ -7,7 +7,7 @@
     <xs:element name="supplyCharges">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="supplyCharge" maxOccurs="unbounded" type="chargeType"/>
+                <xs:element name="supplyCharge" maxOccurs="unbounded" type="ChargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -122,7 +122,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="limitMeasureSpecification" type="measureType"/>
+            <xs:element name="limitMeasureSpecification" type="MeasureType"/>
             <xs:element name="limitValue" type="xs:int"> </xs:element>
             <xs:element name="description">
                 <xs:simpleType>

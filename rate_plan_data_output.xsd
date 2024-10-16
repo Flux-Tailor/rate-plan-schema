@@ -4,9 +4,6 @@
     <xs:include schemaLocation="charges.xsd"/>
     <xs:include schemaLocation="eligibility.xsd"/>
     <xs:include schemaLocation="holidays.xsd"/>
-    <xs:include schemaLocation="minimum_charges.xsd"/>
-    <xs:include schemaLocation="nonmetered_service_charges.xsd"/>
-    <xs:include schemaLocation="other_fixed_charges.xsd"/>
     <xs:include schemaLocation="rate_plans.xsd"/>
     <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
     <xs:include schemaLocation="seasons.xsd"/>
@@ -28,51 +25,29 @@
                                     <xs:element name="deliveryCharges">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element ref="minimumCharges"/>
-                                                <xs:element ref="otherFixedCharges" minOccurs="0"/>
-                                                <xs:element minOccurs="0"
-                                                  name="meteredDeliveryCharges">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                  <xs:element maxOccurs="unbounded" minOccurs="1"
-                                                  name="meteredDeliveryCharge" type="chargeType"/>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                </xs:element>
-                                                <xs:element ref="nonmeteredServiceCharges"
-                                                  minOccurs="0"/>
+                                                <xs:element maxOccurs="unbounded" ref="charges"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
                                     <xs:element name="supplyCharges" minOccurs="0">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element maxOccurs="1"
-                                                  name="meteredSupplyCharges" minOccurs="0">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
-                                                  <xs:element maxOccurs="unbounded"
-                                                  name="meteredSupplyCharge" type="chargeType"/>
-                                                  </xs:sequence>
-                                                  </xs:complexType>
-                                                </xs:element>
-                                                <xs:element ref="nonmeteredServiceCharges"/>
+                                                <xs:element maxOccurs="unbounded" minOccurs="0"
+                                                  ref="charges"> </xs:element>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
                                     <xs:element minOccurs="0" name="exportCredits">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element maxOccurs="unbounded"
-                                                  name="exportCredit" type="chargeType"/>
+                                                <xs:element maxOccurs="unbounded" ref="charges"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
                                     <xs:element name="otherCharges" minOccurs="0">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element maxOccurs="unbounded"
-                                                  ref="otherFixedCharges"/>
+                                                <xs:element maxOccurs="unbounded" ref="charges"/>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
@@ -116,48 +91,29 @@
                         <xs:element name="deliveryCharges">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element ref="minimumCharges"/>
-                                    <xs:element ref="otherFixedCharges" minOccurs="0"/>
-                                    <xs:element minOccurs="0" name="meteredDeliveryCharges">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element maxOccurs="unbounded" minOccurs="1"
-                                                  name="meteredDeliveryCharge" type="chargeType"/>
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
-                                    <xs:element ref="nonmeteredServiceCharges" minOccurs="0"/>
+                                    <xs:element maxOccurs="unbounded" ref="charges"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="supplyCharges" minOccurs="0">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element maxOccurs="1" name="meteredSupplyCharges"
-                                        minOccurs="0">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element maxOccurs="unbounded"
-                                                  name="meteredSupplyCharge" type="chargeType"/>
-                                            </xs:sequence>
-                                        </xs:complexType>
+                                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="charges">
                                     </xs:element>
-                                    <xs:element ref="nonmeteredServiceCharges"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
                         <xs:element minOccurs="0" name="exportCredits">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element maxOccurs="unbounded" name="exportCredit"
-                                        type="chargeType"/>
+                                    <xs:element maxOccurs="unbounded" ref="charges"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
                         <xs:element name="otherCharges" minOccurs="0">
                             <xs:complexType>
                                 <xs:sequence>
-                                    <xs:element maxOccurs="unbounded" ref="otherFixedCharges"/>
+                                    <xs:element maxOccurs="unbounded" ref="charges"/>
                                 </xs:sequence>
                             </xs:complexType>
                         </xs:element>
@@ -166,5 +122,5 @@
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
-    <xs:element name="meteredCharge" type="chargeType"> </xs:element>
+    <xs:element name="meteredCharge" type="ChargeType"> </xs:element>
 </xs:schema>

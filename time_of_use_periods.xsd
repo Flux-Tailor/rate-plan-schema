@@ -18,7 +18,7 @@
     </xs:element>
     <xs:complexType name="TimeOfUsePeriodType">
         <xs:sequence>
-            <xs:element name="effectivePeriod" type="dateIntervalType"/>
+            <xs:element name="effectivePeriod" type="DateIntervalType"/>
             <xs:element name="RatePeriodNrNonHolidays">
                 <xs:simpleType>
                     <xs:annotation>
@@ -128,7 +128,7 @@
 TODO: make this a common definition to re-use in charges.xsd and other purposes</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="measurementApplicable" type="measurementKind"/>
+            <xs:element name="measurementApplicable" type="MeasurementKind"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
