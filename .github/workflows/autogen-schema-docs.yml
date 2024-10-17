@@ -55,21 +55,29 @@ jobs:
         ${{ secrets.SCRIPTING_LICENSE_KEY }}
         EOF
 
-    - name: Run an oxygen command
+#    - name: Run an oxygen command
+#      run: |
+#        cd scripting/oxygen
+#        ls -l scriptinglicensekey.txt
+#        head scriptinglicensekey.txt
+#        ./scripts/validate.sh  -h
+#      shell: bash
+
+
+    - name: Generate schema docs
       run: |
         cd scripting/oxygen
-        ls -l scriptinglicensekey.txt
-        head scriptinglicensekey.txt
-        ./scripts/validate.sh  -h
+        mkdir output
+
+        generate_schema_doc() {
+          BASENAME=$1
+          mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/${BASENAME}
+          ./scripts/schemaDocumentation.sh ${{ github.workspace }}/rate-plan-schema/${BASENAME}.xsd -cfg:${{ github.workspace }}/rate-plan-schema/docgen_settings.xml -out:./output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
+        }
+        generate_schema_doc "all_rate_plan_schemas"        
+        cp -r ./output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+        ls ./output
       shell: bash
-
-
-#    - name: Build with Gradle
-#      run: |
-#        cd scripting/build; ./gradlew generateDoc -PschemaFile=all_rate_plan_schemas.xsd -PinnerBuild=false --info --stacktrace --build-cache
-#        mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
-#        cp -r ${{ github.workspace }}/scripting/doc/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
-#      shell: bash
 
 #    - name: Create Pull Request
 #      uses: peter-evans/create-pull-request@v7
