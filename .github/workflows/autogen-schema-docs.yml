@@ -77,4 +77,7 @@ jobs:
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         path: rate-plan-documentation
+        branch: fluxbot-doc-updates
+        branch-suffix: timestamp
+        title: "[Flux Bot] New version of schema documentation - ${{ inputs.docsVersion }}"
         commit-message: "[Flux Bot] New version of schema documentation"
