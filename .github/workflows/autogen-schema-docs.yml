@@ -48,6 +48,7 @@ jobs:
         tar -xzf oxygen.tar.gz
         cd oxygen
         echo ${{ secrets.SCRIPTING_LICENSE_KEY }} > scriptinglicensekey.txt
+        more /home/runner/work/_temp/*sh
 
     - name: Run an oxygen command
       run: |
