@@ -1,4 +1,4 @@
-name: Autogen Schema Documentation 
+name: Autogen Oxygen Schema Documentation 
 on:
   workflow_dispatch:
     inputs:
@@ -55,20 +55,10 @@ jobs:
         ${{ secrets.SCRIPTING_LICENSE_KEY }}
         EOF
 
-#    - name: Run an oxygen command
-#      run: |
-#        cd scripting/oxygen
-#        ls -l scriptinglicensekey.txt
-#        head scriptinglicensekey.txt
-#        ./scripts/validate.sh  -h
-#      shell: bash
-
-
     - name: Generate schema docs
       run: |
         cd scripting/oxygen
         mkdir output
-
         generate_schema_doc() {
           BASENAME=$1
           mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/${BASENAME}
@@ -76,15 +66,15 @@ jobs:
           ./scripts/schemaDocumentation.sh ${{ github.workspace }}/${BASENAME}.xsd -cfg:${{ github.workspace }}/.github/workflows/docgen_settings.xml -out:./output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
         }
         generate_schema_doc "all_rate_plan_schemas"
-        pwd
-        ls -F output
+        generate_schema_doc "rate_plan_data_input"
+        generate_schema_doc "rate_plan_data_output"
         cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
         ls output
       shell: bash
 
-#    - name: Create Pull Request
-#      uses: peter-evans/create-pull-request@v7
-#      with:
-#        token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
-#        path: rate-plan-documentation
-#        commit-message: "[Flux Bot] New version of schema documentation"
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
+        path: rate-plan-documentation
+        commit-message: "[Flux Bot] New version of schema documentation"
