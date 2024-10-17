@@ -79,6 +79,7 @@ jobs:
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         path: rate-plan-documentation
+        add-paths: doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
         branch: fluxbot-doc-updates
         branch-suffix: timestamp
         title: "[Flux Bot] New version of schema documentation - ${{ inputs.docsVersion }}"
