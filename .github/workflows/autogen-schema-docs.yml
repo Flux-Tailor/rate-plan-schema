@@ -73,6 +73,7 @@ jobs:
         echo "4: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
         echo "5: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
         echo "6: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+        echo "7: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/all_rate_plan_schemas
       shell: bash
 
     - name: Test updates
