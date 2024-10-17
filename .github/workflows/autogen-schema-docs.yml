@@ -76,6 +76,7 @@ jobs:
         }
         generate_schema_doc "all_rate_plan_schemas"
         pwd
+        ls
         cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
         ls output
       shell: bash
