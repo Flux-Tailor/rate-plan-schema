@@ -74,6 +74,11 @@ jobs:
         echo "6: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
       shell: bash
 
+    - name: Test updates
+      run: | 
+        cd ${{ github.workspace }}/rate-plan-documentation
+        git status
+        
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
       with:
