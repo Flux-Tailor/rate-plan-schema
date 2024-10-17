@@ -32,20 +32,20 @@ jobs:
       uses: actions/checkout@v4
       with:
         distribution: 'temurin' 
-        java-version: '21'
+        java-version: '17'
 
     - name: Install Java 
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin' 
-        java-version: '21'
+        java-version: '17'
 
     - name: Download & setup oxygen scripting
       run: |
         mkdir scripting
         cd scripting
-        wget https://www.oxygenxml.com/InstData/Editor/All/oxygen.tar.gz
-        tar -xzvf oxygen.tar.gz
+        wget -q https://www.oxygenxml.com/InstData/Editor/All/oxygen.tar.gz
+        tar -xzf oxygen.tar.gz
         cd oxygen
         echo ${{ secrets.SCRIPTING_LICENSE_KEY }} > scriptinglicensekey.txt
 
