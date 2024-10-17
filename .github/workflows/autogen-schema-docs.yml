@@ -25,14 +25,9 @@ jobs:
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         repository: Flux-Tailor/rate-plan-documentation
-        ref: main
-        path: rate-plan-documentation
 
     - name: Checkout Java 
       uses: actions/checkout@v3.3.0
-      with:
-        distribution: 'temurin' 
-        java-version: '17'
 
     - name: Install Java 
       uses: actions/setup-java@v4
