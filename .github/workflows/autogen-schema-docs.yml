@@ -59,7 +59,7 @@ jobs:
           BASENAME=$1
           mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/${BASENAME}
           mkdir output/${BASENAME}
-          ./scripts/schemaDocumentation.sh ${{ github.workspace }}/${BASENAME}.xsd -cfg:${{ github.workspace }}/.github/workflows/docgen_settings.xml -out:./output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
+          ./scripts/schemaDocumentation.sh ${{ github.workspace }}/main/${BASENAME}.xsd -cfg:${{ github.workspace }}/main/.github/workflows/docgen_settings.xml -out:./output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
         }
         generate_schema_doc "all_rate_plan_schemas"
         generate_schema_doc "rate_plan_data_input"
