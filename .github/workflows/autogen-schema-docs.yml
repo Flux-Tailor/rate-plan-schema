@@ -28,11 +28,19 @@ jobs:
         ref: main
         path: rate-plan-documentation
 
-    - name: Install Java & download oxygen scripting
+    - name: Checkout Java 
+      uses: actions/checkout@v4
+      with:
+        distribution: 'temurin' 
+        java-version: '17'
+
+    - name: Install Java 
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin' 
         java-version: '17'
+
+    - name: Download oxygen scripting
       run: |
         mkdir scripting
         cd scripting
