@@ -27,6 +27,7 @@ jobs:
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         repository: Flux-Tailor/rate-plan-documentation
+        ref: main
         path: rate-plan-documentation
 
     - name: Checkout Java 
@@ -67,11 +68,11 @@ jobs:
         generate_schema_doc "rate_plan_data_input"
         generate_schema_doc "rate_plan_data_output"
         cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
-        ls ${{ github.workspace }}/
-        ls ${{ github.workspace }}/rate-plan-documentation/
-        ls ${{ github.workspace }}/rate-plan-documentation/doc/
-        ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
-        ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
+        echo "1: "; ls ${{ github.workspace }}/
+        echo "2: ";ls ${{ github.workspace }}/rate-plan-documentation/
+        echo "3: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/
+        echo "4: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
+        echo "5: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
       shell: bash
 
     - name: Create Pull Request
