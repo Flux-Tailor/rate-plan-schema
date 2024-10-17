@@ -47,6 +47,7 @@
                                                   name="ratePlanOption">
                                                   <xs:complexType>
                                                   <xs:sequence>
+                                                  <xs:element ref="tariffBookLeafRanges"/>
                                                   <xs:element name="ratePlan">
                                                   <xs:complexType>
                                                   <xs:complexContent>
@@ -57,7 +58,6 @@
                                                   </xs:complexContent>
                                                   </xs:complexType>
                                                   </xs:element>
-                                                  <xs:element ref="tariffBookLeafRanges"/>
                                                   <xs:element minOccurs="0" ref="eligibility"/>
                                                   <xs:element minOccurs="0" ref="seasons"/>
                                                   <xs:element minOccurs="0" ref="holidays"/>
