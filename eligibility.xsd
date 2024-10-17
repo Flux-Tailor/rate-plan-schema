@@ -51,20 +51,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="name">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            name of the eligibility criteria for being eligible to be on this rate plan (e.g."Energy Affordability Program")  <p/>
-                            
-                            Comment:<br/> 
-                            value with name of the criteria for being eligible to be on this rate plan, ex: "Energy Affordability Program" </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="name" type="xs:string"> </xs:element>
             <xs:element name="description">
                 <xs:simpleType>
                     <xs:annotation>
@@ -106,22 +93,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="name">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                                name of the eligibility limit (e.g.: "Low Tension Limit")<p/>
-                                
-                                Comment:<br/> 
-                                the name of the limit, ex.: "Low Tension Limit"</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                        <xs:enumeration value="Low"/>
-                        <xs:enumeration value="High"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="name" type="xs:string"> </xs:element>
             <xs:element name="limitMeasureSpecification" type="MeasureType"/>
             <xs:element name="limitValue" type="xs:int"> </xs:element>
             <xs:element name="description">

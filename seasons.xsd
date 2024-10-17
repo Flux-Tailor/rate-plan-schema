@@ -19,7 +19,7 @@
     <xs:complexType name="SeasonType">
         <xs:sequence>
             <xs:element ref="seasonName"> </xs:element>
-            <xs:element name="month">
+            <xs:element name="month" maxOccurs="unbounded">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
