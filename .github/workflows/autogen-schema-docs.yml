@@ -67,6 +67,10 @@ jobs:
         generate_schema_doc "rate_plan_data_input"
         generate_schema_doc "rate_plan_data_output"
         cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+        ls ${{ github.workspace }}/
+        ls ${{ github.workspace }}/rate-plan-documentation/
+        ls ${{ github.workspace }}/rate-plan-documentation/doc/
+        ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
         ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
       shell: bash
 
