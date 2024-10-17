@@ -17,19 +17,19 @@ jobs:
       SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     steps:
+    - name: Checkout main repo.
+      uses: actions/checkout@v4
+      with:
+        path: main
+
     - name: Install Java 
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin' 
         java-version: '17'
 
-    - name: Checkout main repo.
-      uses: actions/checkout@v3.3.0
-      with:
-        path: main
-
     - name: Checkout rate-plan-documentation repo.
-      uses: actions/checkout@v3.3.0
+      uses: actions/checkout@v4
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         repository: Flux-Tailor/rate-plan-documentation
