@@ -40,7 +40,7 @@ jobs:
         distribution: 'temurin' 
         java-version: '17'
 
-    - name: Download oxygen scripting
+    - name: Download & setup oxygen scripting
       run: |
         mkdir scripting
         cd scripting
@@ -48,7 +48,12 @@ jobs:
         tar -xzvf oxygen.tar.gz
         cd oxygen
         echo ${{ secrets.SCRIPTING_LICENSE_KEY }} > scriptinglicensekey.txt
+
+    - name: Run an oxygen command
+      run: |
+        cd scripting/oxygen
         scripts/validate.sh  -h 
+
 
 #    - name: Build with Gradle
 #      run: |
