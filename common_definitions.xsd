@@ -190,7 +190,7 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 </xs:annotation>
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="TariffBookLeafRange"/>
+                        <xs:enumeration value="TariffBook"/>
                         <xs:enumeration value="Statement"/>
                         <xs:enumeration value="MarketSupplyChargesData"/>
                     </xs:restriction>

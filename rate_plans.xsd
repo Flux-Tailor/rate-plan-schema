@@ -248,21 +248,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tariffDpsCaseNumber" maxOccurs="unbounded">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the New York State Department of Public Service (DPS) docket number (also known as "case number") with which the rate plan is associated<p/>
-                            
-                            Comment:<br/> 
-                            NYS DPS docket number</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="40"/>
-                        <xs:pattern value="\d+-[a-zA-Z]-\d+"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="tariffDpsCaseNumber" maxOccurs="unbounded" type="xs:string"> </xs:element>
             <xs:element name="ratePlanHasRetailSupply" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
