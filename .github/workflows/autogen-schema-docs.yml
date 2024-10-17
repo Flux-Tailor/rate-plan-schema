@@ -17,6 +17,12 @@ jobs:
       SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     steps:
+    - name: Install Java 
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin' 
+        java-version: '17'
+
     - name: Checkout main repo.
       uses: actions/checkout@v3.3.0
       with:
@@ -29,15 +35,6 @@ jobs:
         repository: Flux-Tailor/rate-plan-documentation
         ref: main
         path: rate-plan-documentation
-
-    - name: Checkout Java 
-      uses: actions/checkout@v3.3.0
-
-    - name: Install Java 
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin' 
-        java-version: '17'
 
     - name: Download & setup oxygen scripting
       run: |
