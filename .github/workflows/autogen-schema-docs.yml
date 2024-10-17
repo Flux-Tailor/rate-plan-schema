@@ -51,7 +51,9 @@ jobs:
     - name: Setup license key
       run: |
         cd scripting/oxygen
-        echo $SCRIPTING_LICENSE_KEY >> scriptinglicensekey.txt
+        cat << EOF > ./scriptinglicensekey.txt
+        ${{ secrets.SCRIPTING_LICENSE_KEY }}
+        EOF
 
     - name: Run an oxygen command
       run: |
