@@ -243,7 +243,7 @@
                             Brief description of the tariff such as what type of customer it applies to and major eligibility criteria.</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
+                        <xs:maxLength value="1000"/>
                         <xs:whiteSpace value="collapse"/>
                     </xs:restriction>
                 </xs:simpleType>
