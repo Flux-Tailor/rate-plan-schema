@@ -3,6 +3,14 @@
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
+    <xs:include schemaLocation="eligibility.xsd"/>
+    <xs:include schemaLocation="holidays.xsd"/>
+    <xs:include schemaLocation="rate_plans.xsd"/>
+    <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
+    <xs:include schemaLocation="seasons.xsd"/>
+    <xs:include schemaLocation="service_tier_thresholds.xsd"/>
+    <xs:include schemaLocation="time_of_use_periods.xsd"/>
     <xs:element name="ratePlanModifiers">
         <xs:complexType>
             <xs:sequence>
