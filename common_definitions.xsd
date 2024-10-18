@@ -23,7 +23,7 @@ unique identifier for the rate plan permutation assigned by utility (may need to
         </xs:annotation>
         <xs:simpleType>
             <xs:restriction base="xs:string">
-                <xs:maxLength value="21"/>
+                <xs:maxLength value="40"/>
             </xs:restriction>
         </xs:simpleType>
     </xs:attribute>
