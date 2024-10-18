@@ -13,49 +13,8 @@
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="ratePlanSelection" maxOccurs="unbounded"/>
-                <xs:element name="modifierSelection" maxOccurs="unbounded" minOccurs="0">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base="ratePlanModifierType">
-                                <xs:sequence>
-                                    <xs:element ref="seasons"/>
-                                    <xs:element minOccurs="0" ref="holidays"/>
-                                    <xs:element ref="timeOfUsePeriods" minOccurs="0"/>
-                                    <xs:element minOccurs="0" ref="serviceTierThresholds"/>
-                                    <xs:element name="deliveryCharges">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element maxOccurs="unbounded" ref="charges"/>
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
-                                    <xs:element name="supplyCharges" minOccurs="0">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element maxOccurs="unbounded" minOccurs="0"
-                                                  ref="charges"> </xs:element>
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
-                                    <xs:element minOccurs="0" name="exportCredits">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element maxOccurs="unbounded" ref="charges"/>
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
-                                    <xs:element name="otherCharges" minOccurs="0">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element maxOccurs="unbounded" ref="charges"/>
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
-                                </xs:sequence>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="modifierSelection" maxOccurs="unbounded" minOccurs="0"
+                    type="ratePlanModifierType"> </xs:element>
                 <xs:element name="scenarioSettings">
                     <xs:annotation>
                         <xs:documentation>Each ratePlanScenario may have one or multiple "branches" of charge options which depend on attributes specific to each scenario instance. Examples are: parameters determined by the utility (e.g. contracted electric demand) or by the scenanrio location falling within a rate plan territory.</xs:documentation>
