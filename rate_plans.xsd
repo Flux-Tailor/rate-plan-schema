@@ -73,7 +73,7 @@
                             Unique ID from DPS, one utility may have multiple and these are non-unique. There is 1 id per utility service type and some utilities manage multiple utilities</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="2"/>
+                        <xs:maxLength value="3"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
