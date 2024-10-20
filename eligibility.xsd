@@ -48,9 +48,11 @@
                         <xs:enumeration value="VoluntaryEnrollment"/>
                         <xs:enumeration value="ServiceClass"/>
                         <xs:enumeration value="MandatoryEnrollment"/>
+                        <xs:enumeration value="Phases"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element minOccurs="0" ref="phases"/>
             <xs:element name="name" type="xs:string"> </xs:element>
             <xs:element name="description">
                 <xs:simpleType>
@@ -62,7 +64,7 @@
                             a text description of the rules for fulfilling this criteria</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
+                        <xs:maxLength value="2000"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -106,7 +108,7 @@
                                 a text description of the rules for fulfilling this criteria</xs:documentation>
                     </xs:annotation>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
+                        <xs:maxLength value="2000"/>
                         <xs:whiteSpace value="collapse"/>
                     </xs:restriction>
                 </xs:simpleType>

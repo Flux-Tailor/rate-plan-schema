@@ -215,6 +215,7 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                         <xs:totalDigits value="3"/>
                         <xs:maxExclusive value="1000"/>
                         <xs:whiteSpace fixed="true" value="collapse"/>
+                        <xs:minInclusive value="1"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
