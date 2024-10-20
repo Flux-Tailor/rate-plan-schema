@@ -48,9 +48,11 @@
                         <xs:enumeration value="VoluntaryEnrollment"/>
                         <xs:enumeration value="ServiceClass"/>
                         <xs:enumeration value="MandatoryEnrollment"/>
+                        <xs:enumeration value="Phases"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element minOccurs="0" ref="phases"/>
             <xs:element name="name" type="xs:string"> </xs:element>
             <xs:element name="description">
                 <xs:simpleType>
