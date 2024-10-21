@@ -43,12 +43,37 @@
                 </xs:element>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="exportCredit"
                     type="ChargeType"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="statementCharge"
+                    type="ChargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="ChargeType">
         <xs:sequence>
             <xs:element name="servicePeriod" type="DateIntervalType"/>
+            <xs:element minOccurs="0" name="chargeSourceURL" type="xs:anyURI"/>
+            <xs:element name="sourceDocKind" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>The type of official tariff documentation</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="TariffBook"/>
+                        <xs:enumeration value="Statement"/>
+                        <xs:enumeration value="MarketSupplyChargesData"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="tariffBookLeafRange" minOccurs="0" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="startLeafNbr" type="xs:string"/>
+                        <xs:element name="endLeafNbr" type="xs:string"/>
+                        <xs:element name="dpsCaseNumber" maxOccurs="unbounded" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
             <xs:element name="serviceTierNr" type="xs:int" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Tooltip:<br/> 

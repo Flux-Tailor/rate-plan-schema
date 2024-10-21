@@ -49,6 +49,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="iedrUtilityUserFacingName"/>
             <xs:element name="tariffUtilityName">
                 <xs:simpleType>
                     <xs:annotation>
@@ -63,33 +64,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tariffUtilityPscNumber">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            an ID assigned by the New York State Department of Public Service, non-unique across service types and utilities<p/>
-                            
-                            Comment:<br/> 
-                            Unique ID from DPS, one utility may have multiple and these are non-unique. There is 1 id per utility service type and some utilities manage multiple utilities</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="3"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated<p/>
-                            
-                            Comment:<br/> 
-                            - Date that the rate plan was drafted
-                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:date"> </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element minOccurs="0" name="initialDateEffective"/>
             <xs:element name="dateEffective" nillable="false">
                 <xs:simpleType>
                     <xs:annotation>
@@ -116,49 +91,17 @@
                     <xs:restriction base="xs:date"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="serviceClassNumber">
+            <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
-                            the number of the service class with which this rate plan is associated<p/>
+                            if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated<p/>
                             
                             Comment:<br/> 
-                            Number used to group rates by service class</xs:documentation>
+                            - Date that the rate plan was drafted
+                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
                     </xs:annotation>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="3"/>
-                        <xs:minInclusive value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="serviceClassName">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the name of the service class with which this rate plan is associated<p/>
-                            
-                            Comment:<br/> 
-                            Name of service class</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="40"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="rateCode" nillable="true">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            an identifier used by utilities to refer to this rate plan or a group of rate plans to which this rate plan belongs<p/>
-                            
-                            Comment:<br/> 
-                            identifier used publicly to refer to the parent rate plan of which this rate is a rate plan permutation</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="10"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
+                    <xs:restriction base="xs:date"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="ratePlanTariffId" nillable="true" minOccurs="0">
@@ -191,34 +134,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="service" nillable="false" type="ServiceKind"> </xs:element>
-            <xs:element name="customerClass" nillable="false" maxOccurs="unbounded">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the type of customer that the rate plan applies to such as residential, commercial, industrial, lighting<p/>
-                            
-                            Comment:<br/> 
-                            The type of customer that the tariff applies to such as residential, commercial, industrial, lighting</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
-                        <xs:enumeration value="Commercial"/>
-                        <xs:enumeration value=" Commercial Large"/>
-                        <xs:enumeration value="Distributed Generation"/>
-                        <xs:enumeration value="Industrial"/>
-                        <xs:enumeration value="Interruptible"/>
-                        <xs:enumeration value="Lighting"/>
-                        <xs:enumeration value="Natural Gas Vehicle"/>
-                        <xs:enumeration value="Non-residential"/>
-                        <xs:enumeration value="Religious"/>
-                        <xs:enumeration value="Residential"/>
-                        <xs:enumeration value="Street Lighting"/>
-                        <xs:enumeration value="Time of Use"/>
-                        <xs:enumeration value="Transmission"/>
-                        <xs:enumeration value="Transmission Or Substation"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element maxOccurs="unbounded" name="customerClass" type="CustomerClassKind"> </xs:element>
             <xs:element minOccurs="0" name="territories">
                 <xs:complexType>
                     <xs:sequence>

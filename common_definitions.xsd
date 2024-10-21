@@ -96,6 +96,14 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="customerClasses" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="customerClass"
+                            type="CustomerClassKind"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <!--
@@ -233,11 +241,36 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
 
     <!--
 =======================================
-Enumerations
+Enumerations simpleType
 =======================================
 -->
 
-
+    <xs:simpleType name="CustomerClassKind">
+        <xs:annotation>
+            <xs:documentation>Tooltip:<br/> 
+                    the type of customer that the rate plan applies to such as residential, commercial, industrial, lighting<p/>
+                    
+                    Comment:<br/> 
+                    The type of customer that the tariff applies to such as residential, commercial, industrial, lighting</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="255"/>
+            <xs:enumeration value="Commercial"/>
+            <xs:enumeration value=" Commercial Large"/>
+            <xs:enumeration value="Distributed Generation"/>
+            <xs:enumeration value="Industrial"/>
+            <xs:enumeration value="Interruptible"/>
+            <xs:enumeration value="Lighting"/>
+            <xs:enumeration value="Natural Gas Vehicle"/>
+            <xs:enumeration value="Non-residential"/>
+            <xs:enumeration value="Religious"/>
+            <xs:enumeration value="Residential"/>
+            <xs:enumeration value="Street Lighting"/>
+            <xs:enumeration value="Time of Use"/>
+            <xs:enumeration value="Transmission"/>
+            <xs:enumeration value="Transmission Or Substation"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:simpleType name="MeasurementKind">
         <xs:annotation>
             <xs:documentation>Tooltip:<br/> 
@@ -390,7 +423,6 @@ Enumerations
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
-
     <xs:element name="phases">
         <xs:complexType>
             <xs:sequence>
