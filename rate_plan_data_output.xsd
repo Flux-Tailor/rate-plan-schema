@@ -22,6 +22,15 @@
                                     <xs:complexContent>
                                         <xs:extension base="RatePlanType">
                                             <xs:sequence>
+                                                <xs:element name="ratePlan">
+                                                  <xs:complexType>
+                                                  <xs:complexContent>
+                                                  <xs:extension base="RatePlanType">
+                                                  <xs:attribute ref="ratePlanCodeUnique"/>
+                                                  </xs:extension>
+                                                  </xs:complexContent>
+                                                  </xs:complexType>
+                                                </xs:element>
                                                 <xs:element minOccurs="0" ref="eligibility"/>
                                                 <xs:element minOccurs="0" ref="seasons"/>
                                                 <xs:element minOccurs="0" ref="holidays"/>
