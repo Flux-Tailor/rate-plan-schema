@@ -98,15 +98,6 @@
                                                   <xs:element name="ratePlanOptions">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element maxOccurs="unbounded"
-                                                  name="ratePlanOption">
-                                                  <xs:complexType>
-                                                  <xs:attribute name="ratePlanCodeUnique"/>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  <xs:element name="ratePlanOptions">
-                                                  <xs:complexType>
-                                                  <xs:sequence>
                                                   <xs:element name="ratePlanOption"
                                                   maxOccurs="unbounded">
                                                   <xs:complexType>
@@ -131,10 +122,6 @@
                                                   <xs:element minOccurs="0"
                                                   ref="scenarioInputSettings"/>
                                                   </xs:sequence>
-                                                  </xs:complexType>
-                                                  </xs:element>
-                                                  </xs:sequence>
-
                                                   </xs:complexType>
                                                   </xs:element>
                                                   </xs:sequence>
