@@ -9,8 +9,6 @@
     <xs:include schemaLocation="seasons.xsd"/>
     <xs:include schemaLocation="service_tier_thresholds.xsd"/>
     <xs:include schemaLocation="time_of_use_periods.xsd"/>
-
-
     <xs:element name="ratePlanScenarios">
         <xs:complexType>
             <xs:sequence>
@@ -18,9 +16,7 @@
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="ratePlanOption" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:complexContent>
-                                        <xs:extension base="RatePlanType">
+                                    <xs:complexType>
                                             <xs:sequence>
                                                 <xs:element name="ratePlan">
                                                   <xs:complexType>
@@ -40,10 +36,7 @@
                                                   ref="serviceTierThresholds"/>
                                                 <xs:element ref="charges"> </xs:element>
                                             </xs:sequence>
-                                        </xs:extension>
-                                    </xs:complexContent>
-                                </xs:complexType>
-
+                                    </xs:complexType>
                             </xs:element>
                             <xs:element name="modifierOption" maxOccurs="unbounded" minOccurs="0"
                                 type="ratePlanModifierType"> </xs:element>
