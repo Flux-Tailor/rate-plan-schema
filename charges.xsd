@@ -45,6 +45,8 @@
                     type="ChargeType"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="statementCharge"
                     type="ChargeType"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="marketSupplyCharge"
+                    type="ChargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
