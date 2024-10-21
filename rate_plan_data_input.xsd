@@ -3,18 +3,15 @@
     <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:include schemaLocation="tariff_books.xsd"/>
     <xs:include schemaLocation="tariff_statements.xsd"/>
-    <xs:include schemaLocation="rate_plans.xsd"/>
     <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
-    <xs:include schemaLocation="eligibility.xsd"/>
-    <xs:include schemaLocation="holidays.xsd"/>
-    <xs:include schemaLocation="seasons.xsd"/>
-    <xs:include schemaLocation="service_tier_thresholds.xsd"/>
-    <xs:include schemaLocation="time_of_use_periods.xsd"/>
+    <xs:include schemaLocation="charges_supply.xsd"/>
     <xs:element name="dataTransfer">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" ref="tariffBook"/>
+                <xs:element ref="tariffBooks"/>
+                <xs:element ref="ratePlanModifiers"/>
                 <xs:element ref="tariffStatements"/>
+                <xs:element ref="supplyCharges"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

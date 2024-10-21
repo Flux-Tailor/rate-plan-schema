@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:include schemaLocation="charges.xsd"/>
-    <xs:include schemaLocation="charges_supply.xsd"/> 
+    <xs:include schemaLocation="charges_supply.xsd"/>
     <xs:include schemaLocation="eligibility.xsd"/>
     <xs:include schemaLocation="holidays.xsd"/>
     <xs:include schemaLocation="rate_plans.xsd"/>
@@ -12,16 +12,106 @@
     <xs:include schemaLocation="time_of_use_periods.xsd"/>
     <xs:include schemaLocation="tariff_statements.xsd"/>
     <xs:include schemaLocation="tariff_books.xsd"/>
-    <xs:element name="ratePlanScenarios">
+    <xs:element name="ratePlanScenarioOptions">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ratePlanScenario">
+                <xs:element name="utilities">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="ratePlanOption" maxOccurs="unbounded">
-                                    <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element name="ratePlan">
+                            <xs:element name="utility">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="parentOrgIedrAbbreviation" minOccurs="0">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:maxLength value="3"/>
+                                                  <xs:minLength value="3"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element minOccurs="0" name="parentOrgName"/>
+                                        <xs:element name="iedrOrgs">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="iedrOrg">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element form="qualified"
+                                                  name="iedrOrgAbbreviation">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:maxLength value="3"/>
+                                                  <xs:minLength value="3"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="iedrUserFacingUtilityName"
+                                                  type="xs:string"/>
+                                                  <xs:element name="dpsCompanies">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="dpsCompany">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="dpsCompanyId" type="xs:string">
+                                                  <xs:annotation>
+                                                  <xs:documentation>populated by IEDR platform</xs:documentation>
+                                                  </xs:annotation>
+                                                  </xs:element>
+                                                  <xs:element name="operatingCompanies">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="operatingCompany"
+                                                  maxOccurs="unbounded">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="orgAbbreviation"
+                                                  type="xs:string"/>
+                                                  <xs:element name="serviceType" type="ServiceKind"/>
+                                                  <xs:element name="tariffs">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="tariff" maxOccurs="unbounded">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="dpsPscNumber" type="xs:string"> </xs:element>
+                                                  <xs:element name="serviceClasses">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="serviceClass">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="serviceClassNumber"
+                                                  type="xs:int"/>
+                                                  <xs:element name="serviceClassName"
+                                                  type="xs:string"/>
+                                                  <xs:element name="rates">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="rate">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="rateCode" type="xs:string"/>
+                                                  <xs:element name="rateName"/>
+                                                  <xs:element name="ratePlanOptions">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="ratePlanOption">
+                                                  <xs:complexType>
+                                                  <xs:attribute name="ratePlanCodeUnique"/>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element name="ratePlanOptions">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="ratePlanOption"
+                                                  maxOccurs="unbounded">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="ratePlan">
                                                   <xs:complexType>
                                                   <xs:complexContent>
                                                   <xs:extension base="RatePlanType">
@@ -29,56 +119,111 @@
                                                   </xs:extension>
                                                   </xs:complexContent>
                                                   </xs:complexType>
-                                                </xs:element>
-                                                <xs:element minOccurs="0" ref="eligibility"/>
-                                                <xs:element minOccurs="0" ref="seasons"/>
-                                                <xs:element minOccurs="0" ref="holidays"/>
-                                                <xs:element ref="timeOfUsePeriods" minOccurs="0"
+                                                  </xs:element>
+                                                  <xs:element minOccurs="0" ref="eligibility"/>
+                                                  <xs:element minOccurs="0" ref="seasons"/>
+                                                  <xs:element minOccurs="0" ref="holidays"/>
+                                                  <xs:element ref="timeOfUsePeriods" minOccurs="0"
                                                   maxOccurs="1"/>
-                                                <xs:element minOccurs="0"
+                                                  <xs:element minOccurs="0"
                                                   ref="serviceTierThresholds"/>
-                                                <xs:element ref="charges"> </xs:element>
-                                            </xs:sequence>
-                                    </xs:complexType>
-                            </xs:element>
-                            <xs:element name="modifierOption" maxOccurs="unbounded" minOccurs="0"
-                                type="ratePlanModifierType"> </xs:element>
-                            <xs:element name="scenarioInputSettingOptions">
-                                <xs:annotation>
-                                    <xs:documentation>Each ratePlanScenario may have one or multiple "branches" of charge options which depend on attributes specific to each scenario instance. Examples are: parameters determined by the utility (e.g. contracted electric demand) or by the scenanrio location falling within a rate plan territory.</xs:documentation>
-                                </xs:annotation>
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="customerClass" maxOccurs="unbounded">
-                                            <xs:simpleType>
-                                                <xs:restriction base="xs:string"/>
-                                            </xs:simpleType>
-                                        </xs:element>
-                                        <xs:element maxOccurs="unbounded" minOccurs="0"
-                                            name="icapTag">
-                                            <xs:complexType>
-                                                <xs:sequence>
-                                                  <xs:element name="icapTagValidPeriod"
-                                                  type="DateIntervalType"/>
-                                                  <xs:element name="icapTagValue" type="xs:int"/>
-                                                  <xs:element name="icapTagValueDefinition"
-                                                  type="MeasureType"/>
+                                                  <xs:element ref="charges"> </xs:element>
+                                                  <xs:element minOccurs="0"
+                                                  ref="scenarioInputSettings"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element minOccurs="0" name="modifierOptions">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="modifierOption"
+                                                  maxOccurs="unbounded">
+                                                  <xs:complexType>
+                                                  <xs:complexContent>
+                                                  <xs:extension base="ratePlanModifierType">
+                                                  <xs:sequence minOccurs="0">
+                                                  <xs:element ref="scenarioInputSettings"/>
+                                                  </xs:sequence>
+                                                  </xs:extension>
+                                                  </xs:complexContent>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element minOccurs="0"
+                                                  ref="scenarioInputSettings"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
                                                 </xs:sequence>
                                             </xs:complexType>
                                         </xs:element>
-                                        <xs:element minOccurs="0" name="territoryId"
-                                            type="xs:string" maxOccurs="unbounded"/>
-                                        <xs:element minOccurs="0" name="equipment" type="xs:string"
-                                            maxOccurs="unbounded"/>
-                                        <xs:element minOccurs="0" ref="phase" maxOccurs="unbounded"
-                                        />
                                     </xs:sequence>
                                 </xs:complexType>
                             </xs:element>
                         </xs:sequence>
-
                     </xs:complexType>
                 </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="scenarioInputSettings">
+        <xs:annotation>
+            <xs:documentation>Each ratePlanScenario may have one or multiple "branches" of charge options which depend on attributes specific to each scenario instance. Examples are: parameters determined by the utility (e.g. contracted electric demand) or by the scenanrio location falling within a rate plan territory.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" ref="scopeOfApplicability"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="icapTag">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="icapTagValidPeriod" type="DateIntervalType"/>
+                            <xs:element name="icapTagValue" type="xs:int"/>
+                            <xs:element name="icapTagValueDefinition" type="MeasureType"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="0" name="territoryId" type="xs:string" maxOccurs="unbounded"/>
+                <xs:element minOccurs="0" name="equipment" type="xs:string" maxOccurs="unbounded"/>
+                <xs:element minOccurs="0" ref="phase" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

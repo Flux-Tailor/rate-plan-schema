@@ -8,6 +8,7 @@
     <xs:include schemaLocation="eligibility.xsd"/>
     <xs:include schemaLocation="holidays.xsd"/>
     <xs:include schemaLocation="rate_plans.xsd"/>
+    <xs:include schemaLocation="rate_plan_hierarchy.xsd"/>
     <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
     <xs:include schemaLocation="rate_plan_territories.xsd"/>
     <xs:include schemaLocation="seasons.xsd"/>
