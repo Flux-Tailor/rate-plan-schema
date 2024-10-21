@@ -18,6 +18,15 @@
     </xs:element>
     <xs:complexType name="RatePlanType">
         <xs:sequence>
+            <xs:element minOccurs="0" name="parentOrgIedrAbbreviation">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="3"/>
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="parentOrgName"/>
             <xs:element name="ratePlanIedrOrgAbbreviation" nillable="false">
                 <xs:simpleType>
                     <xs:annotation>
@@ -64,6 +73,16 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element name="dpsCompanyId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>populated by IEDR platform</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dpsPscNumber" type="xs:string"> </xs:element>
+            <xs:element name="serviceClassNumber" type="xs:int"/>
+            <xs:element name="serviceClassName" type="xs:string"/>
+            <xs:element name="rateCode" type="xs:string"/>
+            <xs:element name="rateName"/>
             <xs:element minOccurs="0" name="initialDateEffective"/>
             <xs:element name="dateEffective" nillable="false">
                 <xs:simpleType>
