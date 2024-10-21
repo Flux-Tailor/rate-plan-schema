@@ -56,34 +56,7 @@
             <xs:element minOccurs="0" ref="holidays"/>
             <xs:element minOccurs="0" ref="timeOfUsePeriods"/>
             <xs:element minOccurs="0" ref="serviceTierThresholds"/>
-            <xs:element name="deliveryCharges">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" ref="charges"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element minOccurs="0" name="supplyCharges">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" minOccurs="0" ref="charges"> </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element minOccurs="0" name="exportCredits">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" ref="charges"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element minOccurs="0" name="otherCharges">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" ref="charges"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
+            <xs:element ref="charges"> </xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

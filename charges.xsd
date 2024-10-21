@@ -41,6 +41,8 @@
                         </xs:complexContent>
                     </xs:complexType>
                 </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="exportCredit"
+                    type="ChargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
