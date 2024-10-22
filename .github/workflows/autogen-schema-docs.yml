@@ -2,8 +2,8 @@ name: Autogen Oxygen Schema Documentation
 on:
   workflow_dispatch:
     inputs:
-      docsVersion:
-        description: 'Version of documentation to create/overwrite'
+      docsDirectory:
+        description: 'Version of documentation (directory name) to create/overwrite'
         required: true
 
 permissions:
@@ -17,6 +17,15 @@ jobs:
       SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     steps:
+
+    - name: Validate input
+      run: |
+        # validate directory name 
+        if ! [[ ${{ inputs.docsDirectory }} =~ ^[0-9a-zA-Z._-]+$ ]]; then
+        echo "Please enter a valid directory name.";
+        exit 1
+        fi
+
     - name: Checkout main repo.
       uses: actions/checkout@v4
       with:
@@ -55,17 +64,17 @@ jobs:
       run: |
         cd scripting/oxygen
         mkdir output
-        mkdir ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}
+         ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}
         generate_schema_doc() {
           BASENAME=$1
-          mkdir ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/${BASENAME}
+          mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/${BASENAME}
           mkdir output/${BASENAME}
           ./scripts/schemaDocumentation.sh ${{ github.workspace }}/main/${BASENAME}.xsd -cfg:${{ github.workspace }}/main/.github/workflows/docgen_settings.xml -out:${{ github.workspace }}/scripting/oxygen/output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
         }
         generate_schema_doc "all_rate_plan_schemas"
         generate_schema_doc "rate_plan_data_input"
         generate_schema_doc "rate_plan_data_output"
-        cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+        cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
       shell: bash
 
 #    - name: Test updates
@@ -76,8 +85,8 @@ jobs:
 #        echo "3: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/
 #        echo "4: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
 #        echo "5: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
-#        echo "6: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
-#        echo "7: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/all_rate_plan_schemas
+#        echo "6: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
+#        echo "7: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/all_rate_plan_schemas
 #
 #        cd ${{ github.workspace }}/rate-plan-documentation
 #        git status
@@ -87,8 +96,8 @@ jobs:
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         path: rate-plan-documentation
-        add-paths: doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsVersion }}/
+        add-paths: doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
         branch: fluxbot-doc-updates
         branch-suffix: timestamp
-        title: "[Flux Bot] New version of schema documentation - ${{ inputs.docsVersion }}"
+        title: "[Flux Bot] New version of schema documentation - ${{ inputs.docsDirectory }}"
         commit-message: "[Flux Bot] New version of schema documentation"
