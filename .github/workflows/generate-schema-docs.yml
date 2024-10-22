@@ -1,10 +1,14 @@
-name: Autogen Oxygen Schema Documentation 
+name: Generate Oxygen Schema Docs 
 on:
   workflow_dispatch:
     inputs:
       docsDirectory:
         description: 'Version of documentation (directory name) to create/overwrite'
         required: true
+
+##
+## next version may trigger doc gen on pushing a tag https://docs.github.com/en/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#running-your-workflow-only-when-a-push-of-specific-tags-occurs 
+##
 
 permissions:
   contents: write
@@ -78,20 +82,6 @@ jobs:
         generate_schema_doc "rate_plan_data_output"
         cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
       shell: bash
-
-#    - name: Test updates
-#      run: | 
-#        echo "0: "; ls ${{ github.workspace }}/scripting/oxygen/output
-#        echo "1: "; ls ${{ github.workspace }}/
-#        echo "2: ";ls ${{ github.workspace }}/rate-plan-documentation/
-#        echo "3: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/
-#        echo "4: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
-#        echo "5: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
-#        echo "6: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
-#        echo "7: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/all_rate_plan_schemas
-#
-#        cd ${{ github.workspace }}/rate-plan-documentation
-#        git status
 
     - name: Create Pull Request
       uses: peter-evans/create-pull-request@v7
