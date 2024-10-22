@@ -20,11 +20,11 @@ jobs:
 
     - name: Validate input
       run: |
-        # validate directory name 
         if ! [[ ${{ inputs.docsDirectory }} =~ ^[0-9a-zA-Z._-]+$ ]]; then
-        echo "Please enter a valid directory name.";
-        exit 1
+          echo "Please enter a valid directory name.";
+          exit 1;
         fi
+      shell: bash
 
     - name: Checkout main repo.
       uses: actions/checkout@v4
@@ -64,7 +64,10 @@ jobs:
       run: |
         cd scripting/oxygen
         mkdir output
-         ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}
+        if [ -d ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }} ]; then
+          echo "Deleting contents of existing directory"
+          rm -rf ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/*
+        fi
         generate_schema_doc() {
           BASENAME=$1
           mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/${BASENAME}
