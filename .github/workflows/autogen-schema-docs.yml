@@ -17,10 +17,9 @@ jobs:
       SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     steps:
-
     - name: Validate input
       run: |
-        if ! [[ ${{ inputs.docsDirectory }} =~ ^[0-9a-zA-Z._-]+$ ]]; then
+        if ! [[ "${{ inputs.docsDirectory }}" =~ ^[0-9a-zA-Z._-]+$ ]]; then
           echo "Please enter a valid directory name.";
           exit 1;
         fi
