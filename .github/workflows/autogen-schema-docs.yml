@@ -1,17 +1,105 @@
-name: Autogen Schema Documentation Script
+name: Autogen Oxygen Schema Documentation 
 on:
   workflow_dispatch:
     inputs:
-      docsVersion:
-        description: 'Version of documentation to create/overwrite'
+      docsDirectory:
+        description: 'Version of documentation (directory name) to create/overwrite'
         required: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   generate-doc:
     runs-on: ubuntu-latest
+    env:
+      SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
+
     steps:
-      - name: Flux Tailor Oxygen Documentation Script
-        uses: Flux-Tailor/oxygen-script-documentation-action@v1.0.0
-        env:
-          SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
-        with:
-          docsVersion: ${{ inputs.docsVersion }}
+    - name: Validate input
+      run: |
+        if ! [[ "${{ inputs.docsDirectory }}" =~ ^[0-9a-zA-Z._-]+$ ]]; then
+          echo "Please enter a valid directory name.";
+          exit 1;
+        fi
+      shell: bash
+
+    - name: Checkout main repo.
+      uses: actions/checkout@v4
+      with:
+        path: main
+
+    - name: Install Java 
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin' 
+        java-version: '17'
+
+    - name: Checkout rate-plan-documentation repo.
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
+        repository: Flux-Tailor/rate-plan-documentation
+        ref: main
+        path: rate-plan-documentation
+
+    - name: Download & setup oxygen scripting
+      run: |
+        mkdir scripting
+        cd scripting
+        wget -q https://www.oxygenxml.com/InstData/Editor/All/oxygen.tar.gz
+        tar -xzf oxygen.tar.gz
+      shell: bash
+
+    - name: Setup license key
+      run: |
+        cd scripting/oxygen
+        cat << EOF > ./scriptinglicensekey.txt
+        ${{ secrets.SCRIPTING_LICENSE_KEY }}
+        EOF
+
+    - name: Generate schema docs
+      run: |
+        cd scripting/oxygen
+        mkdir output
+        if [ -d ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }} ]; then
+          echo "Deleting contents of existing directory"
+          rm -rf ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/*
+        fi
+        generate_schema_doc() {
+          BASENAME=$1
+          mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/${BASENAME}
+          mkdir output/${BASENAME}
+          ./scripts/schemaDocumentation.sh ${{ github.workspace }}/main/${BASENAME}.xsd -cfg:${{ github.workspace }}/main/.github/workflows/docgen_settings.xml -out:${{ github.workspace }}/scripting/oxygen/output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
+        }
+        generate_schema_doc "all_rate_plan_schemas"
+        generate_schema_doc "rate_plan_data_input"
+        generate_schema_doc "rate_plan_data_output"
+        cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
+      shell: bash
+
+#    - name: Test updates
+#      run: | 
+#        echo "0: "; ls ${{ github.workspace }}/scripting/oxygen/output
+#        echo "1: "; ls ${{ github.workspace }}/
+#        echo "2: ";ls ${{ github.workspace }}/rate-plan-documentation/
+#        echo "3: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/
+#        echo "4: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/
+#        echo "5: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/
+#        echo "6: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
+#        echo "7: ";ls ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/all_rate_plan_schemas
+#
+#        cd ${{ github.workspace }}/rate-plan-documentation
+#        git status
+
+    - name: Create Pull Request
+      uses: peter-evans/create-pull-request@v7
+      with:
+        token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
+        path: rate-plan-documentation
+        add-paths: doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
+        branch: fluxbot-doc-updates
+        branch-suffix: timestamp
+        title: "[Flux Bot] New version of schema documentation - ${{ inputs.docsDirectory }}"
+        commit-message: "[Flux Bot] New version of schema documentation"
