@@ -301,6 +301,9 @@ Enumerations simpleType
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="PhaseCodeKind">
+        <xs:annotation>
+            <xs:documentation>list of phaseCode values from CIM, source: https://ontology.tno.nl/IEC_CIM/cim_PhaseCode.html</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="A"/>
             <xs:enumeration value="AB"/>
@@ -450,17 +453,17 @@ Enumerations simpleType
     <xs:element name="phases">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="phase" maxOccurs="unbounded">
-                    <xs:annotation>
-                        <xs:appinfo xml:lang="en">Phase code</xs:appinfo>
-                        <xs:documentation xml:lang="en">Number of wires and specific nominal phases can be deduced from enumeration literal values. For example, ABCN is three-phase, four-wire, s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are single-phase, two-wire.</xs:documentation>
-                        <xs:documentation>source: CIM TC57: https://ontology.tno.nl/IEC_CIM/cim_UsagePoint.phaseCode.html</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
+                <xs:element ref="phase" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="phase" nillable="true" type="PhaseCodeKind"/>
+    <xs:element name="phase" nillable="true" type="PhaseCodeKind">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en">Phase code</xs:appinfo>
+            <xs:documentation xml:lang="en">Phase code value representing phases. from CIM: "Number of wires and specific nominal phases can be deduced from enumeration literal values. For example, ABCN is three-phase, four-wire, s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are single-phase, two-wire."</xs:documentation>
+            <xs:documentation>source: CIM TC57: https://ontology.tno.nl/IEC_CIM/cim_UsagePoint.phaseCode.html</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"> </xs:element>
     <xs:element name="statisticKind">
         <xs:simpleType>
