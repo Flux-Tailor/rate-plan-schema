@@ -28,14 +28,11 @@
     <xs:complexType name="CriterionType">
         <xs:sequence>
             <xs:element name="criterionKind">
+                <xs:annotation>
+                    <xs:appinfo>The type of eligibility criterion</xs:appinfo>
+                    <xs:documentation>The type of eligibility criterion per included enumeration list</xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the type of eligibility criteria (e.g. "program_enrollment ", "pilot_participation") <p/>
-                            
-                            Comment:<br/> 
-                            enum with possible values: "program_enrollment ", "pilot_participation"</xs:documentation>
-                    </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="40"/>
                         <xs:enumeration value="ServiceProvision"/>
@@ -55,16 +52,14 @@
             <xs:element minOccurs="0" ref="phases"/>
             <xs:element name="name" type="xs:string"> </xs:element>
             <xs:element name="description">
+                <xs:annotation>
+                    <xs:appinfo>A description of the rules for fulfilling this eligibility criteria</xs:appinfo>
+                    <xs:documentation>A description of the rules for fulfilling this eligibility criteria</xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            a text description of the rules for fulfilling this eligibility criteria<p/>
-                            
-                            Comment:<br/> 
-                            a text description of the rules for fulfilling this criteria</xs:documentation>
-                    </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="2000"/>
+                        <xs:minLength value="20"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

@@ -302,8 +302,32 @@ Enumerations simpleType
     </xs:simpleType>
     <xs:simpleType name="PhaseCodeKind">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="AAA"/>
+            <xs:enumeration value="A"/>
+            <xs:enumeration value="AB"/>
             <xs:enumeration value="ABC"/>
+            <xs:enumeration value="ABCN"/>
+            <xs:enumeration value="ABN"/>
+            <xs:enumeration value="AC"/>
+            <xs:enumeration value="ACN"/>
+            <xs:enumeration value="AN"/>
+            <xs:enumeration value="B"/>
+            <xs:enumeration value="BC"/>
+            <xs:enumeration value="BCN"/>
+            <xs:enumeration value="BN"/>
+            <xs:enumeration value="C"/>
+            <xs:enumeration value="CN"/>
+            <xs:enumeration value="N"/>
+            <xs:enumeration value="X"/>
+            <xs:enumeration value="XN"/>
+            <xs:enumeration value="XY"/>
+            <xs:enumeration value="XYN"/>
+            <xs:enumeration value="none"/>
+            <xs:enumeration value="s1"/>
+            <xs:enumeration value="s12"/>
+            <xs:enumeration value="s12N"/>
+            <xs:enumeration value="s1N"/>
+            <xs:enumeration value="s2"/>
+            <xs:enumeration value="s2N"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="SeasonNameKind">
@@ -426,7 +450,13 @@ Enumerations simpleType
     <xs:element name="phases">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="phase" maxOccurs="unbounded"/>
+                <xs:element ref="phase" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:appinfo xml:lang="en">Phase code</xs:appinfo>
+                        <xs:documentation xml:lang="en">Number of wires and specific nominal phases can be deduced from enumeration literal values. For example, ABCN is three-phase, four-wire, s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are single-phase, two-wire.</xs:documentation>
+                        <xs:documentation>source: CIM TC57: https://ontology.tno.nl/IEC_CIM/cim_UsagePoint.phaseCode.html</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
