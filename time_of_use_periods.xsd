@@ -19,7 +19,7 @@
     <xs:complexType name="TimeOfUsePeriodType">
         <xs:sequence>
             <xs:element name="effectivePeriod" type="DateIntervalType"/>
-            <xs:element name="RatePeriodNrNonHolidays">
+            <xs:element name="RatePeriodNumberNonHolidays">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
@@ -33,7 +33,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="RatePeriodNrHolidays" nillable="false">
+            <xs:element name="RatePeriodNumberHolidays" nillable="false">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 

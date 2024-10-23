@@ -94,14 +94,14 @@
                 <xs:element name="tariffBookLeafRange" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element name="startLeafNbr" type="xs:string"/>
-                            <xs:element name="endLeafNbr" type="xs:string"/>
+                            <xs:element name="startLeafNumber" type="xs:string"/>
+                            <xs:element name="endLeafNumber" type="xs:string"/>
                             <xs:element name="dpsCaseNumber" maxOccurs="unbounded" type="xs:string"/>
                             <xs:element name="receivedDate" type="xs:date"/>
                             <xs:element name="initialEffectiveDate" type="xs:date"/>
                             <xs:element name="effectiveDate" type="xs:date"/>
-                            <xs:element name="revisionNbr" type="xs:int"/>
-                            <xs:element name="supersedingRevision"/>
+                            <xs:element name="revisionNumber" type="xs:int"/>
+                            <xs:element name="supersedingRevisionNumber"/>
                             <xs:element name="status">
                                 <xs:simpleType>
                                     <xs:restriction base="xs:string">

@@ -42,7 +42,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element default="" name="modifierName" type="xs:string"/>
-            <xs:element name="UtilityPscNbr">
+            <xs:element name="UtilityPscNumber">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:minInclusive value="0"/>
