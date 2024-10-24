@@ -138,11 +138,15 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
             <xs:element form="qualified" name="calculationMethod">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="by_metered_quantity"/>
-                        <xs:enumeration value="fixed"/>
-                        <xs:enumeration value="by_variable_utility_settings"/>
+                        <xs:enumeration value="avg"/>
                         <xs:enumeration value="by_billing_cycle"/>
+                        <xs:enumeration value="by_metered_quantity"/>
+                        <xs:enumeration value="by_variable_utility_settings"/>
+                        <xs:enumeration value="fixed"/>
+                        <xs:enumeration value="min"/>
+                        <xs:enumeration value="max"/>
                         <xs:enumeration value="percentage"/>
+                        <xs:enumeration value="sdv"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -152,11 +156,6 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 minOccurs="0"/>
             <xs:element name="phases" type="PhaseCodeKind" minOccurs="0"/>
             <xs:element name="unitOfMeasure" type="UnitSymbolKind" minOccurs="0"/>
-            <xs:element ref="unitMultiplierPowerOfTen" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>use "0" if there is no multiplier, "1" for X10,"2" for "100", "-1" for "0.1", etc.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element name="measurementInterval" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence>
@@ -358,60 +357,141 @@ Enumerations simpleType
                     <xs:documentation>Real energy, multiplier=3 for kWh, multiplier=6 for MWh.</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="kWh">
+                <xs:annotation>
+                    <xs:appinfo>Kilowatt hour</xs:appinfo>
+                    <xs:documentation>Kilowatt hour, Real energy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MWh">
+                <xs:annotation>
+                    <xs:appinfo>Megawatt hour</xs:appinfo>
+                    <xs:documentation>Megawatt hour, Real energy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="W">
                 <xs:annotation>
                     <xs:appinfo>Watt</xs:appinfo>
-                    <xs:documentation>Real power, multiplier=3 for kW, multiplier=6 for MW.</xs:documentation>
+                    <xs:documentation>Real power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kW">
+                <xs:annotation>
+                    <xs:appinfo>Kilowatt</xs:appinfo>
+                    <xs:documentation>Kilowatt, equivalent to 1,000 watts, Real power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MW">
+                <xs:annotation>
+                    <xs:appinfo>Megawatt</xs:appinfo>
+                    <xs:documentation>Megawatt, equivalent to 1,000,000 watts, Real power</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="thm">
                 <xs:annotation>
                     <xs:appinfo>Therm</xs:appinfo>
-                    <xs:documentation>Energy, unit of heat energy that equal to 100,000 British thermal units (BTU). Multiplier = 1 for Deca therm (Dth).
+                    <xs:documentation>Therm. Energy, unit of heat energy that is equal to 100,000 British thermal units (BTU)
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Dth">
+                <xs:annotation>
+                    <xs:appinfo>Decatherm</xs:appinfo>
+                    <xs:documentation>Decatherm, equivalent to 100 therms. Energy, unit of heat energy that is equal to 10,000,000 British thermal units (BTU).
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="BTU">
                 <xs:annotation>
                     <xs:appinfo>British Thermal Units</xs:appinfo>
-                    <xs:documentation>Energy, multiplier = 5 for Metric Million British Thermal Unit (MMBtu).
+                    <xs:documentation>British Thermal Units, Energy
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kBtu">
+                <xs:annotation>
+                    <xs:appinfo>Kilobtu</xs:appinfo>
+                    <xs:documentation>Kilobtu, equivalent to 1,000 Metric Million British Thermal Unit, Energy
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MMBtu">
+                <xs:annotation>
+                    <xs:appinfo>British Thermal Units</xs:appinfo>
+                    <xs:documentation>Metric Million British Thermal Unit, Energy
                     </xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VA">
                 <xs:annotation>
-                    <xs:appinfo>Volt Ampere</xs:appinfo>
-                    <xs:documentation>Apparent power, multiplier=3 for Kilo Volt-ampere (kVA)</xs:documentation>
+                    <xs:appinfo>Volt-Ampere</xs:appinfo>
+                    <xs:documentation>Volt-Ampere, Apparent power, multiplier=3 for Kilo Volt-ampere (kVA)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kVA">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Volt-Ampere</xs:appinfo>
+                    <xs:documentation>Kilo Volt-Ampere, Apparent power</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VArh">
                 <xs:annotation>
-                    <xs:appinfo>Volt Ampere reactive hours</xs:appinfo>
-                    <xs:documentation>Reactive energy, multiplier=3 for Kilo Volt-Ampere reactive hours (kVArh)</xs:documentation>
+                    <xs:appinfo>Volt-Ampere Reactive Hours</xs:appinfo>
+                    <xs:documentation>Reactive energy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kVArh">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Volt-Ampere Reactive Hours</xs:appinfo>
+                    <xs:documentation>Reactive energy</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VAr">
                 <xs:annotation>
-                    <xs:appinfo>Volt Ampere reactive</xs:appinfo>
-                    <xs:documentation>Reactive power, multiplier=3 for Kilo Volt-Ampere Reactive (kVAr)</xs:documentation>
+                    <xs:appinfo>Volt-Ampere Reactive</xs:appinfo>
+                    <xs:documentation>Volt Ampere reactiveReactive power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kVAr">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Volt-Ampere Reactive</xs:appinfo>
+                    <xs:documentation>Kilo Volt Ampere Reactive</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VAh">
                 <xs:annotation>
-                    <xs:appinfo>Volt Ampere hours, multiplier=3 for Kilo Volt-Ampere hours (kVAh)</xs:appinfo>
-                    <xs:documentation>Apparent energy</xs:documentation>
+                    <xs:appinfo>Volt-Ampere Hours</xs:appinfo>
+                    <xs:documentation>Volt Ampere Hours, Apparent Energy</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kVAh">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Volt-Ampere Hours</xs:appinfo>
+                    <xs:documentation>Kilo Volt Ampere Hours, Apparent energy</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="VA">
                 <xs:annotation>
                     <xs:appinfo>Volt-Ampere</xs:appinfo>
-                    <xs:documentation>Apparent power</xs:documentation>
+                    <xs:documentation>Volt-Ampere, Apparent power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kVA">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Volt-Ampere</xs:appinfo>
+                    <xs:documentation>Kilo Volt-Ampere, Apparent power</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="V">
                 <xs:annotation>
                     <xs:appinfo>Volt</xs:appinfo>
-                    <xs:documentation>Electric potential</xs:documentation>
+                    <xs:documentation>Volt, Electric potential</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="kV">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Volt</xs:appinfo>
+                    <xs:documentation>Kilo Volt, Electric potential</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="lb">
@@ -420,9 +500,26 @@ Enumerations simpleType
                     <xs:documentation>Pounds, multiplier=6 for Mlb of Steam</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="klb">
+                <xs:annotation>
+                    <xs:appinfo>Kilo Pounds</xs:appinfo>
+                    <xs:documentation>Kilo Pounds, equivalent to 1000 Pounds. Note that ConEd defines UOM for steam as "Mlb - 1,000 pounds of steam
+                        MMlb - 1,000,000 pounds of steam" but this does not comply with international standards for unit of measure definition.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Mlb">
+                <xs:annotation>
+                    <xs:appinfo>Pounds</xs:appinfo>
+                    <xs:documentation>Million Pounds, equivalent to 1,000,000 pounds. Use "kBTU" for 1,000 pounds. Note that ConEd defines UOM for steam as "Mlb - 1,000 pounds of steam
+                        MMlb - 1,000,000 pounds of steam" in tariffs and on customer bills but this does not comply with international standards for unit of measure definition.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="ValueInclusionKind">
+        <xs:annotation>
+            <xs:documentation>If the value defines a limit included in the limit <!--(i.e. "=", "<=", or ">=")-->"inclusive" shall be used,If the value defines a limit included in the limit, "exclusive" shall be used<!--(i.e. "<" or ">")--> if only values smaller or greater </xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="inclusive"/>
             <xs:enumeration value="exclusive"/>
