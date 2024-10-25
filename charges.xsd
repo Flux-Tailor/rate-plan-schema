@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified" vc:minVersion="1.0" vc:maxVersion="1.1">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:element name="charges">
         <xs:complexType>
@@ -39,9 +41,12 @@
                         </xs:complexContent>
                     </xs:complexType>
                 </xs:element>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="exportCredit" type="ChargeType"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="statementCharge" type="ChargeType"/>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="marketSupplyCharge" type="ChargeType"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="exportCredit"
+                    type="ChargeType"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="statementCharge"
+                    type="ChargeType"/>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="marketSupplyCharge"
+                    type="ChargeType"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -112,6 +117,13 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element minOccurs="0" name="chargeId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>optional element to be populated with utility-specific value. Can be used to tie charges in a rate plan directly to line items on bills.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="chargeCategory" type="xs:string"/>
+            <xs:element minOccurs="0" name="chargeClass" type="xs:string"/>
             <xs:element name="chargeName" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>Tooltip:<br/> 
