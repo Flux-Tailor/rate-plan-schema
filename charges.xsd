@@ -69,14 +69,14 @@
             <xs:element name="tariffBookLeafRange" minOccurs="0" maxOccurs="unbounded">
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="startLeafNbr" type="xs:string"/>
-                        <xs:element name="endLeafNbr" type="xs:string"/>
+                        <xs:element name="startLeafNumber" type="xs:string"/>
+                        <xs:element name="endLeafNumber" type="xs:string"/>
                         <xs:element name="dpsCaseNumber" maxOccurs="unbounded" type="xs:string"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
             <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
-            <xs:element name="serviceTierNr" type="xs:int" minOccurs="0">
+            <xs:element name="serviceTierNumber" type="xs:int" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Tooltip:<br/> 
                             the number for the threshold tier for which the minimum charge is applicable (if any tiered thresholds exist for the rate)<p/>
@@ -85,7 +85,7 @@
                             The number of the tier for which the base charge is applicable (if any tier thresholds exist for the rate).</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ratePeriodNr" type="xs:int" minOccurs="0"/>
+            <xs:element name="ratePeriodNumber" type="xs:int" minOccurs="0"/>
             <xs:element name="peakType" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
@@ -117,6 +117,13 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element minOccurs="0" name="chargeId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>optional element to be populated with utility-specific value. Can be used to tie charges in a rate plan directly to line items on bills.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="chargeCategory" type="xs:string"/>
+            <xs:element minOccurs="0" name="chargeClass" type="xs:string"/>
             <xs:element name="chargeName" type="xs:string">
                 <xs:annotation>
                     <xs:documentation>Tooltip:<br/> 

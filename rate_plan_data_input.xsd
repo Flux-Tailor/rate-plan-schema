@@ -8,10 +8,10 @@
     <xs:element name="dataTransfer">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="tariffBooks"/>
-                <xs:element ref="ratePlanModifiers"/>
-                <xs:element ref="tariffStatements"/>
-                <xs:element ref="supplyCharges"/>
+                <xs:element ref="tariffBooks" minOccurs="0"/>
+                <xs:element ref="ratePlanModifiers" minOccurs="0"/>
+                <xs:element ref="tariffStatements" minOccurs="0"/>
+                <xs:element ref="supplyChargesExtracts" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

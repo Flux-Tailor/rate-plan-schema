@@ -39,7 +39,6 @@
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="3"/>
                         <xs:enumeration value="AGR"/>
-                        <xs:enumeration value="AGR"/>
                         <xs:enumeration value="CEI"/>
                         <xs:enumeration value="LBR"/>
                         <xs:enumeration value="NGG"/>
