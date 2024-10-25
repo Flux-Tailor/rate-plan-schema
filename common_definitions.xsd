@@ -34,6 +34,14 @@ Complex Types
 -->
     <xs:complexType name="ConstraintVariableType">
         <xs:sequence>
+            <xs:element name="customerClasses" minOccurs="0">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="customerClass"
+                            type="CustomerClassKind"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="serviceClasses" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Applicable service classes, eg. "1" for service Class 1. Use "All" if applicable to all service classes.
@@ -69,6 +77,30 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element form="qualified" minOccurs="0" name="ratePlanModifiers">
+                <xs:annotation>
+                    <xs:documentation>Applicable ratePlanModifierCodeUnique values</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded"
+                            name="ratePlanModifierCodeUnique" type="xs:string"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="customRatePlanAttribute" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="attributeName"/>
+                        <xs:element name="value"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element minOccurs="0" ref="phases"/>
+            <xs:element minOccurs="0" name="season"/>
             <xs:element minOccurs="0" name="territories">
                 <xs:complexType>
                     <xs:sequence>
@@ -83,27 +115,7 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element minOccurs="0" name="season"/>
-            <xs:element minOccurs="0" ref="phases"/>
-            <xs:element name="customRatePlanAttribute" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="attributeName"/>
-                        <xs:element name="value"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="customerClasses" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="customerClass"
-                            type="CustomerClassKind"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
+            <xs:element minOccurs="0" ref="voltages"/>
         </xs:sequence>
     </xs:complexType>
     <!--
@@ -349,6 +361,12 @@ Enumerations simpleType
             <xs:enumeration value="Steam"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="VoltageKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="low"/>
+            <xs:enumeration value="high"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:simpleType name="UnitSymbolKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Wh">
@@ -580,10 +598,18 @@ Enumerations simpleType
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
-    <xs:element name="unitMultiplierPowerOfTen">
-        <xs:simpleType>
-            <xs:restriction base="xs:int"> </xs:restriction>
-        </xs:simpleType>
+    <xs:element name="voltages">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="voltage" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="voltage" nillable="true" type="VoltageKind">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en">Type of voltage, also called "Tension"</xs:appinfo>
+            <xs:documentation xml:lang="en">Enumeration describing the type of applicable voltage (also called "tension"). Where applicable, numeric voltage limits applicable to the rate plan or rate plan modifiers associated with a given charge shall be defined further in each of its respective "eligibility">"limit" elements</xs:documentation>
+        </xs:annotation>
     </xs:element>
     <xs:element name="seasonName" type="SeasonNameKind"/>
 </xs:schema>
