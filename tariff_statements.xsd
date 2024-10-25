@@ -10,7 +10,7 @@
                 <xs:element form="qualified" name="tariffStatement" maxOccurs="unbounded">
                     <xs:complexType>
                         <xs:complexContent>
-                            <xs:extension base="TariffDocumentationType">
+                            <xs:extension base="DocumentationType">
                                 <xs:sequence>
                                     <xs:element name="typeCode" type="xs:string"/>
                                     <xs:element name="type" type="xs:string"/>

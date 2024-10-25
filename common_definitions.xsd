@@ -201,7 +201,7 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
             </xs:element>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TariffDocumentationType">
+    <xs:complexType name="DocumentationType">
         <xs:sequence>
             <xs:element name="sourceDocKind">
                 <xs:annotation>
@@ -212,6 +212,9 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                         <xs:enumeration value="TariffBook"/>
                         <xs:enumeration value="Statement"/>
                         <xs:enumeration value="MarketSupplyChargesData"/>
+                        <xs:enumeration value="ESCORetailSupplyChargesData"/>
+                        <xs:enumeration value="CommunityChoiceAggregationSupplyChargesData"/>
+                        <xs:enumeration value="CommunitySolarSupplyChargesData"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
