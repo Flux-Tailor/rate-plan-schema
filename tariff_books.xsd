@@ -21,65 +21,70 @@
                                     <xs:element name="serviceClasses">
                                         <xs:complexType>
                                             <xs:sequence>
-                                                <xs:element maxOccurs="unbounded" name="serviceClass">
-                                                    <xs:complexType>
-                                                        <xs:sequence>
-                                                            <xs:element name="serviceClassNumber" type="xs:int"/>
-                                                            <xs:element name="serviceClassName" type="xs:string"/>
-                                                            <xs:element ref="tariffBookLeafRanges"/>
-                                                            <xs:element name="rates">
-                                                                <xs:complexType>
-                                                                    <xs:sequence>
-                                                                        <xs:element maxOccurs="unbounded" name="rate">
-                                                                            <xs:complexType>
-                                                                                <xs:sequence>
-                                                                                    <xs:element name="rateCode" type="xs:string"/>
-                                                                                    <xs:element name="rateName"/>
-                                                                                    <xs:element ref="tariffBookLeafRanges"/>
-                                                                                    <xs:element name="ratePlanOptions">
-                                                                                        <xs:complexType>
-                                                                                            <xs:sequence>
-                                                                                                <xs:element maxOccurs="unbounded"
-                                                                                                    name="ratePlanOption">
-                                                                                                    <xs:complexType>
-                                                                                                        <xs:sequence>
-                                                                                                            <xs:element ref="tariffBookLeafRanges"/>
-                                                                                                            <xs:element name="ratePlan">
-                                                                                                                <xs:complexType>
-                                                                                                                    <xs:complexContent>
-                                                                                                                        <xs:extension base="RatePlanType">
-                                                                                                                            <xs:attribute ref="ratePlanCodeUnique"
-                                                                                                                                use="required"/>
-                                                                                                                        </xs:extension>
-                                                                                                                    </xs:complexContent>
-                                                                                                                </xs:complexType>
-                                                                                                            </xs:element>
-                                                                                                            <xs:element minOccurs="0" ref="eligibility"/>
-                                                                                                            <xs:element minOccurs="0" ref="seasons"/>
-                                                                                                            <xs:element minOccurs="0" ref="holidays"/>
-                                                                                                            <xs:element minOccurs="0" ref="timeOfUsePeriods"/>
-                                                                                                            <xs:element minOccurs="0"
-                                                                                                                ref="serviceTierThresholds"/>
-                                                                                                            <xs:element ref="charges"/>
-                                                                                                        </xs:sequence>
-                                                                                                    </xs:complexType>
-                                                                                                </xs:element>
-                                                                                            </xs:sequence>
-                                                                                        </xs:complexType>
-                                                                                    </xs:element>
-                                                                                </xs:sequence>
-                                                                            </xs:complexType>
-                                                                        </xs:element>
-                                                                    </xs:sequence>
-                                                                </xs:complexType>
-                                                            </xs:element>
-                                                        </xs:sequence>
-                                                    </xs:complexType>
+                                                <xs:element maxOccurs="unbounded"
+                                                  name="serviceClass">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="serviceClassNumber"
+                                                  type="xs:int"/>
+                                                  <xs:element name="serviceClassName"
+                                                  type="xs:string"/>
+                                                  <xs:element ref="tariffBookLeafRanges"/>
+                                                  <xs:element name="rates">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="rate">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="rateCode" type="xs:string"/>
+                                                  <xs:element name="rateName"/>
+                                                  <xs:element ref="tariffBookLeafRanges"/>
+                                                  <xs:element name="ratePlanOptions">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded"
+                                                  name="ratePlanOption">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element ref="tariffBookLeafRanges"/>
+                                                  <xs:element name="ratePlan">
+                                                  <xs:complexType>
+                                                  <xs:complexContent>
+                                                  <xs:extension base="RatePlanType">
+                                                  <xs:attribute ref="ratePlanCodeUnique"
+                                                  use="required"/>
+                                                  </xs:extension>
+                                                  </xs:complexContent>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  <xs:element minOccurs="0" ref="eligibility"/>
+                                                  <xs:element minOccurs="0" ref="seasons"/>
+                                                  <xs:element minOccurs="0" ref="holidays"/>
+                                                  <xs:element minOccurs="0" ref="timeOfUsePeriods"/>
+                                                  <xs:element minOccurs="0"
+                                                  ref="serviceTierThresholds"/>
+                                                  <xs:element ref="charges"/>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
                                                 </xs:element>
                                             </xs:sequence>
                                         </xs:complexType>
                                     </xs:element>
                                 </xs:sequence>
+                                <xs:attribute ref="isReplacementRecord" use="optional"/>
+                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>

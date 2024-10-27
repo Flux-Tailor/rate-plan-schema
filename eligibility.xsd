@@ -9,6 +9,8 @@
                         <xs:complexContent>
                             <xs:extension base="CriterionType">
                                 <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
+                                <xs:attribute ref="isReplacementRecord" use="optional"/>
+                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
@@ -18,6 +20,8 @@
                         <xs:complexContent>
                             <xs:extension base="LimitType">
                                 <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
+                                <xs:attribute ref="isReplacementRecord" use="optional"/>
+                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>

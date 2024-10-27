@@ -6,7 +6,16 @@
     <xs:element name="ratePlanTerritories">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="ratePlanTerritory" type="ratePlanTerritoryType"/>
+                <xs:element name="ratePlanTerritory">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ratePlanTerritoryType">
+                                <xs:attribute ref="isReplacementRecord" use="optional"/>
+                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -10,18 +10,47 @@
     <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
     <xs:include schemaLocation="seasons.xsd"/>
     <xs:include schemaLocation="service_tier_thresholds.xsd"/>
+    <xs:include schemaLocation="tariff_books.xsd"/>
     <xs:include schemaLocation="time_of_use_periods.xsd"/>
     <xs:element name="ratePlanModifiers">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" name="ratePlanModifier"
-                    type="ratePlanModifierType"/>
+                <xs:element maxOccurs="unbounded" name="ratePlanModifier">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ratePlanModifierType">
+                                <xs:attribute ref="isReplacementRecord" use="optional"/>
+                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="ratePlanModifierType">
         <xs:sequence>
             <xs:element name="ratePlanModifierCodeUnique"/>
+            <xs:element name="sourceMetadata">
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="DocumentationType">
+                            <xs:choice>
+                                <xs:element minOccurs="0" name="statementTypeCode" type="xs:string">
+                                    <xs:annotation>
+                                        <xs:documentation>provided is sourceDocKind="Statement"</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element minOccurs="0" ref="tariffBookLeafRanges">
+                                    <xs:annotation>
+                                        <xs:documentation>Provided if sourceDocKind="TariffBook"</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                            </xs:choice>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="ratePlanModifierKind">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
@@ -30,28 +59,17 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element minOccurs="0" name="statementTypeCode" type="xs:string"/>
             <xs:element ref="scopeOfApplicability"/>
             <xs:element name="validPeriod" type="DateIntervalType"/>
-            <xs:element name="iedrOrg">
+            <xs:element default="" name="modifierName" type="xs:string"/>
+            <xs:element name="modifierDescription">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="3"/>
-                        <xs:minLength value="3"/>
+                        <xs:maxLength value="2000"/>
+                        <xs:minLength value="20"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element default="" name="modifierName" type="xs:string"/>
-            <xs:element name="UtilityPscNumber">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:minInclusive value="0"/>
-                        <xs:maxInclusive value="1000"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="service" type="ServiceKind"/>
-            <xs:element name="modifierDescription" type="xs:string"/>
             <xs:element ref="seasons"/>
             <xs:element minOccurs="0" ref="holidays"/>
             <xs:element minOccurs="0" ref="timeOfUsePeriods"/>

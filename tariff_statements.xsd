@@ -34,6 +34,8 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute ref="isReplacementRecord" use="optional"/>
+            <xs:attribute ref="IsDeletedRecord" use="optional"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

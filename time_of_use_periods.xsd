@@ -9,6 +9,8 @@
                         <xs:complexContent>
                             <xs:extension base="TimeOfUsePeriodType">
                                 <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
+                                <xs:attribute ref="isReplacementRecord" use="optional"/>
+                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
