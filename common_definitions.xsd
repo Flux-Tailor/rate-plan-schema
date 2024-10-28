@@ -211,9 +211,37 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
     </xs:complexType>
     <xs:complexType name="DocumentationType">
         <xs:sequence>
-            <xs:element name="iedrOrgAbbreviation" type="xs:string"
-                minOccurs="0"/>
-            <xs:element minOccurs="0" name="dpsUtilityPscNumber">
+            <xs:element minOccurs="0" name="parentOrgIedrAbbreviation">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="3"/>
+                        <xs:minLength value="3"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="parentOrgName"/>
+            <xs:element name="iedrOrgAbbreviation" type="xs:string"/>
+            <xs:element minOccurs="0" name="iedrUtilityUserFacingName"/>
+            <xs:element minOccurs="0" name="tariffUtilityName">
+                <xs:simpleType>
+                    <xs:annotation>
+                        <xs:documentation>Tooltip:<br/> 
+                            the name of the utility provider in the tariff book with which this rate plan is associated<p/>
+                            
+                            Comment:<br/> 
+                            Name of utility provider</xs:documentation>
+                    </xs:annotation>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="100"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element minOccurs="0" name="dpsCompanyId" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>populated by IEDR platform</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" name="dpsPscNumber">
                 <xs:simpleType>
                     <xs:restriction base="xs:int">
                         <xs:totalDigits value="3"/>

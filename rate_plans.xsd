@@ -29,7 +29,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element minOccurs="0" name="parentOrgName"/>
-            <xs:element name="ratePlanIedrOrgAbbreviation" nillable="false">
+            <xs:element name="iedrOrgAbbreviation" nillable="false">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
@@ -59,8 +59,8 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="iedrUtilityUserFacingName"/>
-            <xs:element name="tariffUtilityName">
+            <xs:element name="iedrUtilityUserFacingName" minOccurs="0"/>
+            <xs:element name="tariffUtilityName" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
                         <xs:documentation>Tooltip:<br/> 
@@ -74,30 +74,18 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="dpsCompanyId" type="xs:string">
+            <xs:element name="dpsCompanyId" type="xs:string" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>populated by IEDR platform</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="dpsPscNumber" type="xs:string"> </xs:element>
-            <xs:element name="serviceClassNumber" type="xs:int"/>
-            <xs:element name="serviceClassName" type="xs:string"/>
-            <xs:element name="rateCode" type="xs:string"/>
-            <xs:element name="rateName"/>
-            <xs:element minOccurs="0" name="initialDateEffective"/>
-            <xs:element name="dateEffective" nillable="false">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the date that the rate plan went or will go into effect<p/>
-                            
-                            Comment:<br/> 
-                            - Date that the rate plan went into effect
-                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:date"> </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element name="dpsPscNumber" type="xs:string" minOccurs="0"> </xs:element>
+            <xs:element name="serviceClassNumber" type="xs:int" minOccurs="0"/>
+            <xs:element name="serviceClassName" type="xs:string" minOccurs="0"/>
+            <xs:element name="rateCode" type="xs:string" minOccurs="0"/>
+            <xs:element name="rateName" minOccurs="0"/>
+            <xs:element minOccurs="0" name="initialEffectiveDate"/>
+            <xs:element name="effectiveDate" nillable="false" type="xs:date"> </xs:element>
             <xs:element name="dateCancellation" nillable="true" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>
@@ -184,7 +172,7 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="tariffDpsCaseNumber" maxOccurs="unbounded" type="xs:string"> </xs:element>
+            <xs:element name="dpsCaseNumber" maxOccurs="unbounded" type="xs:string" minOccurs="0"> </xs:element>
             <xs:element name="ratePlanHasRetailSupply" minOccurs="0">
                 <xs:simpleType>
                     <xs:annotation>

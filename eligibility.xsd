@@ -95,8 +95,8 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="name" type="xs:string"> </xs:element>
-            <xs:element name="limitMeasureSpecification" type="MeasureType"/>
             <xs:element name="limitValue" type="xs:int"> </xs:element>
+            <xs:element name="limitMeasureSpecification" type="MeasureType"/>
             <xs:element name="description">
                 <xs:simpleType>
                     <xs:annotation>
