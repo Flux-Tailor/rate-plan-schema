@@ -13,6 +13,8 @@
                 <xs:element ref="tariffStatements" minOccurs="0"/>
                 <xs:element ref="supplyChargesExtracts" minOccurs="0"/>
             </xs:sequence>
+            <xs:attribute ref="isReplacementRecord" use="optional"/>
+            <xs:attribute ref="IsDeletedRecord" use="optional"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>

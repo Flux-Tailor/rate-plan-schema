@@ -11,21 +11,29 @@ Version: V0.91
 
     <!--
 =======================================
-Simple Types     
+Attributes     
 =======================================
 -->
     <xs:attribute name="ratePlanCodeUnique">
         <xs:annotation>
-            <xs:documentation>Tooltip:<br/>
-a unique identifier for the rate plan to consistently identify the rate plan and its parameters<p/>
-Comment:<br/>
-unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and find its parameters</xs:documentation>
+            <xs:appinfo xml:lang="en">a unique identifier for the rate plan to consistently identify the rate plan and its parameters</xs:appinfo>
+            <xs:documentation xml:lang="en">unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
         </xs:annotation>
         <xs:simpleType>
             <xs:restriction base="xs:string">
                 <xs:maxLength value="40"/>
             </xs:restriction>
         </xs:simpleType>
+    </xs:attribute>
+    <xs:attribute name="isReplacementRecord" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>The record replaces a record included in a prior data transfer.</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="IsDeletedRecord" type="xs:boolean">
+        <xs:annotation>
+            <xs:documentation>The record has been deleted or updated in the source from which it was extracted.</xs:documentation>
+        </xs:annotation>
     </xs:attribute>
     <!--
 =======================================
@@ -203,32 +211,6 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
     </xs:complexType>
     <xs:complexType name="DocumentationType">
         <xs:sequence>
-            <xs:element name="sourceDocKind">
-                <xs:annotation>
-                    <xs:documentation>The type of official tariff documentation</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="TariffBook"/>
-                        <xs:enumeration value="Statement"/>
-                        <xs:enumeration value="MarketSupplyChargesData"/>
-                        <xs:enumeration value="ESCORetailSupplyChargesData"/>
-                        <xs:enumeration value="CommunityChoiceAggregationSupplyChargesData"/>
-                        <xs:enumeration value="CommunitySolarSupplyChargesData"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="sourceURL" type="xs:anyURI">
-                <xs:annotation>
-                    <xs:documentation>Platform-generated URL from which official tariff documentation can be downloaded</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="datePublished" type="xs:date">
-                <xs:annotation>
-                    <xs:documentation>The date on which tariff documentation was published</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="effectivePeriod" type="DateIntervalType"/>
             <xs:element name="iedrOrgAbbreviation" type="xs:string"
                 minOccurs="0"/>
             <xs:element minOccurs="0" name="dpsUtilityPscNumber">
@@ -242,6 +224,51 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 </xs:simpleType>
             </xs:element>
             <xs:element name="serviceType" type="ServiceKind"/>
+            <xs:element name="sourceDocKind">
+                <xs:annotation>
+                    <xs:documentation>The type of official tariff documentation</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="TariffBook"/>
+                        <xs:enumeration value="Statement"/>
+                        <xs:enumeration value="UtilityWebsiteManualEntry"/>
+                        <xs:enumeration value="UtilityWebsiteDataDownload"/>
+                        <xs:enumeration value="MarketSupplyChargesData"/>
+                        <xs:enumeration value="ESCORetailSupplyChargesData"/>
+                        <xs:enumeration
+                            value="CommunityChoiceAggregationSupplyChargesData"/>
+                        <xs:enumeration value="CommunitySolarSupplyChargesData"
+                        />
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="sourceURL" type="xs:anyURI">
+                <xs:annotation>
+                    <xs:documentation>URL from which official source tariff documentation can be downloaded</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dataDownloadURL" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>URL from which official structured data was downloaded</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="datePublished" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>The date on which tariff documentation was published in official sources such as the Public Service Commission Electronic Tariff System (ETS) or utility websites.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateSourceLastUpdated" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>The date when a record or resource was last changed or modified in the source from which data was extracted.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateTimeDataExtract" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">The date on which data was extracted</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="effectivePeriod" type="DateIntervalType"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TimeIntervalType">

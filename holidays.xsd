@@ -7,13 +7,14 @@
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="holiday">
                     <xs:complexType>
                         <xs:simpleContent>
-                            <xs:extension base="HolidayNameType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
-                            </xs:extension>
+                            <xs:extension base="HolidayNameType"> </xs:extension>
                         </xs:simpleContent>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
+            <xs:attribute ref="isReplacementRecord" use="optional"/>
+            <xs:attribute ref="IsDeletedRecord" use="optional"/>
         </xs:complexType>
     </xs:element>
     <xs:simpleType name="HolidayNameType">

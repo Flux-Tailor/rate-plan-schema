@@ -4,7 +4,7 @@
     vc:minVersion="1.0" vc:maxVersion="1.1">
     <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:include schemaLocation="charges.xsd"/>
-    
+
     <xs:element name="supplyChargesExtracts">
         <xs:complexType>
             <xs:sequence>
@@ -12,19 +12,21 @@
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="DocumentationType">
-                            <xs:sequence>
-                                <xs:element maxOccurs="unbounded" name="supplyCharges">
-                                    <xs:complexType>
-                                        <xs:sequence>
-                                            <xs:element ref="scopeOfApplicability"/>
-                                            <xs:element name="supplyCharge" maxOccurs="unbounded" type="ChargeType"
-                                            />
-                                        </xs:sequence>
-                                    </xs:complexType>
-                                </xs:element>
-                            </xs:sequence>
+                                <xs:sequence>
+                                    <xs:element maxOccurs="unbounded" name="supplyCharges">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element ref="scopeOfApplicability"/>
+                                                <xs:element name="supplyCharge"
+                                                  maxOccurs="unbounded" type="ChargeType"/>
+                                            </xs:sequence>
+                                            <xs:attribute ref="isReplacementRecord"/>
+                                            <xs:attribute ref="IsDeletedRecord"/>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
                             </xs:extension>
-                          </xs:complexContent>
+                        </xs:complexContent>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
