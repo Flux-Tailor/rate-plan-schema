@@ -410,6 +410,7 @@ Enumerations simpleType
             <xs:enumeration value="Fall"/>
             <xs:enumeration value="Shoulder"/>
             <xs:enumeration value="OffSeason"/>
+            <xs:enumeration value="Base"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="ServiceKind">
