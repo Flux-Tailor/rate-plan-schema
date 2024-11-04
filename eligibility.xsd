@@ -4,15 +4,14 @@
     <xs:element name="eligibility">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="criterion">
+                <xs:element name="enrollments">
                     <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base="CriterionType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
-                                <xs:attribute ref="isReplacementRecord" use="optional"/>
-                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
-                            </xs:extension>
-                        </xs:complexContent>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded" name="enrollment"
+                                type="EnrollmentType"/>
+                            <xs:element name="priorEnrollmentScenario" type="ConstraintVariableType"
+                            />
+                        </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element maxOccurs="unbounded" minOccurs="0" name="limit">
@@ -27,34 +26,27 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
+            <xs:attribute ref="IsDeletedRecord" use="optional"/>
+            <xs:attribute ref="isReplacementRecord" use="optional"/>
+            <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
         </xs:complexType>
     </xs:element>
-    <xs:complexType name="CriterionType">
+    <xs:complexType name="EnrollmentType">
         <xs:sequence>
-            <xs:element name="criterionKind">
-                <xs:annotation>
-                    <xs:appinfo>The type of eligibility criterion</xs:appinfo>
-                    <xs:documentation>The type of eligibility criterion per included enumeration list</xs:documentation>
-                </xs:annotation>
+            <xs:element name="enrollmentKind">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:maxLength value="40"/>
-                        <xs:enumeration value="ServiceProvision"/>
-                        <xs:enumeration value="RateProvision"/>
-                        <xs:enumeration value="EndUse"/>
-                        <xs:enumeration value="CustomerClass"/>
-                        <xs:enumeration value="Equipment"/>
                         <xs:enumeration value="ProgramEnrollment"/>
-                        <xs:enumeration value="Applicability"/>
                         <xs:enumeration value="VoluntaryEnrollment"/>
-                        <xs:enumeration value="ServiceClass"/>
                         <xs:enumeration value="MandatoryEnrollment"/>
-                        <xs:enumeration value="Phases"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element minOccurs="0" ref="phases"/>
-            <xs:element name="name" type="xs:string"> </xs:element>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Data provider's own string with naming for enrollment</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="description">
                 <xs:annotation>
                     <xs:appinfo>A description of the rules for fulfilling this eligibility criteria</xs:appinfo>

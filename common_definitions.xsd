@@ -42,24 +42,24 @@ Complex Types
 -->
     <xs:complexType name="ConstraintVariableType">
         <xs:sequence>
-            <xs:element name="customerClasses" minOccurs="0">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="customerClass"
-                            type="CustomerClassKind"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
             <xs:element name="serviceClasses" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>Applicable service classes, eg. "1" for service Class 1. Use "All" if applicable to all service classes.
-
+                    <xs:appinfo>Applicable Service Classes</xs:appinfo>
+                    <xs:documentation>Applicable service classes, eg. "1" for service Class 1. Use either an integer or "All" if applicable to all service classes.
 If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just the number for the parent service class. The suffix shall made available separately in "rateCodes"</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="serviceClass"
-                            type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" name="serviceClass">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="serviceClassNumber"
+                                        type="xs:string"/>
+                                    <xs:element name="serviceClassName"
+                                        type="xs:string"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
@@ -69,14 +69,22 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="rateCode"
-                            type="xs:string"/>
+                        <xs:element maxOccurs="unbounded" name="rateCode">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="rateCodeNumber"
+                                        type="xs:int"/>
+                                    <xs:element name="rateName" type="xs:string"
+                                    />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
             <xs:element form="qualified" minOccurs="0" name="ratePlans">
                 <xs:annotation>
-                    <xs:documentation>Applicable ratePlanCodeUnique values</xs:documentation>
+                    <xs:documentation>Applicable ratePlanCodeUnique values. Not used when ConstrainVariableType is used within RatePlanType occurrences.</xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
@@ -96,6 +104,18 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="customerClasses" minOccurs="0">
+                <xs:annotation>
+                    <xs:appinfo>Applicable customer classes</xs:appinfo>
+                    <xs:documentation>Applicable customer classes</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element maxOccurs="unbounded" name="customerClass"
+                            type="CustomerClassKind"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
             <xs:element name="customRatePlanAttribute" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
@@ -107,8 +127,24 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element ref="customerEntities"/>
+            <xs:element ref="dwellingScenario"/>
+            <xs:element minOccurs="0" ref="endUses">
+                <xs:annotation>
+                    <xs:appinfo>Applicable end uses</xs:appinfo>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" ref="equipmentScenario"/>
+            <xs:element minOccurs="0" ref="onSiteGenerationScenario"/>
             <xs:element minOccurs="0" ref="phases"/>
-            <xs:element minOccurs="0" name="season"/>
+            <xs:element minOccurs="0" name="season">
+                <xs:annotation>
+                    <xs:appinfo>Applicable season</xs:appinfo>
+                    <xs:documentation>Applicable season</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" ref="serviceProvisionScenario"/>
             <xs:element minOccurs="0" name="territories">
                 <xs:complexType>
                     <xs:sequence>
@@ -316,41 +352,59 @@ Enumerations simpleType
 
     <xs:simpleType name="CustomerClassKind">
         <xs:annotation>
-            <xs:documentation>Tooltip:<br/> 
-                    the type of customer that the rate plan applies to such as residential, commercial, industrial, lighting<p/>
-                    
-                    Comment:<br/> 
-                    The type of customer that the tariff applies to such as residential, commercial, industrial, lighting</xs:documentation>
+            <xs:appinfo>The type of applicable customer class</xs:appinfo>
+            <xs:documentation>The type of applicable customer class</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:maxLength value="255"/>
             <xs:enumeration value="Commercial"/>
-            <xs:enumeration value=" Commercial Large"/>
-            <xs:enumeration value="Distributed Generation"/>
+            <xs:enumeration value="CommercialLarge"/>
+            <xs:enumeration value="DistributedGeneration"/>
             <xs:enumeration value="Industrial"/>
             <xs:enumeration value="Interruptible"/>
             <xs:enumeration value="Lighting"/>
-            <xs:enumeration value="Natural Gas Vehicle"/>
-            <xs:enumeration value="Non-residential"/>
+            <xs:enumeration value="NaturalGasVehicle"/>
+            <xs:enumeration value="NonResidential"/>
             <xs:enumeration value="Religious"/>
             <xs:enumeration value="Residential"/>
-            <xs:enumeration value="Street Lighting"/>
-            <xs:enumeration value="Time of Use"/>
+            <xs:enumeration value="StreetLighting"/>
             <xs:enumeration value="Transmission"/>
-            <xs:enumeration value="Transmission Or Substation"/>
+            <xs:enumeration value="Substation"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EndUseKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Heating"/>
+            <xs:enumeration value="NonHeating"/>
+            <xs:enumeration value="NotExclusivelyIndividualResidence"/>
+            <xs:enumeration value="Heating"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EquipmentKind">
+        <xs:annotation>
+            <xs:appinfo>Applicable equipment scenarios</xs:appinfo>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="OnSiteGeneration"/>
+            <xs:enumeration value="PEV"/>
+            <xs:enumeration value="AMIMeter"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="MeasurementKind">
         <xs:annotation>
-            <xs:documentation>Tooltip:<br/> 
-                
-                The type of measurement, Naming and enumeration options are in alignment with those from Green Button Connect
+            <xs:appinfo>The type of measurement, naming and enumeration options contain a subset those used in CIM and Green Button connect</xs:appinfo>
+            <xs:documentation>
+                The type of measurement, naming and enumeration options contain a subset those used in the Common Information Profile (CIM) and Green Button (NAESB REQ.21 – Energy Services Provider Interface).
                 Element naming is aligned with the CIM semantic model: https://ontology.tno.nl/cerise/cim-profile/cim_ReadingType.measurementKind.html
-                OWL ontology at: https://ontology.tno.nl/IEC_CIM.ttl
-                
-                Identifies "what" is being measured, as refinement of 'commodity'. When combined with 'unit', it provides detail to the unit of measure. For example, 'energy' with a unit of measure of 'kWh' indicates to the user that active energy is being measured, while with 'kVAh' or 'kVArh', it indicates apparent energy and reactive energy, respectively. 'power' can be combined in a similar way with various power units of measure: Distortion power ('distortionVoltAmperes') with 'kVA' is different from 'power' with 'kVA'.</xs:documentation>
+                OWL ontology at: https://ontology.tno.nl/IEC_CIM.ttl<br/> </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
+            <xs:enumeration value="apparentPower">
+                <xs:annotation>
+                    <xs:documentation>Not available in CIM/GBC, where "energy" is used in combination with a unit of measure to express reactive and apparent power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="apparentPowerFactor"/>
             <xs:enumeration value="batteryCarryover"/>
             <xs:enumeration value="batteryVoltage"/>
@@ -364,13 +418,24 @@ Enumerations simpleType
             <xs:enumeration value="power"/>
             <xs:enumeration value="powerFactor"/>
             <xs:enumeration value="powerQuality"/>
+            <xs:enumeration value="reactivePower">
+                <xs:annotation>
+                    <xs:documentation>Not available in CIM/GBC, where "energy" is used in combination with a unit of measure to express reactive and apparent power</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="voltage"/>
             <xs:enumeration value="volumetricFlow"/>
             <xs:enumeration value=""/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="OnSiteGenerationKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:simpleType name="PhaseCodeKind">
         <xs:annotation>
+            <xs:appinfo>list of phaseCode values from CIM, source: https://ontology.tno.nl/IEC_CIM/cim_PhaseCode.html</xs:appinfo>
             <xs:documentation>list of phaseCode values from CIM, source: https://ontology.tno.nl/IEC_CIM/cim_PhaseCode.html</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
@@ -420,10 +485,10 @@ Enumerations simpleType
             <xs:enumeration value="Steam"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="VoltageKind">
+    <xs:simpleType name="ServiceProvisionKind">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="low"/>
-            <xs:enumeration value="high"/>
+            <xs:enumeration value="Interruptible"/>
+            <xs:enumeration value="Standby"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="UnitSymbolKind">
@@ -595,11 +660,18 @@ Enumerations simpleType
     </xs:simpleType>
     <xs:simpleType name="ValueInclusionKind">
         <xs:annotation>
-            <xs:documentation>If the value defines a limit included in the limit <!--(i.e. "=", "<=", or ">=")-->"inclusive" shall be used,If the value defines a limit included in the limit, "exclusive" shall be used<!--(i.e. "<" or ">")--> if only values smaller or greater </xs:documentation>
+            <xs:appinfo>denotes whether value is or is not considered to be included in case the value indicates a service or other threshold or limit</xs:appinfo>
+            <xs:documentation>denotes whether value is or is not considered to be included in case the value indicates a service or other threshold or limit. If the value defines a limit included in the limit <!--(i.e. "=", "<=", or ">=")-->"inclusive" shall be used,If the value defines a limit included in the limit, "exclusive" shall be used<!--(i.e. "<" or ">")--> if only values smaller or greater </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="inclusive"/>
             <xs:enumeration value="exclusive"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="VoltageKind">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="low"/>
+            <xs:enumeration value="high"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:element name="calcIntervalKind">
@@ -624,6 +696,50 @@ Enumerations simpleType
             </xs:restriction>
         </xs:simpleType>
     </xs:element>
+    <xs:element name="dwellingScenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dwelling"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dwelling" type="DwellingKind"/>
+    <xs:element name="customerEntities">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="customerEntity"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="customerEntity" type="EntityKind"/>
+    <xs:element name="endUses">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="endUse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="endUse" type="EndUseKind"/>
+    <xs:element name="equipmentScenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="equipment"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="equipment" type="EquipmentKind"/>
+    <xs:element name="onSiteGenerationScenario">
+        <xs:annotation>
+            <xs:appinfo>Applicable onsite generation scenario</xs:appinfo>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="onSiteGeneration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="onSiteGeneration" type="OnSiteGenerationKind"/>
     <xs:element name="phases">
         <xs:complexType>
             <xs:sequence>
@@ -639,16 +755,24 @@ Enumerations simpleType
         </xs:annotation>
     </xs:element>
     <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"> </xs:element>
+    <xs:element name="serviceProvisionScenario">
+        <xs:annotation>
+            <xs:appinfo>Applicable service provision</xs:appinfo>
+            <xs:documentation>Applicable service provision</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="serviceProvision"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="serviceProvision" type="ServiceProvisionKind"/>
     <xs:element name="statisticKind">
+        <xs:annotation>
+            <xs:appinfo>The statistic type of the measurement</xs:appinfo>
+            <xs:documentation>The statistic type of the measurement</xs:documentation>
+        </xs:annotation>
         <xs:simpleType>
-            <xs:annotation>
-                <xs:documentation>Tooltip:<br/> 
-                    the statistic type of the eligibility limit to de minimum or maximum limit (e.g. "min", "max", "avg") limits are inclusive. i.e. a minimum of 40kW means sa customer with 40 kW can be on the rate plan<p/>
-                    
-                    Comment:<br/> 
-                    the statistic type of the eligibility limit to de minimum or maximum limit (e.g. "min", "max", "avg")
-                    limits are inclusive. i.e. a minimum of 40kW means a customer with 40 kW can be on the rate plan</xs:documentation>
-            </xs:annotation>
             <xs:restriction base="xs:string">
                 <xs:maxLength value="3"/>
                 <xs:enumeration value="min"/>
@@ -670,5 +794,32 @@ Enumerations simpleType
             <xs:documentation xml:lang="en">Enumeration describing the type of applicable voltage (also called "tension"). Where applicable, numeric voltage limits applicable to the rate plan or rate plan modifiers associated with a given charge shall be defined further in each of its respective "eligibility">"limit" elements</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="seasonName" type="SeasonNameKind"/>
+    <xs:element name="seasonName" type="SeasonNameKind">
+        <xs:annotation>
+            <xs:appinfo>Season Name</xs:appinfo>
+            <xs:documentation>Season Name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:simpleType name="DwellingKind">
+        <xs:annotation>
+            <xs:appinfo>List of dwelling types</xs:appinfo>
+            <xs:documentation>List of dwelling types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Multifamily"/>
+            <xs:enumeration value="SingleFamily"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EntityKind">
+        <xs:annotation>
+            <xs:appinfo>Applicable entity type</xs:appinfo>
+            <xs:documentation>Applicable entity type</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NonProfit"/>
+            <xs:enumeration value="Government"/>
+            <xs:enumeration value="CommunityBasedOrganization"/>
+            <xs:enumeration value="PrivateOrganization"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>

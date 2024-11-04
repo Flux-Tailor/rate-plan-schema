@@ -46,7 +46,6 @@
                                                   name="ratePlanOption">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element ref="tariffBookLeafRanges"/>
                                                   <xs:element name="ratePlan">
                                                   <xs:complexType>
                                                   <xs:complexContent>
@@ -57,6 +56,7 @@
                                                   </xs:complexContent>
                                                   </xs:complexType>
                                                   </xs:element>
+                                                  <xs:element ref="tariffBookLeafRanges"/>
                                                   <xs:element minOccurs="0" ref="eligibility"/>
                                                   <xs:element minOccurs="0" ref="seasons"/>
                                                   <xs:element minOccurs="0" ref="holidays"/>
@@ -100,19 +100,26 @@
                         <xs:sequence>
                             <xs:element name="startLeafNumber" type="xs:string"/>
                             <xs:element name="endLeafNumber" type="xs:string"/>
-                            <xs:element name="dpsCaseNumber" maxOccurs="unbounded" type="xs:string"/>
-                            <xs:element name="receivedDate" type="xs:date"/>
-                            <xs:element name="initialEffectiveDate" type="xs:date"/>
-                            <xs:element name="effectiveDate" type="xs:date"/>
-                            <xs:element name="revisionNumber" type="xs:int"/>
-                            <xs:element name="supersedingRevisionNumber"/>
-                            <xs:element name="status">
-                                <xs:simpleType>
-                                    <xs:restriction base="xs:string">
-                                        <xs:enumeration value="EFFECTIVE"/>
-                                        <xs:enumeration value="PENDING"/>
-                                    </xs:restriction>
-                                </xs:simpleType>
+                            <xs:element name="startLeafMetadata">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="receivedDate" type="xs:date"/>
+                                        <xs:element name="initialEffectiveDate" type="xs:date"/>
+                                        <xs:element name="effectiveDate" type="xs:date"/>
+                                        <xs:element name="dpsCaseNumber" maxOccurs="unbounded"
+                                            type="xs:string"/>
+                                        <xs:element name="status">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="EFFECTIVE"/>
+                                                  <xs:enumeration value="PENDING"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="revisionNumber" type="xs:int"/>
+                                        <xs:element name="supersedingRevisionNumber"/>
+                                    </xs:sequence>
+                                </xs:complexType>
                             </xs:element>
                         </xs:sequence>
                     </xs:complexType>
