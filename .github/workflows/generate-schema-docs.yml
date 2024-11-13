@@ -31,14 +31,15 @@ jobs:
 
     - name: Checkout main repo.
       uses: actions/checkout@v4
+      continue-on-error: true
       with:
         path: main
         ref: ${{ inputs.releaseTag }}
 
     - name: Validate existing tag
       run: |
-        if ! [[ git -l "${{ inputs.releaseTag }}" ]]; then
-          echo "Please enter a valid releast tag.";
+        if ! [[ git -l ${{ inputs.releaseTag }} == ${{ inputs.releaseTag }} ]]; then
+          echo "Please enter a valid release tag.";
           exit 1;
         fi
       shell: bash
