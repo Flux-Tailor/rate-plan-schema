@@ -38,6 +38,7 @@ jobs:
     - name: Validate/Checkout existing tag
       run: |
         cd main
+        git tag -l 
         if [[ $(git tag -l ${{ inputs.releaseTag }}) != ${{ inputs.releaseTag }} ]]; then
           echo "::error::Please enter an existing release tag.";
           exit 1;
