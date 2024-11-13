@@ -24,7 +24,7 @@ jobs:
     - name: Validate input 
       run: |
         if ! [[ "${{ inputs.releaseTag }}" =~ ^[0-9a-zA-Z._-]+$ ]]; then
-          echo "Please enter a well-formed release tag.";
+          echo "::error::Please enter a well-formed release tag.";
           exit 1;
         fi
       shell: bash
@@ -39,7 +39,7 @@ jobs:
       run: |
         cd main
         if ! [[ $(git tag -l ${{ inputs.releaseTag }}) ]]; then
-          echo "Please enter an existing release tag.";
+          echo "::error::Please enter an existing release tag.";
           exit 1;
         fi
         git checkout ${{ inputs.releaseTag }}
