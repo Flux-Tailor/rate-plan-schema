@@ -34,14 +34,16 @@ jobs:
       continue-on-error: true
       with:
         path: main
-        ref: ${{ inputs.releaseTag }}
 
-    - name: Validate existing tag
+    - name: Validate/Checkout existing tag
       run: |
+        cd main
         if ! [[ $(git tag -l ${{ inputs.releaseTag }}) ]]; then
-          echo "Please enter a valid release tag.";
+          echo "Please enter an existing release tag.";
           exit 1;
         fi
+        git checkout ${{ inputs.releaseTag }}
+        cd ${{ github.workspace }}
       shell: bash
 
     - name: Install Java 
