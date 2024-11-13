@@ -38,7 +38,7 @@ jobs:
 
     - name: Validate existing tag
       run: |
-        if ! [[ git tag -l ${{ inputs.releaseTag }} == ${{ inputs.releaseTag }} ]]; then
+        if ! [[ $(git tag -l ${{ inputs.releaseTag }}) ]]; then
           echo "Please enter a valid release tag.";
           exit 1;
         fi
