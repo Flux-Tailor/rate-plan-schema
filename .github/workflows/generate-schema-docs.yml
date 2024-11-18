@@ -2,8 +2,8 @@ name: Generate Oxygen Schema Docs
 on:
   workflow_dispatch:
     inputs:
-      docsDirectory:
-        description: 'Version of documentation (directory name) to create/overwrite'
+      releaseTag:
+        description: 'Release tag of documentation to create/overwrite'
         required: true
 
 ##
@@ -21,18 +21,32 @@ jobs:
       SCRIPTING_LICENSE_KEY: ${{secrets.SCRIPTING_LICENSE_KEY}}
 
     steps:
-    - name: Validate input
+    - name: Validate input 
       run: |
-        if ! [[ "${{ inputs.docsDirectory }}" =~ ^[0-9a-zA-Z._-]+$ ]]; then
-          echo "Please enter a valid directory name.";
+        if ! [[ "${{ inputs.releaseTag }}" =~ ^[0-9a-zA-Z._-]+$ ]]; then
+          echo "::error::Please enter a well-formed release tag.";
           exit 1;
         fi
       shell: bash
 
     - name: Checkout main repo.
       uses: actions/checkout@v4
+      continue-on-error: true
       with:
         path: main
+        fetch-depth: 0
+        fetch-tags: 1
+
+    - name: Validate/Checkout existing tag
+      run: |
+        cd main
+        if [[ $(git tag -l ${{ inputs.releaseTag }}) != ${{ inputs.releaseTag }} ]]; then
+          echo "::error::Please enter an existing release tag.";
+          exit 1;
+        fi
+        git checkout ${{ inputs.releaseTag }}
+        cd ${{ github.workspace }}
+      shell: bash
 
     - name: Install Java 
       uses: actions/setup-java@v4
@@ -67,20 +81,20 @@ jobs:
       run: |
         cd scripting/oxygen
         mkdir output
-        if [ -d ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }} ]; then
+        if [ -d ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }} ]; then
           echo "Deleting contents of existing directory"
-          rm -rf ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/*
+          rm -rf ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/*
         fi
         generate_schema_doc() {
           BASENAME=$1
-          mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/${BASENAME}
+          mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/${BASENAME}
           mkdir output/${BASENAME}
           ./scripts/schemaDocumentation.sh ${{ github.workspace }}/main/${BASENAME}.xsd -cfg:${{ github.workspace }}/main/.github/workflows/docgen_settings.xml -out:${{ github.workspace }}/scripting/oxygen/output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
         }
         generate_schema_doc "all_rate_plan_schemas"
         generate_schema_doc "rate_plan_data_input"
         generate_schema_doc "rate_plan_data_output"
-        cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
+        cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/
       shell: bash
 
     - name: Create Pull Request
@@ -88,8 +102,8 @@ jobs:
       with:
         token: ${{ secrets.GIT_RATE_SCHEMA_DOCUMENTATION_TOKEN }}
         path: rate-plan-documentation
-        add-paths: doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.docsDirectory }}/
+        add-paths: doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/
         branch: fluxbot-doc-updates
         branch-suffix: timestamp
-        title: "[Flux Bot] New version of schema documentation - ${{ inputs.docsDirectory }}"
+        title: "[Flux Bot] New version of schema documentation - ${{ inputs.releaseTag }}"
         commit-message: "[Flux Bot] New version of schema documentation"
