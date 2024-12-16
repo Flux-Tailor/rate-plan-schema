@@ -1,256 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="charges.xsd"/>
+    <xs:include schemaLocation="charges_supply.xsd"/>
+    <xs:include schemaLocation="eligibility.xsd"/>
+    <xs:include schemaLocation="pricing_components.xsd"/>
+    <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
+    <xs:include schemaLocation="tariff_statements.xsd"/>
+    <xs:include schemaLocation="tariff_books.xsd"/>
     <xs:element name="ratePlans">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" name="ratePlan">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base="RatePlanType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
-                                <xs:attribute ref="isReplacementRecord" use="optional"/>
-                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="ratePlan"> </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="ratePlan">
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="RatePlanType">
+                    <xs:sequence minOccurs="0">
+                        <xs:element ref="ratePlanModifiers"/>
+                    </xs:sequence>
+                    <xs:attribute ref="ratePlanURI" use="optional"/>
+                    <xs:attributeGroup ref="crud"/>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="RatePlanApplicabilityType">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="hasMeasurementKinds">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="en-US">Measurement inputs to cost model</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">Measurement inputs to cost, , e.g. "demand" for a rate plan that has demand charges</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="modelComponents">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="en-US">list of "tags" with boolean values used for quality assurance purposes in data ingest and cost modeling, and search via GUI  filtering, sorting, and grouping. andAPI calls</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">list of "tags" with boolean values used for quality assurance purposes in data ingest and cost modeling, and search via GUI  filtering, sorting, and grouping.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="profile"/>
+            <xs:element minOccurs="0" ref="customRatePlanAttribute">
+                <xs:annotation>
+                    <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="RatePlanType">
         <xs:sequence>
-            <xs:element name="utilityInfo">
+            <xs:element name="ratePlanIdentifiers">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="en-US">the unit set of identifiers applicable for a given rate plan.</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">The unit set of identifiers applicable for a given rate plan. All identifiers are required.</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element minOccurs="0" name="parentOrgIedrAbbreviation">
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:maxLength value="3"/>
-                                    <xs:minLength value="3"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element minOccurs="0" name="parentOrgName"/>
-                        <xs:element name="iedrOrgAbbreviation" nillable="false">
-                            <xs:annotation>
-                                <xs:appinfo>a three letter abbreviation for the utility or data provider assigned for the IEDR platform</xs:appinfo>
-                                <xs:documentation>a three letter abbreviation for the utility or data provider assigned for the IEDR platform</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:maxLength value="3"/>
-                                    <xs:enumeration value="AGR"/>
-                                    <xs:enumeration value="CEI"/>
-                                    <xs:enumeration value="LBR"/>
-                                    <xs:enumeration value="NGG"/>
-                                    <xs:enumeration value="NFG"/>
-                                    <xs:enumeration value="PLI"/>
-                                    <xs:enumeration value="DPS"/>
-                                    <xs:enumeration value="NRD"/>
-                                    <xs:enumeration value="NYE"/>
-                                    <xs:enumeration value="RGE"/>
-                                    <xs:enumeration value="CED"/>
-                                    <xs:enumeration value="ORU"/>
-                                    <xs:enumeration value="KNY"/>
-                                    <xs:enumeration value="KLI"/>
-                                    <xs:enumeration value="NIM"/>
-                                    <xs:enumeration value="LPA"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="iedrUtilityUserFacingName" minOccurs="0"/>
-                        <xs:element name="dpsPscNumber" type="xs:string" minOccurs="0"> </xs:element>
-                        <xs:element name="tariffUtilityName" minOccurs="0">
-                            <xs:annotation>
-                                <xs:appinfo>The  name of the utility provider as it appears in the tariff book with which this rate plan is associated</xs:appinfo>
-                                <xs:documentation>The  name of the utility provider as it appears in the tariff book with which this rate plan is associated</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:string">
-                                    <xs:maxLength value="100"/>
-                                </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="dpsCompanyId" type="xs:string" minOccurs="0">
-                            <xs:annotation>
-                                <xs:documentation>Id used in ET DPS system populated by IEDR platform and used to generate URL linkage for source data references</xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
+                        <xs:element ref="serviceClass"/>
+                        <xs:element ref="rateCode"/>
+                        <xs:element ref="ratePlanCodeUnique" minOccurs="0"/>
+                        <xs:element minOccurs="0" ref="utilityTariffId"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="service" nillable="false" type="ServiceKind"> </xs:element>
-            <xs:element name="ratePlanName">
+            <xs:element name="commodity" nillable="false" type="CommodityKind"></xs:element>
+            <xs:element ref="utilityInfo"/>
+            <xs:element name="ratePlanApplicability" type="RatePlanApplicabilityType"/>
+            <xs:element ref="provenanceMetadata"> </xs:element>
+            <xs:element ref="name">
                 <xs:annotation>
                     <xs:appinfo>The name of the rate plan</xs:appinfo>
                     <xs:documentation>The name of the rate plan. Note that the rate plan name may not explicitly or exactly appear as its own distinct "rate" in the tariff book. Naming may be derived from the names of groups of charges listed in tariff documentation.</xs:documentation>
                 </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="255"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
             </xs:element>
-            <xs:element name="applicability" type="ConstraintVariableType"/>
-            <xs:element name="ratePlanDescription">
+            <xs:element ref="validityStatusDates"/>
+            <xs:element ref="description">
                 <xs:annotation>
                     <xs:appinfo>A brief text description of the rate plan describing its most important applicability context, enrollment criteria, and eligibility limits</xs:appinfo>
                     <xs:documentation>A brief text description of the rate plan describing its most important applicability context, enrollment criteria, and eligibility limits</xs:documentation>
                 </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="2000"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
             </xs:element>
-            <xs:element name="dpsCaseNumber" maxOccurs="unbounded" type="xs:string"> </xs:element>
-            <xs:element name="ratePlanFeatures">
-                <xs:annotation>
-                    <xs:appinfo>List of "tags" with boolean values used for grouping, filtering, and data validation purposes</xs:appinfo>
-                    <xs:documentation>List of "tags" with boolean values used for grouping, filtering, and data validation purposes</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="ratePlanHasDemandCharges">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan includes Demand Charges</xs:appinfo>
-                                <xs:documentation>Boolean indicating whether the rate plan includes Demand Charges</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="ratePlanHasIcapTag">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer </xs:appinfo>
-                                <xs:documentation>Boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer </xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="ratePlanHasReactivePower">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan includes Reactive Power Charges</xs:appinfo>
-                                <xs:documentation>oolean indicating whether the rate plan includes Reactive Power Charges</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="ratePlanHasRetailSupply">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply</xs:appinfo>
-                                <xs:documentation>oolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="ratePlanHasTieredBlocks">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan includes tiered rates for blocks of service, also known as "baseline allowance"</xs:appinfo>
-                                <xs:documentation>Boolean indicating whether the rate plan includes tiered rates for blocks of service, also known as "baseline allowance"</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                        <xs:element name="ratePlanHasTimeOfUsePricing">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan includes Time of Use (TOU) Pricing</xs:appinfo>
-                                <xs:documentation>oolean indicating whether the rate plan includes Time of Use (TOU) Pricing</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-
-                        <xs:element name="ratePlanIsRateRider">
-                            <xs:annotation>
-                                <xs:appinfo>Boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book</xs:appinfo>
-                                <xs:documentation>Boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book</xs:documentation>
-                            </xs:annotation>
-                            <xs:simpleType>
-                                <xs:restriction base="xs:boolean"> </xs:restriction>
-                            </xs:simpleType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="numberOfRatePeriods" nillable="true">
-                <xs:annotation>
-                    <xs:appinfo/>
-                    <xs:documentation/>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:appinfo>The number of rate periods associated with
-                            the rate plan, counting 1 if no separate thresholds or rates exist for winter and summer. If rates do differ seasonally or more granularly, this is the count of timeOfUsePeriods entries, which shall be equal to the number of unique combinations of seasonName and
-                            weekday type combination valid during a given effective period for this rate plan.</xs:appinfo>
-                        <xs:documentation>TThe number of rate periods associated with
-                            the rate plan, counting 1 if no separate thresholds or rates exist for winter and summer. If rates do differ seasonally or more granularly, this is the count of timeOfUsePeriods entries, which shall be equal to the number of unique combinations of seasonName and
-                            weekday type combination valid during a given effective period for this rate plan. For example: the correct value is "6" if there are 3 time of use periods (off
-                            peak/base/peak), two seasons winter and summer, and no separate rates for weekends. If separate weekend rates do exist for each of the three time of use periods there will be 6 time of use periods per season and the correct value is "12" for winter and summer combined.
-                            This value is used to inform variables expected to be used in cost modeling and scheduling of devices that operate (turn on/off, charge, import/export) based on time of use
-                            schedules.</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="2"/>
-                        <xs:minExclusive value="0"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="ratePlanTariffId" nillable="true" minOccurs="0">
-                <xs:annotation>
-                    <xs:appinfo>Identifier used by the utility to refer to the tariff, rate, rate plan, arte plan modifier, or their subcomponents.</xs:appinfo>
-                    <xs:documentation>Utility maintained identifier used by the utility to refer to a tariff or part of a tariff with which this rate plan is associated.</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="50"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="effectivePeriod" type="DateIntervalType"/>
-            <xs:element minOccurs="0" name="initialEffectiveDate"/>
-            <xs:element name="dateCancellation" nillable="true" minOccurs="0">
-                <xs:annotation>
-                    <xs:appinfo/>
-                    <xs:documentation/>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the date that the rate plan was cancelled, or is expected to be cancelled, if any such date exists<p/>
-                            
-                            Comment:<br/> 
-                            - Date that the rate plan was cancelled, or is expected to be cancelled, if any such date exists 
-                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:date"> </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
-                <xs:annotation>
-                    <xs:appinfo/>
-                    <xs:documentation/>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated<p/>
-                            
-                            Comment:<br/> 
-                            - Date that the rate plan was drafted
-                            - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:date"> </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element minOccurs="0" ref="eligibility"/>
+            <xs:element ref="holidays"/>
+            <xs:element minOccurs="0" ref="seasons"/>
+            <xs:element ref="serviceTierThresholds" minOccurs="0"/>
+            <xs:element ref="timeOfUsePeriods"/>
+            <xs:element ref="charges"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

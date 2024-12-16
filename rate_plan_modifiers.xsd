@@ -5,13 +5,7 @@
     <xs:include schemaLocation="common_definitions.xsd"/>
     <xs:include schemaLocation="charges.xsd"/>
     <xs:include schemaLocation="eligibility.xsd"/>
-    <xs:include schemaLocation="holidays.xsd"/>
-    <xs:include schemaLocation="rate_plans.xsd"/>
-    <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
-    <xs:include schemaLocation="seasons.xsd"/>
-    <xs:include schemaLocation="service_tier_thresholds.xsd"/>
-    <xs:include schemaLocation="tariff_books.xsd"/>
-    <xs:include schemaLocation="time_of_use_periods.xsd"/>
+    <xs:include schemaLocation="pricing_components.xsd"/>
     <xs:element name="ratePlanModifiers">
         <xs:complexType>
             <xs:sequence>
@@ -19,8 +13,8 @@
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="ratePlanModifierType">
-                                <xs:attribute ref="isReplacementRecord" use="optional"/>
-                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
+                                <xs:attribute ref="ratePlanModifierURI"/>
+                                <xs:attributeGroup ref="crud"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
@@ -28,53 +22,70 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:complexType name="RatePlanModifierApplicabilityType">
+        <xs:sequence>
+            <xs:element minOccurs="0" ref="hasMeasurementKinds">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="en-US">Measurement inputs to cost model</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">Measurement inputs to cost, , e.g. "demand" for a rate plan that has demand charges</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="modelComponents">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="en-US">list of "tags" with boolean values used for quality assurance purposes in data ingest and cost modeling, and search via GUI  filtering, sorting, and grouping. andAPI calls</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">list of "tags" with boolean values used for quality assurance purposes in data ingest and cost modeling, and search via GUI  filtering, sorting, and grouping.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="profile"/>
+            <xs:element minOccurs="0" ref="customRatePlanAttribute">
+                <xs:annotation>
+                    <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="ratePlanModifierType">
         <xs:sequence>
-            <xs:element name="ratePlanModifierCodeUnique"/>
-            <xs:element name="sourceMetadata">
+            <xs:element name="ratePlanModifierIdentifiers">
                 <xs:complexType>
-                    <xs:complexContent>
-                        <xs:extension base="DocumentationType">
-                            <xs:choice>
-                                <xs:element minOccurs="0" name="statementTypeCode" type="xs:string">
-                                    <xs:annotation>
-                                        <xs:documentation>provided is sourceDocKind="Statement"</xs:documentation>
-                                    </xs:annotation>
-                                </xs:element>
-                                <xs:element minOccurs="0" ref="tariffBookLeafRanges">
-                                    <xs:annotation>
-                                        <xs:documentation>Provided if sourceDocKind="TariffBook"</xs:documentation>
-                                    </xs:annotation>
-                                </xs:element>
-                            </xs:choice>
-                        </xs:extension>
-                    </xs:complexContent>
+                    <xs:sequence>
+                        <xs:element ref="ratePlanModifierCodeUnique"/>
+                    </xs:sequence>
                 </xs:complexType>
             </xs:element>
+            <xs:element name="dataSourceMetadata" type="DocumentationType"/>
+            <xs:element ref="utilityInfo"/>
+            <xs:element ref="commodity"/>
             <xs:element name="ratePlanModifierKind">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="VDER_credits"/>
                         <xs:enumeration value="HEAP_discounts"/>
+                        <xs:enumeration value="pilot_program_modifier"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element ref="scopeOfApplicability"/>
-            <xs:element name="validPeriod" type="DateIntervalType"/>
-            <xs:element default="" name="modifierName" type="xs:string"/>
-            <xs:element name="modifierDescription">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="2000"/>
-                        <xs:minLength value="20"/>
-                    </xs:restriction>
-                </xs:simpleType>
+            <xs:element name="ratePlanModifierApplicability" type="ScopeOfApplicabilityType"/>
+            <xs:element ref="provenanceMetadata"> </xs:element>
+            <xs:element ref="name">
+                <xs:annotation>
+                    <xs:appinfo>The name of the rate plan</xs:appinfo>
+                    <xs:documentation>The name of the rate plan. Note that the rate plan name may not explicitly or exactly appear as its own distinct "rate" in the tariff book. Naming may be derived from the names of groups of charges listed in tariff documentation.</xs:documentation>
+                </xs:annotation>
             </xs:element>
-            <xs:element ref="seasons"/>
-            <xs:element minOccurs="0" ref="holidays"/>
-            <xs:element minOccurs="0" ref="timeOfUsePeriods"/>
-            <xs:element minOccurs="0" ref="serviceTierThresholds"/>
-            <xs:element ref="charges"> </xs:element>
+            <xs:element ref="validityStatusDates"/>
+            <xs:element ref="description">
+                <xs:annotation>
+                    <xs:appinfo>A brief text description of the rate plan describing its most important applicability context, enrollment criteria, and eligibility limits</xs:appinfo>
+                    <xs:documentation>A brief text description of the rate plan describing its most important applicability context, enrollment criteria, and eligibility limits</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" ref="eligibility"/>
+            <xs:element ref="holidays"/>
+            <xs:element minOccurs="0" ref="seasons"/>
+            <xs:element ref="serviceTierThresholds" minOccurs="0"/>
+            <xs:element ref="timeOfUsePeriods"/>
+            <xs:element ref="charges"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

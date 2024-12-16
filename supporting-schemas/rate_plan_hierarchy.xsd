@@ -2,7 +2,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
     vc:minVersion="1.0" vc:maxVersion="1.1">
-    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:include schemaLocation="../common_definitions.xsd"/>
     <xs:element name="utilities">
         <xs:complexType>
             <xs:sequence>
@@ -17,7 +17,7 @@
                                     </xs:restriction>
                                 </xs:simpleType>
                             </xs:element>
-                            <xs:element minOccurs="0" name="parentOrgName"/>
+                            <xs:element minOccurs="0" type="xs:string" name="parentOrgName"/>
                             <xs:element name="iedrOrgs">
                                 <xs:complexType>
                                     <xs:sequence>
@@ -56,14 +56,14 @@
                                                   <xs:sequence>
                                                   <xs:element name="orgAbbreviation"
                                                   type="xs:string"/>
-                                                  <xs:element name="serviceType" type="ServiceKind"/>
+                                                  <xs:element ref="commodity"/>
                                                   <xs:element name="tariffs">
                                                   <xs:complexType>
                                                   <xs:sequence>
                                                   <xs:element name="tariff" maxOccurs="unbounded">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element name="dpsPscNumber" type="xs:string"> </xs:element>
+                                                  <xs:element ref="dpsPscNumber"></xs:element>
                                                   <xs:element name="serviceClasses">
                                                   <xs:complexType>
                                                   <xs:sequence>
@@ -82,7 +82,7 @@
                                                   <xs:complexType>
                                                   <xs:sequence>
                                                   <xs:element name="rateCode" type="xs:string"/>
-                                                  <xs:element name="rateName"/>
+                                                  <xs:element type="xs:string" name="rateName"/>
                                                   <xs:element name="ratePlanOptions">
                                                   <xs:complexType>
                                                   <xs:sequence>
@@ -135,8 +135,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute ref="isReplacementRecord" use="optional"/>
-            <xs:attribute ref="IsDeletedRecord" use="optional"/>
+            <xs:attributeGroup ref="crud"/>
         </xs:complexType>
     </xs:element>
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-   <xs:include schemaLocation="rate_plan_data_input.xsd"/>
-    <xs:include schemaLocation="rate_plan_data_output.xsd"/>
+   <xs:include schemaLocation="rate_plan_data_transfer.xsd"/>
     <xs:include schemaLocation="charges.xsd"/>
     <xs:include schemaLocation="charges_supply.xsd"/>
     <xs:include schemaLocation="common_definitions.xsd"/>

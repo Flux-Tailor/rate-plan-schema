@@ -20,8 +20,7 @@
                                                 <xs:element name="supplyCharge"
                                                   maxOccurs="unbounded" type="ChargeType"/>
                                             </xs:sequence>
-                                            <xs:attribute ref="isReplacementRecord"/>
-                                            <xs:attribute ref="IsDeletedRecord"/>
+                                            <xs:attributeGroup ref="crud"/>
                                         </xs:complexType>
                                     </xs:element>
                                 </xs:sequence>

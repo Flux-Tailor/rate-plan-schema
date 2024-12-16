@@ -15,8 +15,8 @@
     </meta>
     <projectTree name="RatePlanSchema.xpr">
         <folder masterFiles="true" name="Main Files">
-            <file name="rate_plan_data_input.xsd"/>
-            <file name="rate_plan_data_output.xsd"/>
+            <file name="supporting-schemas/rate_plan_data_transfer.xsd"/>
+            <file name="rate_plans.xsd"/>
         </folder>
         <folder path="."/>
     </projectTree>

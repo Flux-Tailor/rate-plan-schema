@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
-    <xs:include schemaLocation="common_definitions.xsd"/>
-    <xs:include schemaLocation="tariff_books.xsd"/>
-    <xs:include schemaLocation="tariff_statements.xsd"/>
-    <xs:include schemaLocation="rate_plan_modifiers.xsd"/>
-    <xs:include schemaLocation="charges_supply.xsd"/>
+    <xs:include schemaLocation="../common_definitions.xsd"/>
+    <xs:include schemaLocation="../tariff_books.xsd"/>
+    <xs:include schemaLocation="../tariff_statements.xsd"/>
+    <xs:include schemaLocation="../rate_plan_modifiers.xsd"/>
+    <xs:include schemaLocation="../charges_supply.xsd"/>
     <xs:element name="dataTransfer">
         <xs:complexType>
             <xs:sequence>
@@ -13,8 +13,7 @@
                 <xs:element ref="tariffStatements" minOccurs="0"/>
                 <xs:element ref="supplyChargesExtracts" minOccurs="0"/>
             </xs:sequence>
-            <xs:attribute ref="isReplacementRecord" use="optional"/>
-            <xs:attribute ref="IsDeletedRecord" use="optional"/>
+            <xs:attributeGroup ref="crud"/>
         </xs:complexType>
     </xs:element>
 </xs:schema>
