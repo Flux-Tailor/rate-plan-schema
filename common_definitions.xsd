@@ -5,7 +5,8 @@
     <!--
 =======================================
 Schema: common_definitions.xsd  
-Version: V0.91
+Author: 
+License:
 =======================================
 -->
 
@@ -14,166 +15,64 @@ Version: V0.91
 Attributes     
 =======================================
 -->
-    <xs:attribute name="ratePlanCodeUnique">
+    <xs:attribute name="ratePlanURI" type="xs:anyURI">
         <xs:annotation>
-            <xs:appinfo xml:lang="en">a unique identifier for the rate plan to consistently identify the rate plan and its parameters</xs:appinfo>
+            <xs:appinfo xml:lang="en">a unique identifier for the rate plan to consistently identify the rate plan and its parameters
+
+https://iedr.nyserda.ny.gov/rate-plan/90d30878-b022-4c54-87bb-71fe7359aae6</xs:appinfo>
             <xs:documentation xml:lang="en">unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
         </xs:annotation>
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:maxLength value="40"/>
-            </xs:restriction>
-        </xs:simpleType>
     </xs:attribute>
+    <xs:attribute name="ratePlanModifierURI" type="xs:anyURI">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en">a unique identifier for the rate plan modifier to consistently identify and access data</xs:appinfo>
+            <xs:documentation xml:lang="en">ex: https://iedr.nyserda.ny.gov/rate-plan-modifier/50d30878-b022-4c54-87bb-71fe7359aae6</xs:documentation>
+        </xs:annotation>
+    </xs:attribute>
+    <xs:attributeGroup name="crud">
+        <xs:attribute ref="isReplacementRecord"/>
+        <xs:attribute ref="isDeletedRecord"/>
+    </xs:attributeGroup>
     <xs:attribute name="isReplacementRecord" type="xs:boolean">
         <xs:annotation>
             <xs:documentation>The record replaces a record included in a prior data transfer.</xs:documentation>
         </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="IsDeletedRecord" type="xs:boolean">
+    <xs:attribute name="isDeletedRecord" type="xs:boolean">
         <xs:annotation>
             <xs:documentation>The record has been deleted or updated in the source from which it was extracted.</xs:documentation>
         </xs:annotation>
     </xs:attribute>
+
     <!--
 =======================================
 Complex Types
 =======================================
 -->
-    <xs:complexType name="ConstraintVariableType">
+    <xs:complexType name="ApplicabilityType">
         <xs:sequence>
-            <xs:element name="serviceClasses" minOccurs="0">
-                <xs:annotation>
-                    <xs:appinfo>Applicable Service Classes</xs:appinfo>
-                    <xs:documentation>Applicable service classes, eg. "1" for service Class 1. Use either an integer or "All" if applicable to all service classes.
-If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just the number for the parent service class. The suffix shall made available separately in "rateCodes"</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="serviceClass">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="serviceClassNumber"
-                                        type="xs:string"/>
-                                    <xs:element name="serviceClassName"
-                                        type="xs:string"/>
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element form="qualified" name="rateCodes" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Applicable service rate codes, eg. "2" for Service Class 1 rate 2".</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="rateCode">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="rateCodeNumber"
-                                        type="xs:int"/>
-                                    <xs:element name="rateName" type="xs:string"
-                                    />
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element form="qualified" minOccurs="0" name="ratePlans">
-                <xs:annotation>
-                    <xs:documentation>Applicable ratePlanCodeUnique values. Not used when ConstrainVariableType is used within RatePlanType occurrences.</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded"
-                            name="ratePlanCodeUnique" type="xs:string"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element form="qualified" minOccurs="0" name="ratePlanModifiers">
-                <xs:annotation>
-                    <xs:documentation>Applicable ratePlanModifierCodeUnique values</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded"
-                            name="ratePlanModifierCodeUnique" type="xs:string"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="customerClasses" minOccurs="0">
-                <xs:annotation>
-                    <xs:appinfo>Applicable customer classes</xs:appinfo>
-                    <xs:documentation>Applicable customer classes</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="customerClass"
-                            type="CustomerClassKind"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="customRatePlanAttribute" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
-                </xs:annotation>
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="attributeName"/>
-                        <xs:element name="value"/>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element ref="customerEntities"/>
-            <xs:element ref="dwellingScenario"/>
-            <xs:element minOccurs="0" ref="endUses">
-                <xs:annotation>
-                    <xs:appinfo>Applicable end uses</xs:appinfo>
-                    <xs:documentation/>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" ref="equipmentScenario"/>
-            <xs:element minOccurs="0" ref="onSiteGenerationScenario"/>
-            <xs:element minOccurs="0" ref="phases"/>
-            <xs:element minOccurs="0" name="season">
+            <xs:element minOccurs="0" ref="identifiers"/>
+            <xs:element minOccurs="0" ref="hasMeasurementKinds"/>
+            <xs:element minOccurs="0" ref="modelComponents"/>
+            <xs:element ref="profile" minOccurs="0"/>
+            <xs:element minOccurs="0" ref="seasonNames">
                 <xs:annotation>
                     <xs:appinfo>Applicable season</xs:appinfo>
                     <xs:documentation>Applicable season</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" ref="serviceProvisionScenario"/>
-            <xs:element minOccurs="0" name="territories">
+            <xs:element name="customRatePlanAttributes" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability - TODO: consider removing as no linking is possible to rate plans and rate plan modifiers</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element maxOccurs="unbounded" name="territory">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="territoryId" maxOccurs="1"
-                                        type="xs:string"> </xs:element>
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
+                        <xs:element ref="customRatePlanAttribute"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element minOccurs="0" ref="voltages"/>
         </xs:sequence>
     </xs:complexType>
-    <!--
-   ================
- Measurement Definition
-   ================
-   -->
-
-    <!--
-   ================
-   Time Definition
-   ================
-   -->
-
     <xs:complexType name="DateIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startDate" type="xs:date"/>
@@ -187,6 +86,74 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
             <xs:element form="qualified" name="startDateTime" type="xs:dateTime"/>
             <xs:element name="endDateTime" form="qualified" type="xs:dateTime"
                 minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="DocumentationType">
+        <xs:sequence>
+            <xs:element ref="utilityInfo"/>
+            <xs:element ref="commodity"/>
+            <xs:element ref="dataSource"/>
+            <xs:element ref="mediaType">
+                <xs:annotation>
+                    <xs:appinfo>media type of the source document</xs:appinfo>
+                    <xs:documentation>media type for the document as registered by IANA, enumeration contains subset allowed.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="sourceURL" type="xs:anyURI">
+                <xs:annotation>
+                    <xs:documentation>URL from which official source tariff documentation can be downloaded</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dataCreationMethod">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Manual"/>
+                        <xs:enumeration value="AutomatedDataExtraction"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="dataDownloadURL" type="xs:anyURI" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>URL from which official structured data was downloaded</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="effectivePeriod"/>
+            <xs:element name="datePublished" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>The date on which tariff documentation was published in official sources such as the Public Service Commission Electronic Tariff System (ETS) or utility websites.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateSourceLastUpdated" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>the date at which a record or resource was last changed or modified in the source from which data was extracted.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateTimeDataExtract" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">the datetime at which data was extracted</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="dateTimeDataTransfer" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>the datetime at which data was transferred</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="updateFrequency">
+                <xs:annotation>
+                    <xs:documentation>The expected update frequency for this document</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="daily"/>
+                        <xs:enumeration value="weekly"/>
+                        <xs:enumeration value="monthly"/>
+                        <xs:enumeration value="quarterly"/>
+                        <xs:enumeration value="annually"/>
+                        <xs:enumeration value="biannually"/>
+                        <xs:enumeration value="multiyear"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="MeasureType">
@@ -210,7 +177,7 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 type="xs:string"/>
             <xs:element name="measurementSource" type="MeasurementKind"
                 minOccurs="0"/>
-            <xs:element name="phases" type="PhaseCodeKind" minOccurs="0"/>
+            <xs:element minOccurs="0" ref="phases"/>
             <xs:element name="unitOfMeasure" type="UnitSymbolKind" minOccurs="0"/>
             <xs:element name="measurementInterval" minOccurs="0">
                 <xs:complexType>
@@ -222,8 +189,17 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
                 </xs:complexType>
             </xs:element>
             <xs:element minOccurs="0" ref="statisticKind"/>
-            <xs:element name="inclusionStatus" type="ValueInclusionKind"
-                minOccurs="0"/>
+            <xs:element minOccurs="0" ref="inclusionStatus"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ProfileMetricType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en-US">Numeric cost model variable determined by a customer-specific scenario or utility setting.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="profileVariable" type="ProfileVariableKind"/>
+            <xs:element minOccurs="0" name="scenarioVariableMeasurement"
+                type="MeasureType"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="ScopeOfApplicabilityType">
@@ -231,108 +207,16 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
             <xs:documentation>The scope of rate plan parameters to which a data point or set of data points is applicable. This will be used to filter charges data for the set applicable to a customer scenario to be calculated.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element form="qualified" name="include"
-                type="ConstraintVariableType">
+            <xs:element form="qualified" name="include" type="ApplicabilityType">
                 <xs:annotation>
                     <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit inclusion. All other values for this same field are explicitly excluded.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="exclude" type="ConstraintVariableType"
-                minOccurs="0">
+            <xs:element name="exclude" type="ApplicabilityType" minOccurs="0">
                 <xs:annotation>
                     <xs:documentation>A set of attribute values that constrain the scope of applicability of this data element by explicit exclusion. This allows for the exclusion of a subset of excluded values for one variables from a larger set of included values for another variable, e.g. "All service class 1 rate plans except time of use rate plans"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="DocumentationType">
-        <xs:sequence>
-            <xs:element minOccurs="0" name="parentOrgIedrAbbreviation">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="3"/>
-                        <xs:minLength value="3"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element minOccurs="0" name="parentOrgName"/>
-            <xs:element name="iedrOrgAbbreviation" type="xs:string"/>
-            <xs:element minOccurs="0" name="iedrUtilityUserFacingName"/>
-            <xs:element minOccurs="0" name="tariffUtilityName">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the name of the utility provider in the tariff book with which this rate plan is associated<p/>
-                            
-                            Comment:<br/> 
-                            Name of utility provider</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="100"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element minOccurs="0" name="dpsCompanyId" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation>populated by IEDR platform</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element minOccurs="0" name="dpsPscNumber">
-                <xs:simpleType>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="3"/>
-                        <xs:maxExclusive value="1000"/>
-                        <xs:whiteSpace fixed="true" value="collapse"/>
-                        <xs:minInclusive value="1"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="serviceType" type="ServiceKind"/>
-            <xs:element name="sourceDocKind">
-                <xs:annotation>
-                    <xs:documentation>The type of official tariff documentation</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="TariffBook"/>
-                        <xs:enumeration value="Statement"/>
-                        <xs:enumeration value="UtilityWebsiteManualEntry"/>
-                        <xs:enumeration value="UtilityWebsiteDataDownload"/>
-                        <xs:enumeration value="MarketSupplyChargesData"/>
-                        <xs:enumeration value="ESCORetailSupplyChargesData"/>
-                        <xs:enumeration
-                            value="CommunityChoiceAggregationSupplyChargesData"/>
-                        <xs:enumeration value="CommunitySolarSupplyChargesData"
-                        />
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="sourceURL" type="xs:anyURI">
-                <xs:annotation>
-                    <xs:documentation>URL from which official source tariff documentation can be downloaded</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="dataDownloadURL" type="xs:anyURI" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>URL from which official structured data was downloaded</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="datePublished" type="xs:date">
-                <xs:annotation>
-                    <xs:documentation>The date on which tariff documentation was published in official sources such as the Public Service Commission Electronic Tariff System (ETS) or utility websites.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="dateSourceLastUpdated" type="xs:dateTime">
-                <xs:annotation>
-                    <xs:documentation>The date when a record or resource was last changed or modified in the source from which data was extracted.</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="dateTimeDataExtract" type="xs:dateTime">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en">The date on which data was extracted</xs:documentation>
-                </xs:annotation>
-            </xs:element>
-            <xs:element name="effectivePeriod" type="DateIntervalType"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TimeIntervalType">
@@ -342,8 +226,693 @@ If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just t
         </xs:sequence>
     </xs:complexType>
 
+    <!--
+=======================================
+Global Elements
+=======================================
+-->
 
+    <xs:element name="calcIntervalKind">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="PER-CYCLE"/>
+                <xs:enumeration value="CYCLE"/>
+                <xs:enumeration value="DAY"/>
+                <xs:enumeration value="WEEK"/>
+                <xs:enumeration value="MONTH"/>
+                <xs:enumeration value="YEAR"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="calcIntervalPer" type="xs:int"/>
+    <xs:element name="calculationMode">
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="TOTAL"/>
+                <xs:enumeration value="PERIOD"/>
+                <xs:enumeration value="SLIDING"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="commodity" type="CommodityKind"/>
+    <xs:element name="customRatePlanAttribute">
+        <xs:annotation>
+            <xs:documentation>Flexible options for rate plan attributes by which to filter rate plans for applicability</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="attributeName" type="xs:string"/>
+                <xs:element name="attributeValue" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dataSource" type="DataSourceKind"/>
+    <xs:element name="description">
+        <xs:annotation>
+            <xs:appinfo>description text</xs:appinfo>
+            <xs:documentation>description text</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="2000"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="dpsCaseNumber" type="xs:string"/>
+    <xs:element name="dpsPscNumber" type="xs:string"/>
+    <xs:element name="dwellingScenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="dwelling"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="dwelling" type="DwellingKind"/>
+    <xs:element name="customerEntities">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="customerEntity"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="customerEntity" type="EntityKind"/>
+    <xs:element name="effectivePeriod" type="DateIntervalType"/>
+    <xs:element name="endUses">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="endUse"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="endUse" type="EndUseKind"/>
+    <xs:element name="equipmentScenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="equipment"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="equipment" type="EquipmentKind"/>
+    <xs:element name="hasMeasurementKinds">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en-US">Measurement inputs to cost model</xs:appinfo>
+            <xs:documentation xml:lang="en-US">Measurement inputs to cost, , e.g. "demand" for a rate plan that has demand charges</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="hasMeasurementKind" type="MeasurementKind"
+                    maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="identifiers">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en-US">the set of identifiers denoting the set of rate plans to which charges are (when used in include) or are not (when used in exclude) applicable</xs:appinfo>
+            <xs:documentation xml:lang="en-US">The set of identifiers denoting the set of rate plans to which charges are (when used in include) or are not (when used in exclude) applicable. Multiple instances can exist for each identifier.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="serviceClassReferences" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>Applicable Service Classes</xs:appinfo>
+                        <xs:documentation>Applicable service classes, eg. "1" for service Class 1. Use either an integer or "All" if applicable to all service classes.
+                            If a suffix is added (ex.: "SC1TOU1" ) this field shall be populated with just the number for the parent service class. The suffix shall made available separately in "rateCodes"</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="serviceClassReference"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element form="qualified" name="rateReferences" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Applicable service rate codes, eg. "2" for Service Class 1 rate 2".</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="rateReference"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element form="qualified" minOccurs="0"
+                    name="ratePlanReferences">
+                    <xs:annotation>
+                        <xs:documentation>Applicable ratePlanCodeUnique values. Not used when ConstrainVariableType is used within RatePlanType occurrences.</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="ratePlanCodeUnique"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element form="qualified" minOccurs="0"
+                    name="ratePlanModifierReferences">
+                    <xs:annotation>
+                        <xs:documentation>Applicable ratePlanModifierCodeUnique values</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded"
+                                ref="ratePlanModifierCodeUnique"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="utilityTariffIdReferences" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="utilityTariffId">
+                                <xs:annotation>
+                                    <xs:appinfo>utility-maintained identifier for a tariff or rate</xs:appinfo>
+                                    <xs:documentation>utility-maintained identifier for a ta</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="iedrRatePlanBrowserURL" type="xs:anyURI">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en-US">IEDR Permalink URL</xs:appinfo>
+            <xs:documentation xml:lang="en-US">IEDR Permalink URL, ex.:https://iedr.nyserda.ny.gov/rate-plan/?rateId=KNYGSC22CT2</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="inclusionStatus" type="ValueInclusionKind"/>
+    <xs:element name="initialEffectiveDate" type="xs:date"/>
+    <xs:element name="mediaType">
+        <xs:annotation>
+            <xs:appinfo>media type of the source document</xs:appinfo>
+            <xs:documentation>media type for document as registered by IANA, enumeration contains allowed subset.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="application/json">
+                    <xs:annotation>
+                        <xs:documentation>JSON</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/pdf">
+                    <xs:annotation>
+                        <xs:documentation>PDF</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/vnd.ms-excel">
+                    <xs:annotation>
+                        <xs:documentation>vnd.ms-excel</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration
+                    value="application/vnd.oasis.opendocument.spreadsheet">
+                    <xs:annotation>
+                        <xs:documentation>vnd.oasis.opendocument.spreadsheet</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/vnd.oasis.opendocument.text">
+                    <xs:annotation>
+                        <xs:documentation>vnd.oasis.opendocument.text</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration
+                    value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <xs:annotation>
+                        <xs:documentation>vnd.openxmlformats-officedocument.spreadsheetml.sheet</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/zip">
+                    <xs:annotation>
+                        <xs:documentation>ZIP</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="image/gif">
+                    <xs:annotation>
+                        <xs:documentation>GIF</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="image/jpeg">
+                    <xs:annotation>
+                        <xs:documentation>JPEG</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="image/png">
+                    <xs:annotation>
+                        <xs:documentation>PNG</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/csv">
+                    <xs:annotation>
+                        <xs:documentation>CSV</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/html">
+                    <xs:annotation>
+                        <xs:documentation>HTML</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/plain">
+                    <xs:annotation>
+                        <xs:documentation>plain</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/rtf">
+                    <xs:annotation>
+                        <xs:documentation>RTF</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/xml">
+                    <xs:annotation>
+                        <xs:documentation>XML</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="month">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en-US">an integer representing the calendar month (i.e. 1-12)</xs:appinfo>
+            <xs:documentation xml:lang="en-US">an integer representing the calendar month(i.e. 1-12)</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:int">
+                <xs:minInclusive value="1"/>
+                <xs:maxInclusive value="12"/>
+                <xs:totalDigits value="2"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="name" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en-US">data provider's own name for the data element</xs:appinfo>
+            <xs:documentation xml:lang="en-US">data provider's own name for the data element</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="onSiteGenerationScenario">
+        <xs:annotation>
+            <xs:appinfo>Applicable onsite generation scenario</xs:appinfo>
+            <xs:documentation/>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="onSiteGeneration"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="onSiteGeneration" type="OnSiteGenerationKind"/>
+    <xs:element name="peakType">
+        <xs:simpleType>
+            <xs:annotation>
+                <xs:documentation>Name of the Peak Type</xs:documentation>
+            </xs:annotation>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="base"/>
+                <xs:enumeration value="mid"/>
+                <xs:enumeration value="peak"/>
+                <xs:enumeration value="offpeak"/>
+                <xs:enumeration value="shoulderpeak"/>
+                <xs:enumeration value="superpeak"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="phases">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="phase" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="phase" type="PhaseCodeKind">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en">Phase code</xs:appinfo>
+            <xs:documentation xml:lang="en">Phase code value representing phases. from CIM: "Number of wires and specific nominal phases can be deduced from enumeration literal values. For example, ABCN is three-phase, four-wire, s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are single-phase, two-wire."</xs:documentation>
+            <xs:documentation>source: CIM TC57: https://ontology.tno.nl/IEC_CIM/cim_UsagePoint.phaseCode.html</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="profile">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="customerClasses">
+                    <xs:annotation>
+                        <xs:appinfo>Applicable customer classes</xs:appinfo>
+                        <xs:documentation>Applicable customer classes</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="unbounded"
+                                name="customerClass" type="CustomerClassKind"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element ref="customerEntities" minOccurs="0"/>
+                <xs:element ref="dwellingScenario" minOccurs="0"/>
+                <xs:element minOccurs="0" ref="endUses">
+                    <xs:annotation>
+                        <xs:appinfo>Applicable end uses</xs:appinfo>
+                        <xs:documentation/>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="0" ref="equipmentScenario"/>
+                <xs:element minOccurs="0" ref="onSiteGenerationScenario"/>
+                <xs:element minOccurs="0" ref="phases"/>
+                <xs:element minOccurs="0" ref="serviceProvisionScenario"/>
+                <xs:element minOccurs="0" ref="ratePlanTerritories"></xs:element>
+                <xs:element minOccurs="0" ref="voltages"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="provenanceMetadata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tariffBookLeafRanges"/>
+                <xs:element maxOccurs="unbounded" ref="dpsCaseNumber"></xs:element>
+                <xs:element ref="iedrRatePlanBrowserURL" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo xml:lang="en-US">IEDR Permalink URL</xs:appinfo>
+                        <xs:documentation xml:lang="en-US">IEDR Permalink URL, ex.:https://iedr.nyserda.ny.gov/rate-plan/?rateId=KNYGSC22CT2</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element ref="tariffStatementTypeCode"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="modelComponents">
+        <xs:annotation>
+            <xs:appinfo>List of "tags" with boolean values used for grouping, filtering, and data validation purposes</xs:appinfo>
+            <xs:documentation>List of "tags" with boolean values used for grouping, filtering, and data validation purposes</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="hasIcapTag">
+                    <xs:annotation>
+                        <xs:appinfo>Boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer </xs:appinfo>
+                        <xs:documentation>Boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer </xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:boolean"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="hasRetailSupply">
+                    <xs:annotation>
+                        <xs:appinfo>Boolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply</xs:appinfo>
+                        <xs:documentation>oolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:boolean"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="hasServiceTiers">
+                    <xs:annotation>
+                        <xs:appinfo>Boolean indicating whether the rate plan includes tiered rates for blocks of service, also known as "baseline allowance"</xs:appinfo>
+                        <xs:documentation>Boolean indicating whether the rate plan includes tiered rates for blocks of service, also known as "baseline allowance"</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:boolean"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="hasTimeOfUsePricing">
+                    <xs:annotation>
+                        <xs:appinfo>Boolean indicating whether the rate plan includes Time of Use (TOU) Pricing</xs:appinfo>
+                        <xs:documentation>oolean indicating whether the rate plan includes Time of Use (TOU) Pricing</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:boolean"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
 
+                <xs:element name="isRider">
+                    <xs:annotation>
+                        <xs:appinfo>Boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book</xs:appinfo>
+                        <xs:documentation>Boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:boolean"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="rateReference">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="rateCode"/>
+                <xs:element ref="rateName"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="rateCode" type="xs:string"/>
+    <xs:element name="rateName" type="xs:string"/>
+    <xs:element name="ratePlanCodeUnique" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>unique identifier for the rate plan permutation assigned by utility</xs:appinfo>
+            <xs:documentation>unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="ratePlanModifierCodeUnique" type="xs:string">
+        <xs:annotation>
+            <xs:appinfo>unique identifier for the rate plan modifier assigned by the utility</xs:appinfo>
+            <xs:documentation>unique identifier for the rate plan modifier assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"></xs:element>
+    <xs:element name="seasonNames">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="seasonName"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="seasonName" type="SeasonNameKind">
+        <xs:annotation>
+            <xs:appinfo>Season Name</xs:appinfo>
+            <xs:documentation>Season Name</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="serviceClassReference">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="serviceClassNumber"/>
+                <xs:element ref="serviceClassName"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="serviceClassNumber" type="xs:string"/>
+    <xs:element name="serviceClassName" type="xs:string"/>
+    <xs:element name="serviceProvisionScenario">
+        <xs:annotation>
+            <xs:appinfo>Applicable service provision</xs:appinfo>
+            <xs:documentation>Applicable service provision</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="serviceProvision"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="serviceProvision" type="ServiceProvisionKind"/>
+    <xs:element name="statementComponent">
+        <xs:annotation>
+            <xs:appinfo>the component of to which the charge is allocated on a customer bill</xs:appinfo>
+            <xs:documentation>the component of to which the charge is allocated on a customer bill</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="delivery"/>
+                <xs:enumeration value="supply"/>
+                <xs:enumeration value="bundled"/>
+                <xs:enumeration value="export"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="statisticKind">
+        <xs:annotation>
+            <xs:appinfo>The statistic type of the measurement</xs:appinfo>
+            <xs:documentation>The statistic type of the measurement</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="3"/>
+                <xs:enumeration value="min"/>
+                <xs:enumeration value="max"/>
+                <xs:enumeration value="avg"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="tariffBookLeafRanges">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="tariffBookLeafRange" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tariffBookLeafRange">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="startLeafNumber" type="xs:string"/>
+                <xs:element name="startLeafMetadata">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="receivedDate" type="xs:date"/>
+                            <xs:element ref="initialEffectiveDate"/>
+                            <xs:element name="effectiveDate" type="xs:date"/>
+                            <xs:element maxOccurs="unbounded"
+                                ref="dpsCaseNumber"/>
+                            <xs:element name="status">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="EFFECTIVE"/>
+                                        <xs:enumeration value="PENDING"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="revisionNumber" type="xs:int"/>
+                            <xs:element name="supersedingRevisionNumber"
+                                type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="endLeafNumber" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="tariffStatementTypeCode" type="xs:string"/>
+    <xs:element name="utilityInfo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="parentOrgIedrAbbreviation">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="AGR"/>
+                            <xs:enumeration value="CEI"/>
+                            <xs:enumeration value="NGG"/>
+                            <xs:enumeration value="PLI"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element minOccurs="0" name="parentOrgName" type="xs:string"/>
+                <xs:element name="iedrOrgAbbreviation" nillable="false">
+                    <xs:annotation>
+                        <xs:appinfo>a three letter abbreviation for the utility or data provider assigned for the IEDR platform</xs:appinfo>
+                        <xs:documentation>a three letter abbreviation for the utility or data provider assigned for the IEDR platform</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="3"/>
+                            <xs:enumeration value="CED"/>
+                            <xs:enumeration value="CHG"/>
+                            <xs:enumeration value="DPS"/>
+                            <xs:enumeration value="KLI"/>
+                            <xs:enumeration value="KNY"/>
+                            <xs:enumeration value="LBR"/>
+                            <xs:enumeration value="LPA"/>
+                            <xs:enumeration value="NFG"/>
+                            <xs:enumeration value="NIM"/>
+                            <xs:enumeration value="NRD"/>
+                            <xs:enumeration value="NYE"/>
+                            <xs:enumeration value="ORU"/>
+                            <xs:enumeration value="RGE"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="iedrUtilityUserFacingName" type="xs:string"
+                    minOccurs="0"/>
+                <xs:element ref="dpsPscNumber" minOccurs="0"/>
+                <xs:element name="tariffUtilityName" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>The  name of the utility provider as it appears in the tariff book with which this rate plan is associated</xs:appinfo>
+                        <xs:documentation>The  name of the utility provider as it appears in the tariff book with which this rate plan is associated</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:maxLength value="100"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="dpsCompanyId" type="xs:string" minOccurs="0">
+                    <xs:annotation>
+                        <xs:documentation>Id used in ET DPS system populated by IEDR platform and used to generate URL linkage for source data references</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="organizationType" nillable="false">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration
+                                value="DistributedSystemPlatformProvider"/>
+                            <xs:enumeration value="RetailSupplier"/>
+                            <xs:enumeration value="CommunityChoiceAggregator"></xs:enumeration>
+                            <xs:enumeration value="CommunitySolarProvider"></xs:enumeration>
+                            <xs:enumeration value="Prosumer"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="utilityTariffId">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en-US">Identifier used by the utility to refer to the tariff, rate, rate plan, arte plan modifier, or their subcomponents.</xs:appinfo>
+            <xs:documentation xml:lang="en-US">Utility maintained identifier used by the utility to refer to a tariff or part of a tariff with which this rate plan is associated.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:maxLength value="50"/>
+            </xs:restriction>
+        </xs:simpleType>
+    </xs:element>
+    <xs:element name="validityStatusDates">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="effectivePeriod"/>
+                <xs:element minOccurs="0" ref="initialEffectiveDate"/>
+                <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo>if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated</xs:appinfo>
+                        <xs:documentation> if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated</xs:documentation>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Tooltip:<br/> 
+                               <p/>
+                                
+                                Comment:<br/> 
+                                - Date that the rate plan was drafted
+                                - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:date"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+                <xs:element name="dateCancellation" nillable="true"
+                    minOccurs="0">
+                    <xs:annotation>
+                        <xs:appinfo/>
+                        <xs:documentation/>
+                    </xs:annotation>
+                    <xs:simpleType>
+                        <xs:annotation>
+                            <xs:documentation>Tooltip:<br/> 
+                                the date that the rate plan was cancelled, or is expected to be cancelled, if any such date exists<p/>
+                                
+                                Comment:<br/> 
+                                - Date that the rate plan was cancelled, or is expected to be cancelled, if any such date exists 
+                                - Date formatted in either basic or extended ISO compliant format as “YYYYMMDD” or “YYYY-MM-DD," respectively. </xs:documentation>
+                        </xs:annotation>
+                        <xs:restriction base="xs:date"> </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="voltages">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="voltage" maxOccurs="unbounded"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="voltage" nillable="true" type="VoltageKind">
+        <xs:annotation>
+            <xs:appinfo xml:lang="en">Type of voltage, also called "Tension"</xs:appinfo>
+            <xs:documentation xml:lang="en">Enumeration describing the type of applicable voltage (also called "tension"). Where applicable, numeric voltage limits applicable to the rate plan or rate plan modifiers associated with a given charge shall be defined further in each of its respective "eligibility">"limit" elements</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <!--
 =======================================
 Enumerations simpleType
@@ -372,12 +941,46 @@ Enumerations simpleType
             <xs:enumeration value="Substation"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="DataSourceKind">
+        <xs:annotation>
+            <xs:documentation>The type of official tariff documentation</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="TariffBook"/>
+            <xs:enumeration value="Statement"/>
+            <xs:enumeration value="MarketSupplyChargesData"/>
+            <xs:enumeration value="ESCORetailSupplyChargesData"/>
+            <xs:enumeration value="CommunityChoiceAggregationSupplyChargesData"/>
+            <xs:enumeration value="CommunitySolarData"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DwellingKind">
+        <xs:annotation>
+            <xs:appinfo>List of dwelling types</xs:appinfo>
+            <xs:documentation>List of dwelling types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Multifamily"/>
+            <xs:enumeration value="SingleFamily"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="EntityKind">
+        <xs:annotation>
+            <xs:appinfo>Applicable entity type</xs:appinfo>
+            <xs:documentation>Applicable entity type</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="NonProfit"/>
+            <xs:enumeration value="Government"/>
+            <xs:enumeration value="CommunityBasedOrganization"/>
+            <xs:enumeration value="PrivateOrganization"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:simpleType name="EndUseKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Heating"/>
             <xs:enumeration value="NonHeating"/>
             <xs:enumeration value="NotExclusivelyIndividualResidence"/>
-            <xs:enumeration value="Heating"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="EquipmentKind">
@@ -467,6 +1070,22 @@ Enumerations simpleType
             <xs:enumeration value="s2N"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="ProfileVariableKind">
+        <xs:annotation>
+            <xs:documentation xml:lang="en-US">Numeric customer profile dependent variable</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Capacity"/>
+            <xs:enumeration value="ContractDemand"/>
+            <xs:enumeration value="EquipmentSize"/>
+            <xs:enumeration value="HouseholdIncome"/>
+            <xs:enumeration value="HouseholdSize"/>
+            <xs:enumeration value="IcapTag"/>
+            <xs:enumeration value="ResidentialProportion"/>
+            <xs:enumeration value="Seasonality"/>
+            <xs:enumeration value="Transportation"/>
+        </xs:restriction>
+    </xs:simpleType>
     <xs:simpleType name="SeasonNameKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Winter"/>
@@ -476,19 +1095,182 @@ Enumerations simpleType
             <xs:enumeration value="Shoulder"/>
             <xs:enumeration value="OffSeason"/>
             <xs:enumeration value="Base"/>
+            <xs:enumeration value="Custom">
+                <xs:annotation>
+                    <xs:appinfo xml:lang="en-US">Seasonality is customized for a customer</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">Seasonality is customized for a customer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="ServiceKind">
+    <xs:simpleType name="CommodityKind">
+        <xs:annotation>
+            <xs:documentation xml:lang="en-US">list of CommodityKind values from CIM, source:https://ontology.tno.nl/IEC_CIM/cim_CommodityKind.html</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="Electric"/>
-            <xs:enumeration value="Gas"/>
-            <xs:enumeration value="Steam"/>
+            <xs:enumeration value="air">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="carbon">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ch4">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="co2">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="communication">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="coolingFluid">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="electricityPrimaryMetered">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="electricitySecondaryMetered">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="hch">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="heatingFluid">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="insulativeGas">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="insulativeOil">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="internet">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="naturalGas">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="none">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nonpotableWater">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="nox">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="pfc">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="potableWater">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="propane">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="refuse">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="sf6">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="so2">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="steam">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="tvLicence">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="wasteWater">
+                <xs:annotation>
+                    <xs:appinfo/>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="ServiceProvisionKind">
         <xs:restriction base="xs:string">
             <xs:enumeration value="Interruptible"/>
             <xs:enumeration value="Standby"/>
+            <xs:enumeration value="Seasonal"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="UnitSymbolKind">
@@ -672,154 +1454,8 @@ Enumerations simpleType
         <xs:restriction base="xs:string">
             <xs:enumeration value="low"/>
             <xs:enumeration value="high"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:element name="calcIntervalKind">
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="PER-CYCLE"/>
-                <xs:enumeration value="CYCLE"/>
-                <xs:enumeration value="DAY"/>
-                <xs:enumeration value="WEEK"/>
-                <xs:enumeration value="MONTH"/>
-                <xs:enumeration value="YEAR"/>
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:element>
-    <xs:element name="calcIntervalPer" type="xs:int"/>
-    <xs:element name="calculationMode">
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="TOTAL"/>
-                <xs:enumeration value="PERIOD"/>
-                <xs:enumeration value="SLIDING"/>
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:element>
-    <xs:element name="dwellingScenario">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="dwelling"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="dwelling" type="DwellingKind"/>
-    <xs:element name="customerEntities">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="customerEntity"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="customerEntity" type="EntityKind"/>
-    <xs:element name="endUses">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="endUse"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="endUse" type="EndUseKind"/>
-    <xs:element name="equipmentScenario">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="equipment"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="equipment" type="EquipmentKind"/>
-    <xs:element name="onSiteGenerationScenario">
-        <xs:annotation>
-            <xs:appinfo>Applicable onsite generation scenario</xs:appinfo>
-            <xs:documentation/>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="onSiteGeneration"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="onSiteGeneration" type="OnSiteGenerationKind"/>
-    <xs:element name="phases">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="phase" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="phase" nillable="true" type="PhaseCodeKind">
-        <xs:annotation>
-            <xs:appinfo xml:lang="en">Phase code</xs:appinfo>
-            <xs:documentation xml:lang="en">Phase code value representing phases. from CIM: "Number of wires and specific nominal phases can be deduced from enumeration literal values. For example, ABCN is three-phase, four-wire, s12n (splitSecondary12N) is single-phase, three-wire, and s1n and s2n are single-phase, two-wire."</xs:documentation>
-            <xs:documentation>source: CIM TC57: https://ontology.tno.nl/IEC_CIM/cim_UsagePoint.phaseCode.html</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"> </xs:element>
-    <xs:element name="serviceProvisionScenario">
-        <xs:annotation>
-            <xs:appinfo>Applicable service provision</xs:appinfo>
-            <xs:documentation>Applicable service provision</xs:documentation>
-        </xs:annotation>
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="serviceProvision"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="serviceProvision" type="ServiceProvisionKind"/>
-    <xs:element name="statisticKind">
-        <xs:annotation>
-            <xs:appinfo>The statistic type of the measurement</xs:appinfo>
-            <xs:documentation>The statistic type of the measurement</xs:documentation>
-        </xs:annotation>
-        <xs:simpleType>
-            <xs:restriction base="xs:string">
-                <xs:maxLength value="3"/>
-                <xs:enumeration value="min"/>
-                <xs:enumeration value="max"/>
-                <xs:enumeration value="avg"/>
-            </xs:restriction>
-        </xs:simpleType>
-    </xs:element>
-    <xs:element name="voltages">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="voltage" maxOccurs="unbounded"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:element name="voltage" nillable="true" type="VoltageKind">
-        <xs:annotation>
-            <xs:appinfo xml:lang="en">Type of voltage, also called "Tension"</xs:appinfo>
-            <xs:documentation xml:lang="en">Enumeration describing the type of applicable voltage (also called "tension"). Where applicable, numeric voltage limits applicable to the rate plan or rate plan modifiers associated with a given charge shall be defined further in each of its respective "eligibility">"limit" elements</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:element name="seasonName" type="SeasonNameKind">
-        <xs:annotation>
-            <xs:appinfo>Season Name</xs:appinfo>
-            <xs:documentation>Season Name</xs:documentation>
-        </xs:annotation>
-    </xs:element>
-    <xs:simpleType name="DwellingKind">
-        <xs:annotation>
-            <xs:appinfo>List of dwelling types</xs:appinfo>
-            <xs:documentation>List of dwelling types</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="Multifamily"/>
-            <xs:enumeration value="SingleFamily"/>
-        </xs:restriction>
-    </xs:simpleType>
-    <xs:simpleType name="EntityKind">
-        <xs:annotation>
-            <xs:appinfo>Applicable entity type</xs:appinfo>
-            <xs:documentation>Applicable entity type</xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="NonProfit"/>
-            <xs:enumeration value="Government"/>
-            <xs:enumeration value="CommunityBasedOrganization"/>
-            <xs:enumeration value="PrivateOrganization"/>
+            <xs:enumeration value="substation"/>
+            <xs:enumeration value="transmission"/>
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>

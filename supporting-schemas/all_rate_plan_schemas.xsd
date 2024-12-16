@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:include schemaLocation="rate_plan_data_transfer.xsd"/>
+    <xs:include schemaLocation="../charges.xsd"/>
+    <xs:include schemaLocation="../charges_supply.xsd"/>
+    <xs:include schemaLocation="../common_definitions.xsd"/>
+    <xs:include schemaLocation="../eligibility.xsd"/>
+    <xs:include schemaLocation="../pricing_components.xsd"/>
+    <xs:include schemaLocation="../rate_plans.xsd"/>
+    <xs:include schemaLocation="../rate_plan_modifiers.xsd"/>
+    <xs:include schemaLocation="../tariff_books.xsd"/>
+    <xs:include schemaLocation="../tariff_statements.xsd"/>
+</xs:schema>

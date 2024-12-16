@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.0" vc:maxVersion="1.1">
+    <xs:include schemaLocation="common_definitions.xsd"/>
+    <xs:element name="holidays">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="holidayName">
+                    <xs:complexType>
+                        <xs:simpleContent>
+                            <xs:extension base="HolidayNameType"> </xs:extension>
+                        </xs:simpleContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attributeGroup ref="crud"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:simpleType name="HolidayNameType">
+        <xs:annotation>
+            <xs:documentation>holiday name, see this element's restrictions for values</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="25"/>
+            <xs:enumeration value="Christmas Day"/>
+            <xs:enumeration value="Indigenous Peoples' Day"/>
+            <xs:enumeration value="Independence Day"/>
+            <xs:enumeration value="Juneteenth"/>
+            <xs:enumeration value="Labor Day"/>
+            <xs:enumeration value="Memorial Day"/>
+            <xs:enumeration value="New Year’s Day"/>
+            <xs:enumeration value="President’s Day"/>
+            <xs:enumeration value="Thanksgiving Day"/>
+            <xs:enumeration value="Veterans Day"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="seasons">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="season">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="SeasonType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="SeasonType">
+        <xs:sequence>
+            <xs:element ref="seasonName"/>
+            <xs:element maxOccurs="unbounded" ref="month"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="serviceTierNumber" type="xs:int"/>
+    <xs:element name="serviceTierThresholds">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="0" name="serviceTierThreshold">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="ServiceTierThresholdType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ServiceTierThresholdType">
+        <xs:sequence>
+            <xs:element name="effectiveInterval" type="DateIntervalType"/>
+            <xs:element ref="serviceTierNumber"/>
+            <xs:element ref="seasonName"/>
+            <xs:element name="measurementSpecification" type="MeasureType"/>
+            <xs:element name="minQuantity" type="xs:int"/>
+            <xs:element name="maxQuantity" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="timeOfUsePeriods">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element maxOccurs="unbounded" minOccurs="1" name="timeOfUsePeriod">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="TimeOfUsePeriodType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ratePeriodNumberNonHolidays" default="">
+        <xs:annotation>
+            <xs:appinfo>the rate period number identifying a peak type applicable during non-holidays</xs:appinfo>
+            <xs:documentation>the rate period number identifying a peak type applicable during non-holidays - period numbers should be counted from highest to lowest price</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="ratePeriodNumberHolidays" nillable="false" default="">
+        <xs:annotation>
+            <xs:appinfo>the alternate rate period number applicable during this time period during applicable holidays.</xs:appinfo>
+            <xs:documentation>the alternate rate period number applicable during this time period during applicable holidays, if the prices applicable do not differ during holidays ratePeriodNumberNonHolidays is repeated to confirm</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:complexType name="TimeOfUsePeriodType">
+        <xs:sequence>
+            <xs:element name="measurementApplicable" type="MeasurementKind"/>
+            <xs:element ref="statementComponent">
+                <xs:annotation>
+                    <xs:documentation>whether the time of use period schedule is for the Delivery, Supply, or Export component of the charges on a bill</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element ref="peakType"/>
+            <xs:element ref="seasonName"/>
+            <xs:element name="dayType">
+                <xs:annotation>
+                    <xs:documentation> whether the rate period is applicable to a "weekend" or "weekday" or in case it's applicable to both to "all"</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="7"/>
+                        <xs:whiteSpace value="collapse"/>
+                        <xs:enumeration value="weekend"/>
+                        <xs:enumeration value="weekday"/>
+                        <xs:enumeration value="all"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="periodStart">
+                <xs:annotation>
+                    <xs:documentation>the time of day on or after which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh]:[mm]:[ss]. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="timeStart">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:time"> </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element ref="inclusionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="periodEnd">
+                <xs:annotation>
+                    <xs:documentation>The time of day in hours and minutes in 24 hour format before or on which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] The timezone for all New York state rate plans is EDT or EST depending on the date.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="timeEnd">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:time"> </xs:restriction>
+                            </xs:simpleType>
+                        </xs:element>
+                        <xs:element ref="inclusionStatus"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="ratePeriodNumberNonHolidays"> </xs:element>
+            <xs:element ref="ratePeriodNumberHolidays"> </xs:element>
+            <xs:element name="totalRatePeriodsPerSeason" nillable="true">
+                <xs:annotation>
+                    <xs:appinfo>The number of rate periods associated with the rate plan for a given season</xs:appinfo>
+                    <xs:documentation>The number of rate periods associated with the rate plan, counting 1 if no separate thresholds or rates exist for winter and summer. If rates do differ seasonally or more granularly, this is the count of timeOfUsePeriods entries, which shall be equal to the number of unique combinations of seasonName and weekday type combination valid during a given effective period for this rate plan. For example: the correct value is "6" if there are 3 time of use periods (off peak/base/peak), two seasons winter and summer, and no separate rates for weekends. If separate weekend rates do exist for each of the three time of use periods there will be 6 time of use periods per season and the correct value is "12" for winter and summer combined.This value is used to inform variables expected to be used in cost modeling and scheduling of devices that operate (turn on/off, charge, import/export) based on time of use
+                        schedules.</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:totalDigits value="2"/>
+                        <xs:minExclusive value="0"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="appliesOnHolidays">
+                <xs:annotation>
+                    <xs:documentation>boolean indicating whether or not this rate period applies on holidays or whether it has the peak type of a different rate period if it's a holiday</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:boolean"> </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element ref="effectivePeriod"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ratePlanTerritories">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ratePlanTerritory">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="RatePlanTerritoryType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="RatePlanTerritoryType">
+        <xs:sequence>
+            <xs:element name="IedrRatePlanTerritoryId" type="xs:string"/>
+            <xs:element name="territoryKind">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="50"/>
+                        <xs:whiteSpace value="collapse"/>
+                        <xs:enumeration value="system_operator_zone_id"/>
+                        <xs:enumeration value="legal_division"/>
+                        <xs:enumeration value="climate_zone_icc"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="geographicUnit" type="xs:string"/>
+            <xs:element name="rawValue" type="xs:string"/>
+            <xs:element ref="effectivePeriod"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

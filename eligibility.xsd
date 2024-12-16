@@ -4,13 +4,23 @@
     <xs:element name="eligibility">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="enrollments">
+                <xs:element name="enrollmentCriteria">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element maxOccurs="unbounded" name="enrollment"
+                            <xs:element maxOccurs="unbounded" name="enrollmentChoice"
                                 type="EnrollmentType"/>
-                            <xs:element name="priorEnrollmentScenario" type="ConstraintVariableType"
-                            />
+                            <xs:element name="priorEnrollments" minOccurs="0">
+                                <xs:annotation>
+                                    <xs:appinfo xml:lang="en-US">constraints on customer enrollment prior to enrolling</xs:appinfo>
+                                    <xs:documentation xml:lang="en-US">constraints on customer enrollment prior to enrolling</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" ref="scopeOfApplicability"
+                                        />
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -18,22 +28,21 @@
                     <xs:complexType>
                         <xs:complexContent>
                             <xs:extension base="LimitType">
-                                <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
-                                <xs:attribute ref="isReplacementRecord" use="optional"/>
-                                <xs:attribute ref="IsDeletedRecord" use="optional"/>
+                                <xs:attributeGroup ref="crud"/>
                             </xs:extension>
                         </xs:complexContent>
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute ref="IsDeletedRecord" use="optional"/>
-            <xs:attribute ref="isReplacementRecord" use="optional"/>
-            <xs:attribute ref="ratePlanCodeUnique" use="optional"/>
+            <xs:attributeGroup ref="crud"/>
         </xs:complexType>
     </xs:element>
     <xs:complexType name="EnrollmentType">
         <xs:sequence>
             <xs:element name="enrollmentKind">
+                <xs:annotation>
+                    <xs:appinfo>whether there is choice to enroll or not, or whether additional enrollment in a program is required.</xs:appinfo>
+                </xs:annotation>
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="ProgramEnrollment"/>
@@ -42,68 +51,41 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="name" type="xs:string">
+            <xs:element ref="name">
                 <xs:annotation>
-                    <xs:documentation>Data provider's own string with naming for enrollment</xs:documentation>
+                    <xs:appinfo xml:lang="en-US">data provider's own name for the data element</xs:appinfo>
+                    <xs:documentation xml:lang="en-US">data provider's own name for the data element</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="description">
+            <xs:element ref="description">
                 <xs:annotation>
-                    <xs:appinfo>A description of the rules for fulfilling this eligibility criteria</xs:appinfo>
-                    <xs:documentation>A description of the rules for fulfilling this eligibility criteria</xs:documentation>
+                    <xs:appinfo>A description of the rules for enrollment</xs:appinfo>
+                    <xs:documentation>A description of the rules for enrollment</xs:documentation>
                 </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="2000"/>
-                        <xs:minLength value="20"/>
-                    </xs:restriction>
-                </xs:simpleType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="LimitType">
         <xs:sequence>
             <xs:element name="limitKind">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                                the type of eligibility limit (e.g. "Tension", "ReactivePower", "Consumption", "ElectricDemand") <p/>
-                                
-                                Comment:<br/> 
-                                ex.: Tension, ReactivePower, Consumption, ElectricDemand (this should either become a restricted enum or we will map a known list of options for a given data provider to a common model to allow for use of the limits in automated filtering) </xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="40"/>
-                        <xs:enumeration value="ActiveEnergyConsumption"/>
-                        <xs:enumeration value="EquipmentSize"/>
-                        <xs:enumeration value="ResidentialProportion"/>
-                        <xs:enumeration value="Seasonality"/>
-                        <xs:enumeration value="Tension"/>
-                        <xs:enumeration value="ElectricDemand"/>
-                        <xs:enumeration value="ContractDemand"/>
-                        <xs:enumeration value="Capacity"/>
-                        <xs:enumeration value="Transportation"/>
-                    </xs:restriction>
-                </xs:simpleType>
+                <xs:annotation>
+                    <xs:documentation>The type of numeric limit, providing direct matching with measurementKind values from customer data.</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element minOccurs="0" name="serviceMeasurement" type="MeasurementKind"/>
+                        <xs:element minOccurs="0" name="profileMetric" type="ProfileMetricType"/>
+                    </xs:sequence>
+                </xs:complexType>
             </xs:element>
-            <xs:element name="name" type="xs:string"> </xs:element>
-            <xs:element name="limitValue" type="xs:int"> </xs:element>
+            <xs:element ref="name"></xs:element>
+            <xs:element name="limitValue" type="xs:int">
+                <xs:annotation>
+                    <xs:documentation>The numeric value of the limit</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="limitMeasureSpecification" type="MeasureType"/>
-            <xs:element name="description">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                                a text description of the rules for fulfilling this eligibility criteria<p/>
-                                
-                                Comment:<br/> 
-                                a text description of the rules for fulfilling this criteria</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="2000"/>
-                        <xs:whiteSpace value="collapse"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element ref="description"></xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>
