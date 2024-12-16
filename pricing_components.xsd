@@ -167,14 +167,8 @@
             <xs:element ref="ratePeriodNumberHolidays"> </xs:element>
             <xs:element name="totalRatePeriodsPerSeason" nillable="true">
                 <xs:annotation>
-                    <xs:appinfo>The number of rate periods associated with
-                        the rate plan, counting 1 if no separate thresholds or rates exist for winter and summer. If rates do differ seasonally or more granularly, this is the count of timeOfUsePeriods entries, which shall be equal to the number of unique combinations of seasonName and
-                        weekday type combination valid during a given effective period for this rate plan.</xs:appinfo>
-                    <xs:documentation>TThe number of rate periods associated with
-                        the rate plan, counting 1 if no separate thresholds or rates exist for winter and summer. If rates do differ seasonally or more granularly, this is the count of timeOfUsePeriods entries, which shall be equal to the number of unique combinations of seasonName and
-                        weekday type combination valid during a given effective period for this rate plan. For example: the correct value is "6" if there are 3 time of use periods (off
-                        peak/base/peak), two seasons winter and summer, and no separate rates for weekends. If separate weekend rates do exist for each of the three time of use periods there will be 6 time of use periods per season and the correct value is "12" for winter and summer combined.
-                        This value is used to inform variables expected to be used in cost modeling and scheduling of devices that operate (turn on/off, charge, import/export) based on time of use
+                    <xs:appinfo>The number of rate periods associated with the rate plan for a given season</xs:appinfo>
+                    <xs:documentation>The number of rate periods associated with the rate plan, counting 1 if no separate thresholds or rates exist for winter and summer. If rates do differ seasonally or more granularly, this is the count of timeOfUsePeriods entries, which shall be equal to the number of unique combinations of seasonName and weekday type combination valid during a given effective period for this rate plan. For example: the correct value is "6" if there are 3 time of use periods (off peak/base/peak), two seasons winter and summer, and no separate rates for weekends. If separate weekend rates do exist for each of the three time of use periods there will be 6 time of use periods per season and the correct value is "12" for winter and summer combined.This value is used to inform variables expected to be used in cost modeling and scheduling of devices that operate (turn on/off, charge, import/export) based on time of use
                         schedules.</xs:documentation>
                 </xs:annotation>
                 <xs:simpleType>
