@@ -19,10 +19,8 @@
                                                   name="serviceClass">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element name="serviceClassNumber"
-                                                  type="xs:int"/>
-                                                  <xs:element name="serviceClassName"
-                                                  type="xs:string"/>
+                                                  <xs:element ref="serviceClassNumber"/>
+                                                  <xs:element ref="serviceClassName"/>
                                                   <xs:element ref="tariffBookLeafRanges"/>
                                                   <xs:element name="rates">
                                                   <xs:complexType>
@@ -30,10 +28,10 @@
                                                   <xs:element maxOccurs="unbounded" name="rate">
                                                   <xs:complexType>
                                                   <xs:sequence>
-                                                  <xs:element ref="rateCodeNumber"/>
+                                                  <xs:element ref="rateCode"/>
                                                   <xs:element ref="rateName"/>
                                                   <xs:element ref="tariffBookLeafRanges"/>
-                                                  <xs:element ref="ratePlans"> </xs:element>
+                                                  <xs:element ref="ratePlans"></xs:element>
                                                   </xs:sequence>
                                                   </xs:complexType>
                                                   </xs:element>

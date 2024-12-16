@@ -52,10 +52,11 @@
     </xs:element>
     <xs:complexType name="SeasonType">
         <xs:sequence>
-            <xs:element ref="seasonName"></xs:element>
-            <xs:element maxOccurs="unbounded" ref="month"></xs:element>
+            <xs:element ref="seasonName"/>
+            <xs:element maxOccurs="unbounded" ref="month"/>
         </xs:sequence>
     </xs:complexType>
+    <xs:element name="serviceTierNumber" type="xs:int"/>
     <xs:element name="serviceTierThresholds">
         <xs:complexType>
             <xs:sequence>
@@ -74,11 +75,11 @@
     <xs:complexType name="ServiceTierThresholdType">
         <xs:sequence>
             <xs:element name="effectiveInterval" type="DateIntervalType"/>
-            <xs:element name="serviceTierNumber" type="xs:int"/>
-            <xs:element ref="seasonName"></xs:element>
+            <xs:element ref="serviceTierNumber"/>
+            <xs:element ref="seasonName"/>
             <xs:element name="measurementSpecification" type="MeasureType"/>
-            <xs:element name="minQuantity" type="xs:int"></xs:element>
-            <xs:element name="maxQuantity" type="xs:int"></xs:element>
+            <xs:element name="minQuantity" type="xs:int"/>
+            <xs:element name="maxQuantity" type="xs:int"/>
         </xs:sequence>
     </xs:complexType>
     <xs:element name="timeOfUsePeriods">
@@ -96,6 +97,18 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="ratePeriodNumberNonHolidays" default="">
+        <xs:annotation>
+            <xs:appinfo>the rate period number identifying a peak type applicable during non-holidays</xs:appinfo>
+            <xs:documentation>the rate period number identifying a peak type applicable during non-holidays - period numbers should be counted from highest to lowest price</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="ratePeriodNumberHolidays" nillable="false" default="">
+        <xs:annotation>
+            <xs:appinfo>the alternate rate period number applicable during this time period during applicable holidays.</xs:appinfo>
+            <xs:documentation>the alternate rate period number applicable during this time period during applicable holidays, if the prices applicable do not differ during holidays ratePeriodNumberNonHolidays is repeated to confirm</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:complexType name="TimeOfUsePeriodType">
         <xs:sequence>
             <xs:element name="measurementApplicable" type="MeasurementKind"/>
@@ -104,13 +117,13 @@
                     <xs:documentation>whether the time of use period schedule is for the Delivery, Supply, or Export component of the charges on a bill</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element ref="peakType"></xs:element>
-            <xs:element ref="seasonName"></xs:element>
+            <xs:element ref="peakType"/>
+            <xs:element ref="seasonName"/>
             <xs:element name="dayType">
+                <xs:annotation>
+                    <xs:documentation> whether the rate period is applicable to a "weekend" or "weekday" or in case it's applicable to both to "all"</xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation> whether the rate period is applicable to a "weekend" or "weekday" or in case it's applicable to both to "all"</xs:documentation>
-                    </xs:annotation>
                     <xs:restriction base="xs:string">
                         <xs:maxLength value="7"/>
                         <xs:whiteSpace value="collapse"/>
@@ -121,13 +134,13 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="periodStart">
+                <xs:annotation>
+                    <xs:documentation>the time of day on or after which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh]:[mm]:[ss]. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="timeStart">
                             <xs:simpleType>
-                                <xs:annotation>
-                                    <xs:documentation>the time of day on and after which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as T[hh]:[mm]:[ss]. The timezone for all New York state rate plans is EDT or EST depending on the date. </xs:documentation>
-                                </xs:annotation>
                                 <xs:restriction base="xs:time"> </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
@@ -136,13 +149,13 @@
                 </xs:complexType>
             </xs:element>
             <xs:element name="periodEnd">
+                <xs:annotation>
+                    <xs:documentation>The time of day in hours and minutes in 24 hour format before or on which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] The timezone for all New York state rate plans is EDT or EST depending on the date.</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="timeEnd">
                             <xs:simpleType>
-                                <xs:annotation> 
-                                    <xs:documentation>The time of day in hours and minutes in 24 hour format up to (but not including) which a given rate period is applicable, in ISO8601 format as hours and minutes in 24 hour format, formatted as [hh]:[mm]:[ss] The timezone for all New York state rate plans is EDT or EST depending on the date.</xs:documentation>
-                                </xs:annotation>
                                 <xs:restriction base="xs:time"> </xs:restriction>
                             </xs:simpleType>
                         </xs:element>
@@ -150,34 +163,8 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="ratePeriodNumberNonHolidays">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the rate period id for the peak type applicable during non holidays.<p/>
-                            
-                            Comment:<br/> 
-                            The rate period id for the peak type applicable during non holidays</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="2"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="ratePeriodNumberHolidays" nillable="false">
-                <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            the rate period id for the peak type applicable during holidays<p/>
-                            
-                            Comment:<br/> 
-                            the rate period id for the peak type applicable during holidays</xs:documentation>
-                    </xs:annotation>
-                    <xs:restriction base="xs:int">
-                        <xs:totalDigits value="2"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
+            <xs:element ref="ratePeriodNumberNonHolidays"> </xs:element>
+            <xs:element ref="ratePeriodNumberHolidays"> </xs:element>
             <xs:element name="totalRatePeriodsPerSeason" nillable="true">
                 <xs:annotation>
                     <xs:appinfo>The number of rate periods associated with
@@ -198,14 +185,10 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="appliesOnHolidays">
+                <xs:annotation>
+                    <xs:documentation>boolean indicating whether or not this rate period applies on holidays or whether it has the peak type of a different rate period if it's a holiday</xs:documentation>
+                </xs:annotation>
                 <xs:simpleType>
-                    <xs:annotation>
-                        <xs:documentation>Tooltip:<br/> 
-                            boolean indicating whether or not this rate period applies on holidays or whether it has the peak type of a different rate period if it's a holiday. <p/>
-                            
-                            Comment:<br/> 
-                            whether or not this rate period applies on holidays or whether it has an alternate applicable peak type if it's a holiday</xs:documentation>
-                    </xs:annotation>
                     <xs:restriction base="xs:boolean"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>

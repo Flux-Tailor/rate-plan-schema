@@ -11,7 +11,7 @@
     <xs:element name="ratePlans">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="ratePlan"> </xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="ratePlan"></xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -59,17 +59,17 @@
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element ref="serviceClass"/>
+                        <xs:element ref="serviceClassNumber"/>
                         <xs:element ref="rateCode"/>
                         <xs:element ref="ratePlanCodeUnique" minOccurs="0"/>
                         <xs:element minOccurs="0" ref="utilityTariffId"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element name="commodity" nillable="false" type="CommodityKind"></xs:element>
+            <xs:element ref="commodity"></xs:element>
             <xs:element ref="utilityInfo"/>
             <xs:element name="ratePlanApplicability" type="RatePlanApplicabilityType"/>
-            <xs:element ref="provenanceMetadata"> </xs:element>
+            <xs:element ref="provenanceMetadata"></xs:element>
             <xs:element ref="name">
                 <xs:annotation>
                     <xs:appinfo>The name of the rate plan</xs:appinfo>

@@ -261,8 +261,8 @@ Global Elements
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="attributeName"/>
-                <xs:element name="value"/>
+                <xs:element name="attributeName" type="xs:string"/>
+                <xs:element name="attributeValue" type="xs:string"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -340,18 +340,17 @@ Global Elements
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="serviceClass"/>
+                            <xs:element ref="serviceClassReference"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element form="qualified" name="rateCodeReferences"
-                    minOccurs="0">
+                <xs:element form="qualified" name="rateReferences" minOccurs="0">
                     <xs:annotation>
                         <xs:documentation>Applicable service rate codes, eg. "2" for Service Class 1 rate 2".</xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="rateCode"/>
+                            <xs:element ref="rateReference"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -381,7 +380,12 @@ Global Elements
                 <xs:element name="utilityTariffIdReferences" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="utilityTariffId"/>
+                            <xs:element ref="utilityTariffId">
+                                <xs:annotation>
+                                    <xs:appinfo>utility-maintained identifier for a tariff or rate</xs:appinfo>
+                                    <xs:documentation>utility-maintained identifier for a ta</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -395,16 +399,98 @@ Global Elements
         </xs:annotation>
     </xs:element>
     <xs:element name="inclusionStatus" type="ValueInclusionKind"/>
-    <xs:element name="mediaType" default="">
+    <xs:element name="initialEffectiveDate" type="xs:date"/>
+    <xs:element name="mediaType">
         <xs:annotation>
             <xs:appinfo>media type of the source document</xs:appinfo>
-            <xs:documentation>[extension] Media type for document as registered by IANA, allowed subset in enumeration.</xs:documentation>
+            <xs:documentation>media type for document as registered by IANA, enumeration contains allowed subset.</xs:documentation>
         </xs:annotation>
+        <xs:simpleType>
+            <xs:restriction base="xs:string">
+                <xs:enumeration value="application/json">
+                    <xs:annotation>
+                        <xs:documentation>JSON</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/pdf">
+                    <xs:annotation>
+                        <xs:documentation>PDF</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/vnd.ms-excel">
+                    <xs:annotation>
+                        <xs:documentation>vnd.ms-excel</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration
+                    value="application/vnd.oasis.opendocument.spreadsheet">
+                    <xs:annotation>
+                        <xs:documentation>vnd.oasis.opendocument.spreadsheet</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/vnd.oasis.opendocument.text">
+                    <xs:annotation>
+                        <xs:documentation>vnd.oasis.opendocument.text</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration
+                    value="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <xs:annotation>
+                        <xs:documentation>vnd.openxmlformats-officedocument.spreadsheetml.sheet</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="application/zip">
+                    <xs:annotation>
+                        <xs:documentation>ZIP</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="image/gif">
+                    <xs:annotation>
+                        <xs:documentation>GIF</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="image/jpeg">
+                    <xs:annotation>
+                        <xs:documentation>JPEG</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="image/png">
+                    <xs:annotation>
+                        <xs:documentation>PNG</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/csv">
+                    <xs:annotation>
+                        <xs:documentation>CSV</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/html">
+                    <xs:annotation>
+                        <xs:documentation>HTML</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/plain">
+                    <xs:annotation>
+                        <xs:documentation>plain</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/rtf">
+                    <xs:annotation>
+                        <xs:documentation>RTF</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+                <xs:enumeration value="text/xml">
+                    <xs:annotation>
+                        <xs:documentation>XML</xs:documentation>
+                    </xs:annotation>
+                </xs:enumeration>
+            </xs:restriction>
+        </xs:simpleType>
     </xs:element>
     <xs:element name="month">
         <xs:annotation>
-            <xs:appinfo xml:lang="en-US">the number representing the month as an integer (i.e. 1-12)</xs:appinfo>
-            <xs:documentation xml:lang="en-US">the number representing the month as an integer (i.e. 1-12)</xs:documentation>
+            <xs:appinfo xml:lang="en-US">an integer representing the calendar month (i.e. 1-12)</xs:appinfo>
+            <xs:documentation xml:lang="en-US">an integer representing the calendar month(i.e. 1-12)</xs:documentation>
         </xs:annotation>
         <xs:simpleType>
             <xs:restriction base="xs:int">
@@ -432,7 +518,6 @@ Global Elements
         </xs:complexType>
     </xs:element>
     <xs:element name="onSiteGeneration" type="OnSiteGenerationKind"/>
-
     <xs:element name="peakType">
         <xs:simpleType>
             <xs:annotation>
@@ -489,7 +574,7 @@ Global Elements
                 <xs:element minOccurs="0" ref="onSiteGenerationScenario"/>
                 <xs:element minOccurs="0" ref="phases"/>
                 <xs:element minOccurs="0" ref="serviceProvisionScenario"/>
-                <xs:element minOccurs="0" ref="ratePlanTerritories"> </xs:element>
+                <xs:element minOccurs="0" ref="ratePlanTerritories"></xs:element>
                 <xs:element minOccurs="0" ref="voltages"/>
             </xs:sequence>
         </xs:complexType>
@@ -498,7 +583,7 @@ Global Elements
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="tariffBookLeafRanges"/>
-                <xs:element maxOccurs="unbounded" ref="dpsCaseNumber"> </xs:element>
+                <xs:element maxOccurs="unbounded" ref="dpsCaseNumber"></xs:element>
                 <xs:element ref="iedrRatePlanBrowserURL" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo xml:lang="en-US">IEDR Permalink URL</xs:appinfo>
@@ -565,15 +650,15 @@ Global Elements
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="rateCode">
+    <xs:element name="rateReference">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="rateCodeNumber"/>
+                <xs:element ref="rateCode"/>
                 <xs:element ref="rateName"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-    <xs:element name="rateCodeNumber" type="xs:string"/>
+    <xs:element name="rateCode" type="xs:string"/>
     <xs:element name="rateName" type="xs:string"/>
     <xs:element name="ratePlanCodeUnique" type="xs:string">
         <xs:annotation>
@@ -587,7 +672,7 @@ Global Elements
             <xs:documentation>unique identifier for the rate plan modifier assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"> </xs:element>
+    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"></xs:element>
     <xs:element name="seasonNames">
         <xs:complexType>
             <xs:sequence>
@@ -601,14 +686,16 @@ Global Elements
             <xs:documentation>Season Name</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="serviceClass">
+    <xs:element name="serviceClassReference">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="serviceClassNumber" type="xs:string"/>
-                <xs:element name="serviceClassName" type="xs:string"/>
+                <xs:element ref="serviceClassNumber"/>
+                <xs:element ref="serviceClassName"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="serviceClassNumber" type="xs:string"/>
+    <xs:element name="serviceClassName" type="xs:string"/>
     <xs:element name="serviceProvisionScenario">
         <xs:annotation>
             <xs:appinfo>Applicable service provision</xs:appinfo>
@@ -664,8 +751,7 @@ Global Elements
                     <xs:complexType>
                         <xs:sequence>
                             <xs:element name="receivedDate" type="xs:date"/>
-                            <xs:element name="initialEffectiveDate"
-                                type="xs:date"/>
+                            <xs:element ref="initialEffectiveDate"/>
                             <xs:element name="effectiveDate" type="xs:date"/>
                             <xs:element maxOccurs="unbounded"
                                 ref="dpsCaseNumber"/>
@@ -728,7 +814,7 @@ Global Elements
                 </xs:element>
                 <xs:element name="iedrUtilityUserFacingName" type="xs:string"
                     minOccurs="0"/>
-                <xs:element ref="dpsPscNumber" minOccurs="0"> </xs:element>
+                <xs:element ref="dpsPscNumber" minOccurs="0"/>
                 <xs:element name="tariffUtilityName" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>The  name of the utility provider as it appears in the tariff book with which this rate plan is associated</xs:appinfo>
@@ -745,7 +831,18 @@ Global Elements
                         <xs:documentation>Id used in ET DPS system populated by IEDR platform and used to generate URL linkage for source data references</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element name="OrganizationType"/>
+                <xs:element name="organizationType" nillable="false">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration
+                                value="DistributedSystemPlatformProvider"/>
+                            <xs:enumeration value="RetailSupplier"/>
+                            <xs:enumeration value="CommunityChoiceAggregator"></xs:enumeration>
+                            <xs:enumeration value="CommunitySolarProvider"></xs:enumeration>
+                            <xs:enumeration value="Prosumer"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -764,8 +861,7 @@ Global Elements
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="effectivePeriod"/>
-                <xs:element minOccurs="0" name="initialEffectiveDate"
-                    type="xs:date"/>
+                <xs:element minOccurs="0" ref="initialEffectiveDate"/>
                 <xs:element name="dateDraftUpdate" nillable="true" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>if the rate plan is in draft ("Pending") status, the date that the rate plan draft was last updated</xs:appinfo>

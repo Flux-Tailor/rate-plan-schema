@@ -85,7 +85,7 @@
                 </xs:annotation>
             </xs:element>
             <xs:element name="limitMeasureSpecification" type="MeasureType"/>
-            <xs:element ref="description"> </xs:element>
+            <xs:element ref="description"></xs:element>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

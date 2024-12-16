@@ -13,9 +13,9 @@
                         <xs:documentation xml:lang="en-US">set of profile specific properties for which a set of charges is applicable, for example: charges for heating end use vs non-heating end use.</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element minOccurs="0" maxOccurs="unbounded" ref="minimumCharge"> </xs:element>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="minimumCharge"></xs:element>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="otherFixedCharge"/>
-                <xs:element minOccurs="0" maxOccurs="unbounded" ref="nonmeteredServiceCharge"> </xs:element>
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="nonmeteredServiceCharge"></xs:element>
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="meteredServiceCharge"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="statementCharge"/>
                 <xs:element maxOccurs="unbounded" minOccurs="0" ref="marketSupplyCharge"/>
@@ -26,64 +26,52 @@
     <xs:element name="minimumCharge">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="ChargeType"> </xs:extension>
+                <xs:extension base="ChargeType"></xs:extension>
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
     <xs:element name="otherFixedCharge">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="ChargeType"> </xs:extension>
+                <xs:extension base="ChargeType"></xs:extension>
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
     <xs:element name="nonmeteredServiceCharge">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="ChargeType"> </xs:extension>
+                <xs:extension base="ChargeType"></xs:extension>
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
     <xs:element name="meteredServiceCharge">
         <xs:complexType>
             <xs:complexContent>
-                <xs:extension base="ChargeType"> </xs:extension>
+                <xs:extension base="ChargeType"></xs:extension>
             </xs:complexContent>
         </xs:complexType>
     </xs:element>
     <xs:element name="statementCharge" type="ChargeType"/>
     <xs:element name="marketSupplyCharge" type="ChargeType"/>
     <xs:element name="exportCredit" type="ChargeType"/>
-
     <xs:complexType name="ChargeType">
         <xs:sequence>
-            <xs:element name="servicePeriod" type="DateIntervalType"/>
+            <xs:element ref="effectivePeriod"/>
             <xs:element minOccurs="0" name="chargeSourceURL" type="xs:anyURI"/>
-            <xs:element name="sourceDocKind" minOccurs="0">
+            <xs:element minOccurs="0" ref="dataSource">
                 <xs:annotation>
-                    <xs:documentation>The type of official tariff documentation</xs:documentation>
-                </xs:annotation>
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:enumeration value="TariffBook"/>
-                        <xs:enumeration value="Statement"/>
-                        <xs:enumeration value="MarketSupplyChargesData"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element minOccurs="0" maxOccurs="unbounded" ref="tariffBookLeafRange"> </xs:element>
-            <xs:element name="serviceTierNumber" type="xs:int" minOccurs="0">
-                <xs:annotation>
-                    <xs:documentation>Tooltip:<br/> 
-                            the number for the threshold tier for which the minimum charge is applicable (if any tiered thresholds exist for the rate)<p/>
-                            
-                            Comment:<br/> 
-                            The number of the tier for which the base charge is applicable (if any tier thresholds exist for the rate).</xs:documentation>
+                    <xs:documentation>The type of tariff data source</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="ratePeriodNumber" type="xs:int" minOccurs="0"/>
-            <xs:element minOccurs="0" ref="peakType"> </xs:element>
-            <xs:element minOccurs="0" ref="month"> </xs:element>
+            <xs:element minOccurs="0" maxOccurs="unbounded" ref="tariffBookLeafRange"></xs:element>
+            <xs:element minOccurs="0" ref="serviceTierNumber">
+                <xs:annotation>
+                    <xs:documentation>the number for the threshold tier for which the minimum charge is applicable  - if any tiered thresholds exist for the rate plan or modifier</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="0" ref="ratePeriodNumberNonHolidays"/>
+            <xs:element minOccurs="0" ref="peakType"></xs:element>
+            <xs:element minOccurs="0" ref="month"></xs:element>
             <xs:element minOccurs="0" ref="seasonName"/>
             <xs:element ref="statementComponent">
                 <xs:annotation>
@@ -110,7 +98,7 @@
                     <xs:documentation xml:lang="en-US">a text string for the name of the charge (e.g. "Basic Service Charge", "Bill Issuance Charge"</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element minOccurs="0" ref="description"> </xs:element>
+            <xs:element minOccurs="0" ref="description"></xs:element>
             <xs:element name="value" type="xs:decimal"/>
             <xs:element name="measurementDefinition" type="MeasureType" minOccurs="0"/>
         </xs:sequence>
