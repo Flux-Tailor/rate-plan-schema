@@ -11,7 +11,7 @@
     <xs:element name="ratePlans">
         <xs:complexType>
             <xs:sequence>
-                <xs:element maxOccurs="unbounded" minOccurs="0" ref="ratePlan"></xs:element>
+                <xs:element maxOccurs="unbounded" minOccurs="0" ref="ratePlan"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -20,9 +20,9 @@
             <xs:complexContent>
                 <xs:extension base="RatePlanType">
                     <xs:sequence minOccurs="0">
-                        <xs:element ref="ratePlanModifiers"/>
+                        <xs:element ref="ratePlanModifiers" minOccurs="0"/>
                     </xs:sequence>
-                    <xs:attribute ref="ratePlanURI" use="optional"/>
+                    <xs:attribute ref="ratePlanURI"/>
                     <xs:attributeGroup ref="crud"/>
                 </xs:extension>
             </xs:complexContent>
@@ -66,10 +66,10 @@
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
-            <xs:element ref="commodity"></xs:element>
+            <xs:element ref="commodity"/>
             <xs:element ref="utilityInfo"/>
             <xs:element name="ratePlanApplicability" type="RatePlanApplicabilityType"/>
-            <xs:element ref="provenanceMetadata"></xs:element>
+            <xs:element ref="provenanceMetadata"/>
             <xs:element ref="name">
                 <xs:annotation>
                     <xs:appinfo>The name of the rate plan</xs:appinfo>
@@ -84,10 +84,10 @@
                 </xs:annotation>
             </xs:element>
             <xs:element minOccurs="0" ref="eligibility"/>
-            <xs:element ref="holidays"/>
+            <xs:element ref="holidays" minOccurs="0"/>
             <xs:element minOccurs="0" ref="seasons"/>
             <xs:element ref="serviceTierThresholds" minOccurs="0"/>
-            <xs:element ref="timeOfUsePeriods"/>
+            <xs:element ref="timeOfUsePeriods" minOccurs="0"/>
             <xs:element ref="charges"/>
         </xs:sequence>
     </xs:complexType>
