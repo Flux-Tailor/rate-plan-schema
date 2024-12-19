@@ -17,10 +17,12 @@ Attributes
 -->
     <xs:attribute name="ratePlanURI" type="xs:anyURI">
         <xs:annotation>
-            <xs:appinfo xml:lang="en">a unique identifier for the rate plan to consistently identify the rate plan and its parameters
+            <xs:appinfo xml:lang="en-US">a Unified Resource Identifier (URI)for the rate plan to consistently locate the rate plan and its parameters.
 
-https://iedr.nyserda.ny.gov/rate-plan/90d30878-b022-4c54-87bb-71fe7359aae6</xs:appinfo>
-            <xs:documentation xml:lang="en">unique identifier for the rate plan permutation assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
+draft example: https://iedr.nyserda.ny.gov/rate-plan/90d30878-b022-4c54-87bb-71fe7359aae6</xs:appinfo>
+            <xs:documentation xml:lang="en-US">a Unified Resource Identifier (URI)for the rate plan to consistently locate the rate plan and its parameters. This URI can be used to reference the rate plan from for example a customer's service agreement data set.
+
+draft example: https://iedr.nyserda.ny.gov/rate-plan/90d30878-b022-4c54-87bb-71fe7359aae6</xs:documentation>
         </xs:annotation>
     </xs:attribute>
     <xs:attribute name="ratePlanModifierURI" type="xs:anyURI">
@@ -198,7 +200,7 @@ Complex Types
         </xs:annotation>
         <xs:sequence>
             <xs:element name="profileVariable" type="ProfileVariableKind"/>
-            <xs:element minOccurs="0" name="scenarioVariableMeasurement"
+            <xs:element minOccurs="0" name="profileVariableMeasurement"
                 type="MeasureType"/>
         </xs:sequence>
     </xs:complexType>
@@ -574,7 +576,7 @@ Global Elements
                 <xs:element minOccurs="0" ref="onSiteGenerationScenario"/>
                 <xs:element minOccurs="0" ref="phases"/>
                 <xs:element minOccurs="0" ref="serviceProvisionScenario"/>
-                <xs:element minOccurs="0" ref="ratePlanTerritories"></xs:element>
+                <xs:element minOccurs="0" ref="ratePlanTerritories"/>
                 <xs:element minOccurs="0" ref="voltages"/>
             </xs:sequence>
         </xs:complexType>
@@ -583,7 +585,7 @@ Global Elements
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="tariffBookLeafRanges"/>
-                <xs:element maxOccurs="unbounded" ref="dpsCaseNumber"></xs:element>
+                <xs:element maxOccurs="unbounded" ref="dpsCaseNumber"/>
                 <xs:element ref="iedrRatePlanBrowserURL" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo xml:lang="en-US">IEDR Permalink URL</xs:appinfo>
@@ -672,7 +674,7 @@ Global Elements
             <xs:documentation>unique identifier for the rate plan modifier assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
         </xs:annotation>
     </xs:element>
-    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"></xs:element>
+    <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"/>
     <xs:element name="seasonNames">
         <xs:complexType>
             <xs:sequence>
@@ -837,8 +839,8 @@ Global Elements
                             <xs:enumeration
                                 value="DistributedSystemPlatformProvider"/>
                             <xs:enumeration value="RetailSupplier"/>
-                            <xs:enumeration value="CommunityChoiceAggregator"></xs:enumeration>
-                            <xs:enumeration value="CommunitySolarProvider"></xs:enumeration>
+                            <xs:enumeration value="CommunityChoiceAggregator"/>
+                            <xs:enumeration value="CommunitySolarProvider"/>
                             <xs:enumeration value="Prosumer"/>
                         </xs:restriction>
                     </xs:simpleType>
@@ -992,6 +994,7 @@ Enumerations simpleType
             <xs:enumeration value="OnSiteGeneration"/>
             <xs:enumeration value="PEV"/>
             <xs:enumeration value="AMIMeter"/>
+            <xs:enumeration value="TimeOfUseMetering"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="MeasurementKind">
