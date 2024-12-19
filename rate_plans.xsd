@@ -22,7 +22,7 @@
                     <xs:sequence minOccurs="0">
                         <xs:element ref="ratePlanModifiers" minOccurs="0"/>
                     </xs:sequence>
-                    <xs:attribute ref="ratePlanURI" use="required"/>
+                    <xs:attribute ref="ratePlanURI"/>
                     <xs:attributeGroup ref="crud"/>
                 </xs:extension>
             </xs:complexContent>
