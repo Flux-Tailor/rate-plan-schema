@@ -810,6 +810,21 @@ Global Elements
         </xs:complexType>
     </xs:element>
     <xs:element name="tariffStatementTypeCode" type="xs:string"/>
+    <xs:element name="ratePlanTerritories">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ratePlanTerritory">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="RatePlanTerritoryType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="utilityInfo">
         <xs:complexType>
             <xs:sequence>
