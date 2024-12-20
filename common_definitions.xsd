@@ -221,6 +221,25 @@ Complex Types
             </xs:element>
         </xs:sequence>
     </xs:complexType>
+    <xs:complexType name="RatePlanTerritoryType">
+        <xs:sequence>
+            <xs:element name="IedrRatePlanTerritoryId" type="xs:string"/>
+            <xs:element name="territoryKind">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:maxLength value="50"/>
+                        <xs:whiteSpace value="collapse"/>
+                        <xs:enumeration value="system_operator_zone_id"/>
+                        <xs:enumeration value="legal_division"/>
+                        <xs:enumeration value="climate_zone_icc"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="geographicUnit" type="xs:string"/>
+            <xs:element name="rawValue" type="xs:string"/>
+            <xs:element ref="effectivePeriod"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="TimeIntervalType">
         <xs:sequence>
             <xs:element form="qualified" name="startTime" type="xs:time"/>
@@ -285,7 +304,7 @@ Global Elements
     <xs:element name="dwellingScenario">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="dwelling"/>
+                <xs:element ref="dwelling" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -293,7 +312,7 @@ Global Elements
     <xs:element name="customerEntities">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="customerEntity"/>
+                <xs:element ref="customerEntity" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -302,7 +321,7 @@ Global Elements
     <xs:element name="endUses">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="endUse"/>
+                <xs:element ref="endUse" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -310,7 +329,7 @@ Global Elements
     <xs:element name="equipmentScenario">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="equipment"/>
+                <xs:element ref="equipment" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -515,7 +534,7 @@ Global Elements
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="onSiteGeneration"/>
+                <xs:element ref="onSiteGeneration" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -705,7 +724,7 @@ Global Elements
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="serviceProvision"/>
+                <xs:element ref="serviceProvision" maxOccurs="unbounded"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -776,6 +795,21 @@ Global Elements
         </xs:complexType>
     </xs:element>
     <xs:element name="tariffStatementTypeCode" type="xs:string"/>
+    <xs:element name="ratePlanTerritories">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ratePlanTerritory">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="RatePlanTerritoryType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="utilityInfo">
         <xs:complexType>
             <xs:sequence>
