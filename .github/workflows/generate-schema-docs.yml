@@ -86,14 +86,14 @@ jobs:
           rm -rf ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/*
         fi
         generate_schema_doc() {
-          BASENAME=$1
+          DIRNAME=$(dirname "$1")
+          BASENAME=$(basename "$1")
           mkdir -p ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/${BASENAME}
           mkdir output/${BASENAME}
-          ./scripts/schemaDocumentation.sh ${{ github.workspace }}/main/${BASENAME}.xsd -cfg:${{ github.workspace }}/main/.github/workflows/docgen_settings.xml -out:${{ github.workspace }}/scripting/oxygen/output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
+          ./scripts/schemaDocumentation.sh ${{ github.workspace }}/main/${DIRNAME}/${BASENAME}.xsd -cfg:${{ github.workspace }}/main/.github/workflows/docgen_settings.xml -out:${{ github.workspace }}/scripting/oxygen/output/${BASENAME}/${BASENAME}.html   -format:html -split:namespace
         }
-        generate_schema_doc "all_rate_plan_schemas"
-        generate_schema_doc "rate_plan_data_input"
-        generate_schema_doc "rate_plan_data_output"
+        generate_schema_doc "supporting-schemas/rate_plan_data_transfer"
+        generate_schema_doc "rate_plans"
         cp -r output/* ${{ github.workspace }}/rate-plan-documentation/doc/OxygenDocs/rate-plan-schema-docs/${{ inputs.releaseTag }}/
       shell: bash
 
