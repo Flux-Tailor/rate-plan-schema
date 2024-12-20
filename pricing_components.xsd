@@ -189,38 +189,4 @@
             <xs:element ref="effectivePeriod"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:element name="ratePlanTerritories">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="ratePlanTerritory">
-                    <xs:complexType>
-                        <xs:complexContent>
-                            <xs:extension base="RatePlanTerritoryType">
-                                <xs:attributeGroup ref="crud"/>
-                            </xs:extension>
-                        </xs:complexContent>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
-    <xs:complexType name="RatePlanTerritoryType">
-        <xs:sequence>
-            <xs:element name="IedrRatePlanTerritoryId" type="xs:string"/>
-            <xs:element name="territoryKind">
-                <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:maxLength value="50"/>
-                        <xs:whiteSpace value="collapse"/>
-                        <xs:enumeration value="system_operator_zone_id"/>
-                        <xs:enumeration value="legal_division"/>
-                        <xs:enumeration value="climate_zone_icc"/>
-                    </xs:restriction>
-                </xs:simpleType>
-            </xs:element>
-            <xs:element name="geographicUnit" type="xs:string"/>
-            <xs:element name="rawValue" type="xs:string"/>
-            <xs:element ref="effectivePeriod"/>
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>
