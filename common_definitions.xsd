@@ -693,6 +693,21 @@ Global Elements
             <xs:documentation>unique identifier for the rate plan modifier assigned by utility (may need to be created for IEDR where for example permutations for different tension levels exist) to consistently identify the rate plan and its parameters</xs:documentation>
         </xs:annotation>
     </xs:element>
+    <xs:element name="ratePlanTerritories">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ratePlanTerritory" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:extension base="RatePlanTerritoryType">
+                                <xs:attributeGroup ref="crud"/>
+                            </xs:extension>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
     <xs:element name="scopeOfApplicability" type="ScopeOfApplicabilityType"/>
     <xs:element name="seasonNames">
         <xs:complexType>
