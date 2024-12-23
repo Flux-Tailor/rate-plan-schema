@@ -571,7 +571,7 @@ Global Elements
     <xs:element name="profile">
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="customerClasses">
+                <xs:element name="customerClasses" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>Applicable customer classes</xs:appinfo>
                         <xs:documentation>Applicable customer classes</xs:documentation>
@@ -622,7 +622,7 @@ Global Elements
         </xs:annotation>
         <xs:complexType>
             <xs:sequence>
-                <xs:element name="hasIcapTag">
+                <xs:element name="hasIcapTag" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>Boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer </xs:appinfo>
                         <xs:documentation>Boolean indicating whether the rate plan calculation is subject to the ICAP tag of a given customer </xs:documentation>
@@ -631,7 +631,7 @@ Global Elements
                         <xs:restriction base="xs:boolean"> </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="hasRetailSupply">
+                <xs:element name="hasRetailSupply" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>Boolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply</xs:appinfo>
                         <xs:documentation>oolean indicating whether the rate plan is for only distribution service vs. distribution and supply service with ESCO retail supply</xs:documentation>
@@ -640,7 +640,7 @@ Global Elements
                         <xs:restriction base="xs:boolean"> </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="hasServiceTiers">
+                <xs:element name="hasServiceTiers" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>Boolean indicating whether the rate plan includes tiered rates for blocks of service, also known as "baseline allowance"</xs:appinfo>
                         <xs:documentation>Boolean indicating whether the rate plan includes tiered rates for blocks of service, also known as "baseline allowance"</xs:documentation>
@@ -649,7 +649,7 @@ Global Elements
                         <xs:restriction base="xs:boolean"> </xs:restriction>
                     </xs:simpleType>
                 </xs:element>
-                <xs:element name="hasTimeOfUsePricing">
+                <xs:element name="hasTimeOfUsePricing" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>Boolean indicating whether the rate plan includes Time of Use (TOU) Pricing</xs:appinfo>
                         <xs:documentation>oolean indicating whether the rate plan includes Time of Use (TOU) Pricing</xs:documentation>
@@ -659,7 +659,7 @@ Global Elements
                     </xs:simpleType>
                 </xs:element>
 
-                <xs:element name="isRider">
+                <xs:element name="isRider" minOccurs="0">
                     <xs:annotation>
                         <xs:appinfo>Boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book</xs:appinfo>
                         <xs:documentation>Boolean indicating whether the rate plan is defined in the tariff book or a rider to the tariff book</xs:documentation>
