@@ -361,7 +361,8 @@ Global Elements
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="serviceClassReference"/>
+                            <xs:element ref="serviceClassReference"
+                                maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -371,7 +372,8 @@ Global Elements
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="rateReference"/>
+                            <xs:element ref="rateReference"
+                                maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -382,7 +384,8 @@ Global Elements
                     </xs:annotation>
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="ratePlanCodeUnique"/>
+                            <xs:element ref="ratePlanCodeUnique"
+                                maxOccurs="unbounded"/>
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
@@ -401,7 +404,8 @@ Global Elements
                 <xs:element name="utilityTariffIdReferences" minOccurs="0">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="utilityTariffId">
+                            <xs:element ref="utilityTariffId"
+                                maxOccurs="unbounded">
                                 <xs:annotation>
                                     <xs:appinfo>utility-maintained identifier for a tariff or rate</xs:appinfo>
                                     <xs:documentation>utility-maintained identifier for a ta</xs:documentation>
@@ -611,7 +615,7 @@ Global Elements
                         <xs:documentation xml:lang="en-US">IEDR Permalink URL, ex.:https://iedr.nyserda.ny.gov/rate-plan/?rateId=KNYGSC22CT2</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element ref="tariffStatementTypeCode"/>
+                <xs:element ref="tariffStatementTypeCode" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
