@@ -615,7 +615,7 @@ Global Elements
                         <xs:documentation xml:lang="en-US">IEDR Permalink URL, ex.:https://iedr.nyserda.ny.gov/rate-plan/?rateId=KNYGSC22CT2</xs:documentation>
                     </xs:annotation>
                 </xs:element>
-                <xs:element ref="tariffStatementTypeCode"/>
+                <xs:element ref="tariffStatementTypeCode" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
